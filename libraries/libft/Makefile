@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/20 12:07:51 by gkenzo-s          #+#    #+#              #
-#    Updated: 2021/09/10 13:18:54 by mde-figu         ###   ########.fr        #
+#    Updated: 2021/09/22 00:33:36 by nbarreir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ OBJ = ft_memset.o ft_bzero.o ft_memcpy.o ft_memccpy.o ft_memmove.o \
 	  ft_strnstr.o ft_atoi.o ft_calloc.o ft_strdup.o \
 	  ft_substr.o ft_strjoin.o ft_strtrim.o ft_split.o ft_itoa.o \
 	  ft_strmapi.o ft_putchar_fd.o ft_putstr_fd.o ft_putendl_fd.o \
-	  ft_putnbr_fd.o 
+	  ft_putnbr_fd.o
 
 BONUS_OBJ = ft_lstnew.o ft_lstadd_front.o ft_lstsize.o ft_lstlast.o \
 			ft_lstadd_back.o ft_lstdelone.o ft_lstclear.o ft_lstiter.o \
@@ -62,7 +62,7 @@ clean:
 	@/bin/rm -f $(OBJ) $(BONUS_OBJ) $(ADDITIONAL_OBJ)
 
 fclean: clean
-	@/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME) $(OBJ) $(BONUS_OBJ) $(ADDITIONAL_OBJ)
 
 re: fclean all
 

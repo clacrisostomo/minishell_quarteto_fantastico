@@ -3,20 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/09/21 22:06:28 by mde-figu         ###   ########.fr        #
+#    Updated: 2021/09/22 00:35:41 by nbarreir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.c\
-
-INCLUDES = minishell.h libft.h
 NAME = minishell
-CFLAGS = -Wall -Wextra -Werror
-LIBFT = libft
 
+CFLAGS = -Wall -Wextra -Werror
+INCLUDES = includes/minishell.h libraries/libft.h
+#LIBFT = libft
+LIBFT = libraries/libft
+
+SRC = main.c\
 
 all: $(NAME)
 
@@ -26,12 +27,19 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 		gcc -c $< -I includes
-		
+
+git:
+	@git add .
+	@git commit -m "$m"
+	@git push
+#make git m="blablabla"
+
 clean:
 		make clean -C $(LIBFT)
 		rm -f $(OBJ)
-		rm -f $(NAME)
+
 fclean: clean
 		make fclean -C $(LIBFT)
-		rm -f $(OBJ)
+		rm -f $(NAME) $(OBJ)
+
 re: fclean all
