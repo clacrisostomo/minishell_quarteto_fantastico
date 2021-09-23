@@ -6,7 +6,7 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/23 00:14:17 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/09/23 11:15:55 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int echo(char *cmd)
 	have_n = 0;
 	if (ft_strncmp(cmd, "echo -n", 7) == 0)
 		have_n = 1;
-	//printf("%s", cmd);
+	printf("%s", cmd);
 	if (have_n != 1)
 		printf("\n");
 	return (1);
@@ -45,7 +45,7 @@ static int exec_cmd_one(char *cmd)
 	return (1);
 }
 
-static void execute(char *command)
+void execute(char *command)
 {
 	if (ft_strncmp(command, "echo ", 4) == 0)
 		echo(command);
@@ -60,24 +60,29 @@ int	ft_strnstr_indie(const char *big, const char *small, size_t len)
 	size_t	needle_len;
 	char	*tmp;
 	int i;
-
+	//printf("%s\n", big);
+	printf("%s\n", small);
 	i = 0;
 	tmp = (char *)big;
 	needle_len = ft_strlen(small);
+	printf("%li\n", len);
+	printf("%li\n", needle_len);
 	if (!needle_len)
 		return (0);
 	while (*tmp && len >= needle_len)
 	{
-		if (!ft_strncmp(tmp, small, needle_len))
+		//printf("%i\n", ft_strncmp(tmp, small, needle_len));
+		if (ft_strncmp(tmp, small, needle_len) == 0)
 		{
-			printf("%i\n", i);
-			return (i);
+			printf("%li\n", i + needle_len);
+			return (i + needle_len);
 		}
+		//needle_len++;
 		tmp++;
 		i++;
-		len--;
+		//len--;
 	}
-	return (0);
+	return (INT_MAX); //só está assim pq se não tiver nada não fica como 0
 }
 
 static void init_pos(char *command, t_pos *posit)
@@ -94,7 +99,7 @@ static void parser(char *command, t_pos *posit)
 {
 	init_pos(command, posit);
 	printf("echo %i, cd %i, pwd %i", posit->pos_echo, posit->pos_cd, posit->pos_pwd);
-	if (ft_strncmp(command, "echo ", 4) == 0)
+	if (posit->pos_echo < posit->pos_cd)
 		echo(command);
 	else if (ft_strncmp(command, "cd ", 2) == 0)
 		exec_cmd_one(command);
@@ -129,7 +134,6 @@ static void loop(void)
 			break;
 		}
 		parser(command, &posit);
-		execute(command);
 		//exec_cmd_one(command);
 		//exec_cmd_two(command);
 		add_history(command);

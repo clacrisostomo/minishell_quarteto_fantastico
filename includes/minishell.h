@@ -6,12 +6,14 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/22 23:06:13 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/09/23 02:52:29 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define INT_MAX 2147483647
 
 # include <unistd.h>
 # include <stdlib.h>
