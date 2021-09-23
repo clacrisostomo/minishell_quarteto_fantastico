@@ -6,7 +6,7 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/22 00:46:05 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/09/22 02:43:05 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 #include "../libraries/libft/libft.h"
+//#include "../libraries/ft_printf/ft_printf.h"
 
 #endif
