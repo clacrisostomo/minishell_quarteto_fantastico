@@ -6,7 +6,7 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/22 02:43:05 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/09/22 23:06:13 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,16 @@
 # include <readline/history.h>
 #include "../libraries/libft/libft.h"
 //#include "../libraries/ft_printf/ft_printf.h"
+
+typedef struct s_pos
+{
+	int	pos_echo;
+	int pos_cd;
+	int pos_pwd;
+	int	pos_exp;
+	int pos_uset;
+	int pos_env;
+} t_pos;
+
 
 #endif
