@@ -3,57 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/23 11:15:55 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/09/28 01:22:50 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int echo(char *cmd)
-{
-	int have_n;
-
-	have_n = 0;
-	if (ft_strncmp(cmd, "echo -n", 7) == 0)
-		have_n = 1;
-	printf("%s", cmd);
-	if (have_n != 1)
-		printf("\n");
-	return (1);
-}
-
-static int exec_cmd_one(char *cmd)
-{
-	char *tmp;
-	char *space;
-
-	space = ft_strchr(cmd, ' ') + 1;
-	tmp = ft_substr(cmd, space - cmd, ft_strlen(space));
-	chdir(tmp);
-	free(tmp);
-
-	/*if (ft_strncmp(cmd, "cd ", 2) == 0)
-	{
-		space = ft_strchr(cmd, ' ') + 1;
-		tmp = ft_substr(cmd, space - cmd, ft_strlen(space));
-		chdir(tmp);
-		free (tmp);
-	}*/
-	return (1);
-}
-
-void execute(char *command)
-{
-	if (ft_strncmp(command, "echo ", 4) == 0)
-		echo(command);
-	else if (ft_strncmp(command, "cd ", 2) == 0)
-		exec_cmd_one(command);
-	//else if (!strcmp("exit", command))
-	//exit();
-}
 
 int	ft_strnstr_indie(const char *big, const char *small, size_t len)
 {
@@ -61,12 +18,12 @@ int	ft_strnstr_indie(const char *big, const char *small, size_t len)
 	char	*tmp;
 	int i;
 	//printf("%s\n", big);
-	printf("%s\n", small);
+	//printf("%s\n", small);
 	i = 0;
 	tmp = (char *)big;
 	needle_len = ft_strlen(small);
-	printf("%li\n", len);
-	printf("%li\n", needle_len);
+	//printf("%li\n", len);
+	//printf("%li\n", needle_len);
 	if (!needle_len)
 		return (0);
 	while (*tmp && len >= needle_len)
@@ -74,7 +31,7 @@ int	ft_strnstr_indie(const char *big, const char *small, size_t len)
 		//printf("%i\n", ft_strncmp(tmp, small, needle_len));
 		if (ft_strncmp(tmp, small, needle_len) == 0)
 		{
-			printf("%li\n", i + needle_len);
+		//printf("%li\n", i + needle_len);
 			return (i + needle_len);
 		}
 		//needle_len++;
@@ -85,7 +42,104 @@ int	ft_strnstr_indie(const char *big, const char *small, size_t len)
 	return (INT_MAX); //só está assim pq se não tiver nada não fica como 0
 }
 
-static void init_pos(char *command, t_pos *posit)
+static int echo(char **cmd)
+{
+	int has_n;
+	int i;
+	//char 	*temp;
+	//int		start;
+	//printf("cheguei aqui!\n");
+	has_n = 0;
+	i = 1;
+	if (ft_strcmp(cmd[1],"-n") == 0)
+	{
+		has_n = 1;
+		i++;
+	}
+	while (cmd && cmd[i])
+	{
+		printf("%s ", cmd[i]);
+		i++;
+	}
+/* 	if (ft_strncmp(cmd, "echo -n ", 8) == 0)
+	{
+		//has_n = 1;
+		start = ft_strnstr_indie(cmd, "echo -n ", ft_strlen(cmd));
+		temp = ft_substr(cmd, start, (ft_strlen(cmd) - start + 1));
+		printf("%s", temp);
+	}
+	else
+	{
+		start = ft_strnstr_indie(cmd, "echo ", ft_strlen(cmd));
+		temp = ft_substr(cmd, start, (ft_strlen(cmd) - start + 1));
+		printf("%s\n", temp);
+	} */
+	if (has_n != 1)
+		printf("\n");
+	//free (temp);
+	return (1);
+}
+
+static int exec_cmd_one(char **cmd)
+{
+	/* char *tmp;
+	char *space;
+	
+	space = ft_strchr(cmd, ' ') + 1;
+	tmp = ft_substr(cmd, space - cmd, ft_strlen(space));
+	if (ft_strncmp(tmp, " ", ft_strlen(tmp)))
+	{
+		printf("Minishell: cd's argument is right\n");
+	}
+	else if ((int)ft_strlen(tmp) == ft_strncmp(tmp, " ", ft_strlen(tmp)))
+	{
+		printf("Minishell: cd's argument is wrong2\n");
+		free(tmp);
+		return (1);
+	}
+	chdir(tmp);
+	free(tmp); */
+	int	i;
+
+	i = 1;
+	while (cmd[i])
+		i++;
+
+	//printf("IIIII: %i\n", i);
+	if (i > 2)
+	{
+		printf("Minishell: cd's argument is wrong\n");
+		return (1);
+	}
+	if (i == 2)
+		chdir(cmd[1]);
+	/* if (ft_strcmp(cmd, "cd ", 2) == 0)
+	{
+		space = ft_strchr(cmd, ' ') + 1;
+		tmp = ft_substr(cmd, space - cmd, ft_strlen(space));
+		chdir(tmp);
+		free (tmp);
+	} */
+	return (0);
+}
+
+void execute(char **command)
+{
+	//printf("cheguei aqui!\n");
+	if (!(ft_strcmp(command[0], "echo")))
+		echo(command);
+	else if (!(ft_strcmp(command[0], "cd")))
+		exec_cmd_one(command);
+/* 	if (ft_strncmp(command, "echo ", 4) == 0)
+		echo(command);
+	else if (ft_strncmp(command, "cd ", 2) == 0)
+		exec_cmd_one(command); */
+	//else if (!strcmp("exit", command))
+	//exit();
+}
+
+
+/*static void init_pos(char *command, t_pos *posit)
 {
 	posit->pos_echo = ft_strnstr_indie(command, "echo", ft_strlen(command));
 	posit->pos_cd = ft_strnstr_indie(command, "cd", ft_strlen(command));
@@ -93,19 +147,19 @@ static void init_pos(char *command, t_pos *posit)
 	posit->pos_exp = ft_strnstr_indie(command, "export", ft_strlen(command));
 	posit->pos_uset = ft_strnstr_indie(command, "unset", ft_strlen(command));
 	posit->pos_env = ft_strnstr_indie(command, "env", ft_strlen(command));
-}
+}*/
 
-static void parser(char *command, t_pos *posit)
-{
-	init_pos(command, posit);
-	printf("echo %i, cd %i, pwd %i", posit->pos_echo, posit->pos_cd, posit->pos_pwd);
-	if (posit->pos_echo < posit->pos_cd)
-		echo(command);
-	else if (ft_strncmp(command, "cd ", 2) == 0)
-		exec_cmd_one(command);
-	//else if (!strcmp("exit", command))
-	//exit();
-}
+// static void parser(char *command, t_pos *posit)
+// {
+// 	init_pos(command, posit);
+// 	printf("echo %i, cd %i, pwd %i", posit->pos_echo, posit->pos_cd, posit->pos_pwd);
+// 	if (posit->pos_echo < posit->pos_cd)
+// 		echo(command);
+// 	else if (ft_strncmp(command, "cd ", 2) == 0)
+// 		exec_cmd_one(command);
+// 	//else if (!strcmp("exit", command))
+// 	//exit();
+// }
 
 static char *do_prompt(void)
 {
@@ -116,12 +170,72 @@ static char *do_prompt(void)
 	prompt = ft_strjoin(cwd, "$ ");
 	return (prompt);
 }
+void    ft_free_split(char **str)
+{
+    int    i;
+
+    i = -1;
+    if (!(str))
+        return ;
+    while (*(str + ++i) != NULL)
+    {
+        free(*(str + i));
+        *(str + i) = NULL;
+    }
+    free(str);
+    str = NULL;
+}
+char	**blank_spaces(char *cmd)
+{
+	//int i;
+	char **arg_cmd;
+	
+	//i = 0;
+	arg_cmd = ft_split(cmd, ' ');
+	
+	/* while (arg_cmd[i])
+	{
+		printf ("%s\n", arg_cmd[i]);
+		i++;
+	} */
+	return (arg_cmd);
+/* 	while (cmd)
+	{
+		if (ft_strchr(cmd[i], " ") && ft_strchr(cmd[i++], " "))
+			oi          tudo        bem
+			oi tudo bem
+			arg[i]
+			while /s 
+	} */
+	
+	/* char *old;
+	char *new;
+	int i;
+	int j;
+	
+	i = 0;
+	j = 0;
+	old = cmd;
+	new = NULL;
+	printf ("%s", old);
+	while (old)
+	{
+		while (ft_isspace(old[i]) && ft_isspace(old[i++]))
+			i++;
+		new[j] = old[i];
+		j++;
+		i++;
+	}
+	printf ("%s", new);
+	return (new); */
+}
 
 static void loop(void)
 {
+	char **cmd;
 	char *command;
 	char *prompt;
-	t_pos posit;
+	//t_pos posit;
 
 	while (1)
 	{
@@ -133,11 +247,14 @@ static void loop(void)
 			free(command);
 			break;
 		}
-		parser(command, &posit);
+		add_history(command);
+		cmd = blank_spaces(command);
+		free(command);
+		//parser(command, &posit);
+		execute(cmd);
+		ft_free_split(cmd);
 		//exec_cmd_one(command);
 		//exec_cmd_two(command);
-		add_history(command);
-		free(command);
 	}
 }
 

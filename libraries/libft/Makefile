@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/20 12:07:51 by gkenzo-s          #+#    #+#              #
-#    Updated: 2021/09/22 00:33:36 by nbarreir         ###   ########.fr        #
+#    Updated: 2021/09/27 23:41:25 by csantos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 	  ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c \
 	  ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c \
 	  ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
-	  ft_putnbr_fd.c\
+	  ft_putnbr_fd.c ft_isspace.c\
 
 BONUS_SRC = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 			ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c \
@@ -32,7 +32,7 @@ OBJ = ft_memset.o ft_bzero.o ft_memcpy.o ft_memccpy.o ft_memmove.o \
 	  ft_strnstr.o ft_atoi.o ft_calloc.o ft_strdup.o \
 	  ft_substr.o ft_strjoin.o ft_strtrim.o ft_split.o ft_itoa.o \
 	  ft_strmapi.o ft_putchar_fd.o ft_putstr_fd.o ft_putendl_fd.o \
-	  ft_putnbr_fd.o
+	  ft_putnbr_fd.o ft_isspace.o
 
 BONUS_OBJ = ft_lstnew.o ft_lstadd_front.o ft_lstsize.o ft_lstlast.o \
 			ft_lstadd_back.o ft_lstdelone.o ft_lstclear.o ft_lstiter.o \
