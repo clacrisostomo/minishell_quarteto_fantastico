@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/28 01:22:50 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/09/28 22:08:26 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,40 @@ int	ft_strnstr_indie(const char *big, const char *small, size_t len)
 	}
 	return (INT_MAX); //só está assim pq se não tiver nada não fica como 0
 }
+
+static void	pwd(void)
+{
+	char	*pwd;
+
+	pwd = NULL;
+	pwd = getcwd(pwd, 0);
+	if (pwd != NULL)
+		printf("%s\n", pwd);
+	free(pwd);
+}
+
+void    print_split(char **str)
+{
+    int    i;
+
+    i = -1;
+    while (*(str + ++i) != NULL)
+        printf("%s\n", *(str + i));
+}
+
+char    *find_old_pwd(char **str)
+{
+    int    i;
+
+    i = -1;
+    while (*(str + ++i) != NULL)
+	{
+		if(!ft_strncmp(*(str + i), "OLDPWD=", 7))
+        	return(ft_strchr(*(str + i), '=') + 1);
+	}
+	return("\0");
+}
+
 
 static int echo(char **cmd)
 {
@@ -80,56 +114,42 @@ static int echo(char **cmd)
 	return (1);
 }
 
-static int exec_cmd_one(char **cmd)
+static int exec_cmd_one(char **cmd, char **envp)
 {
-	/* char *tmp;
-	char *space;
-	
-	space = ft_strchr(cmd, ' ') + 1;
-	tmp = ft_substr(cmd, space - cmd, ft_strlen(space));
-	if (ft_strncmp(tmp, " ", ft_strlen(tmp)))
-	{
-		printf("Minishell: cd's argument is right\n");
-	}
-	else if ((int)ft_strlen(tmp) == ft_strncmp(tmp, " ", ft_strlen(tmp)))
-	{
-		printf("Minishell: cd's argument is wrong2\n");
-		free(tmp);
-		return (1);
-	}
-	chdir(tmp);
-	free(tmp); */
 	int	i;
+	const char *old;
 
 	i = 1;
+	old = find_old_pwd(envp);
+	printf("%s", old);
 	while (cmd[i])
 		i++;
 
-	//printf("IIIII: %i\n", i);
 	if (i > 2)
 	{
 		printf("Minishell: cd's argument is wrong\n");
+		g_env.status_error = 1;
 		return (1);
 	}
 	if (i == 2)
-		chdir(cmd[1]);
-	/* if (ft_strcmp(cmd, "cd ", 2) == 0)
 	{
-		space = ft_strchr(cmd, ' ') + 1;
-		tmp = ft_substr(cmd, space - cmd, ft_strlen(space));
-		chdir(tmp);
-		free (tmp);
-	} */
+		if (ft_strncmp(cmd[1], "-", 4) == 0)
+			chdir(old); //<< PRECISAMOS SUBSTITUIR O ENVP por HASHTABLE
+		chdir(cmd[1]);
+	}
 	return (0);
 }
 
-void execute(char **command)
+void execute(char **command, char **envp)
 {
+	
 	//printf("cheguei aqui!\n");
 	if (!(ft_strcmp(command[0], "echo")))
 		echo(command);
 	else if (!(ft_strcmp(command[0], "cd")))
-		exec_cmd_one(command);
+		exec_cmd_one(command, envp);
+	else if (!(ft_strcmp(command[0], "pwd")))
+		pwd();
 /* 	if (ft_strncmp(command, "echo ", 4) == 0)
 		echo(command);
 	else if (ft_strncmp(command, "cd ", 2) == 0)
@@ -187,50 +207,13 @@ void    ft_free_split(char **str)
 }
 char	**blank_spaces(char *cmd)
 {
-	//int i;
 	char **arg_cmd;
 	
-	//i = 0;
 	arg_cmd = ft_split(cmd, ' ');
-	
-	/* while (arg_cmd[i])
-	{
-		printf ("%s\n", arg_cmd[i]);
-		i++;
-	} */
 	return (arg_cmd);
-/* 	while (cmd)
-	{
-		if (ft_strchr(cmd[i], " ") && ft_strchr(cmd[i++], " "))
-			oi          tudo        bem
-			oi tudo bem
-			arg[i]
-			while /s 
-	} */
-	
-	/* char *old;
-	char *new;
-	int i;
-	int j;
-	
-	i = 0;
-	j = 0;
-	old = cmd;
-	new = NULL;
-	printf ("%s", old);
-	while (old)
-	{
-		while (ft_isspace(old[i]) && ft_isspace(old[i++]))
-			i++;
-		new[j] = old[i];
-		j++;
-		i++;
-	}
-	printf ("%s", new);
-	return (new); */
 }
 
-static void loop(void)
+static void loop(char **envp)
 {
 	char **cmd;
 	char *command;
@@ -239,6 +222,7 @@ static void loop(void)
 
 	while (1)
 	{
+		g_env.status_error = 0;
 		prompt = do_prompt();
 		command = readline(prompt);
 		free(prompt);
@@ -251,22 +235,24 @@ static void loop(void)
 		cmd = blank_spaces(command);
 		free(command);
 		//parser(command, &posit);
-		execute(cmd);
+		execute(cmd, envp);
 		ft_free_split(cmd);
 		//exec_cmd_one(command);
 		//exec_cmd_two(command);
 	}
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
 	(void)argv;
+	(void)envp;
 	if (argc > 1 && argv)
 	{
 		printf("ERROR: TOO MANY ARGS");
 		return (0);
 	}
-	loop();
+//	print_split(envp);
+	loop(envp);
 	return (1);
 }
