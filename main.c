@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/29 22:24:28 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/09/29 23:42:13 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,32 @@ static int echo(char **cmd)
 	return (1);
 }
 
+char	*search_hash_by_key(char *key)
+{
+	int	c;
+
+	c = 0;
+	while(c <= g_shell.hash->size - 1)
+	{
+		//printf("%s = %s\n", g_shell.hash->items[c]->key, g_shell.hash->items[c]->value);
+		if (g_shell.hash->items[c]->key == key)
+		{
+			return(g_shell.hash->items[c]->value);
+		}
+		c++;
+	}
+	return (NULL);
+}
+
 static int exec_cmd_one(char **cmd, char **envp)
 {
 	int	i;
+	(void)envp;
 	char *old;
 
 	i = 1;
-	old = find_old_pwd(envp);
-	printf("%s", old);
+	//old = find_old_pwd(envp);
+	//printf("%s", old);
 	while (cmd[i])
 		i++;
 
@@ -129,13 +147,17 @@ static int exec_cmd_one(char **cmd, char **envp)
 	{
 		printf("Minishell: cd's argument is wrong\n");
 		g_shell.status_error = 1;
-		free(old);
+		//free(old);
 		return (1);
 	}
 	if (i == 2)
 	{
 		if (ft_strncmp(cmd[1], "-", 4) == 0)
-			chdir(old); //<< PRECISAMOS SUBSTITUIR O ENVP por HASHTABLE
+		{
+			old = search_hash_by_key("OLDPWD");
+			printf("%s\n", old);
+			chdir(old);
+		}
 		chdir(cmd[1]);
 	}
 	return (0);

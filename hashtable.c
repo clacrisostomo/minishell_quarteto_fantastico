@@ -69,7 +69,7 @@ char	*find_value(char *line)
 	j = i;
 	while(line[j])
 		j++;
-	value = ft_substr(line, i, j);
+	value = ft_substr(line, i + 1, j);
 	return (value);
 }
 
