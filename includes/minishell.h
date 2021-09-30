@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/29 22:00:51 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/09/30 14:48:17 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define INT_MAX 2147483647
 # define HASH_SIZE 256
+# define NULL ((void *)0)
 
 # include <unistd.h>
 # include <stdlib.h>
