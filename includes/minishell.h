@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/29 00:04:23 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/09/29 22:00:51 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_ht_item
 
 typedef struct s_hash_table
 {
-	t_ht_item**	items;
+	t_ht_item					**items;
 	int			size;
 	int			count;
 } t_hash_table;
@@ -78,8 +78,9 @@ void	create_hash_table(int size);
 t_ht_item	*create_hash_item(char* key, char* value);
 t_ht_item	*insert_table(char *key, char *value);
 void	envp_to_hash(char **envp);
-void	free_item(t_ht_item **items);
+void	free_item(t_ht_item *items);
 void	free_table(t_hash_table *table);
+void	free_all(t_hash_table *table);
 
 
 #endif

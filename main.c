@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/29 00:25:09 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/09/29 22:24:28 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ static int echo(char **cmd)
 static int exec_cmd_one(char **cmd, char **envp)
 {
 	int	i;
-	const char *old;
+	char *old;
 
 	i = 1;
 	old = find_old_pwd(envp);
@@ -129,6 +129,7 @@ static int exec_cmd_one(char **cmd, char **envp)
 	{
 		printf("Minishell: cd's argument is wrong\n");
 		g_shell.status_error = 1;
+		free(old);
 		return (1);
 	}
 	if (i == 2)
@@ -220,13 +221,13 @@ static void loop(char **envp)
 	char *prompt;
 	//t_pos posit;
 
+	envp_to_hash(envp);
 	while (1)
 	{
 		g_shell.status_error = 0;
 		prompt = do_prompt();
 		command = readline(prompt);
 		free(prompt);
-		envp_to_hash(envp);
 		if (!strcmp("exit", command))
 		{
 			free(command);
@@ -241,11 +242,13 @@ static void loop(char **envp)
 		//exec_cmd_one(command);
 		//exec_cmd_two(command);
 	}
-	while (g_shell.hash)
-	{
-		free_item(g_shell.hash->items++);
-	}
-	free_table(g_shell.hash);
+	//while (g_shell.hash->items - 1)
+	//{
+	//	free_item(g_shell.hash->items++);
+	//}
+	//free_table(g_shell.hash);
+	free_all(g_shell.hash);
+	//free(g_shell.hash);
 }
 
 int main(int argc, char *argv[], char *envp[])

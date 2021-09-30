@@ -9,26 +9,45 @@ t_ht_item	*insert_table(char *key, char *value)
 	return (new_item);
 }
 
-void	free_item(t_ht_item **items)
+void	free_all(t_hash_table *table)
 {
-    //free((*items)->key);
-    //free((*items)->value);
-    free(items);
+	int i;
+	t_ht_item *item;
+
+	i = 0;
+	while (i < g_shell.hash->size)
+	{
+		item = table->items[i];
+			free(table->items[i]->key);
+			free(table->items[i]->value);
+			free(item);
+		i++;
+	}
+	//free(table->items);
+	//free(table);
+}
+
+void	free_item(t_ht_item *items)
+{
+	free(items->key);
+	free(items->value);
+	free(items);
 }
 void	free_table(t_hash_table *table)
 {
-    int i;
-    t_ht_item *item;
+	int i;
+	t_ht_item *item;
 
-    i = 0;
-    while (i++ < g_shell.hash->size - 1)
-    {
-        item = table->items[i];
-        if (item != NULL)
-            free(item);
-    }
-    free(table->items);
-   // free(table);
+	i = 0;
+	while (i < g_shell.hash->size)
+	{
+		item = table->items[i];
+		if (item != NULL)
+			free_item(item);
+		i++;
+	}
+	free(table->items);
+	free(table);
 }
 
 void	create_hash_table(int size)
@@ -40,7 +59,7 @@ void	create_hash_table(int size)
 	g_shell.hash->size = size;
 	g_shell.hash->count = 0;
 	g_shell.hash->items = (t_ht_item**) ft_calloc(g_shell.hash->size, sizeof(t_ht_item*));
-	while( i++ < g_shell.hash->size - 1)
+	while (i++ < g_shell.hash->size - 1)
 	{
 		g_shell.hash->items[i] = NULL;
 	}
