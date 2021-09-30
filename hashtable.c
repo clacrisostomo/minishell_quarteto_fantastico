@@ -23,31 +23,6 @@ void	free_all(t_hash_table *table)
 			free(item);
 		i++;
 	}
-	//free(table->items);
-	//free(table);
-}
-
-void	free_item(t_ht_item *items)
-{
-	free(items->key);
-	free(items->value);
-	free(items);
-}
-void	free_table(t_hash_table *table)
-{
-	int i;
-	t_ht_item *item;
-
-	i = 0;
-	while (i < g_shell.hash->size)
-	{
-		item = table->items[i];
-		if (item != NULL)
-			free_item(item);
-		i++;
-	}
-	free(table->items);
-	free(table);
 }
 
 void	create_hash_table(int size)
