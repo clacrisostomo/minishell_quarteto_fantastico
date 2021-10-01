@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/30 23:19:08 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/09/30 23:57:56 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,18 +144,39 @@ char	*search_hash_by_key(char *key)
 	return (NULL);
 }
 
+void	modify_hash_by_key(char *key, char *new_val)
+{
+	int	c;
+
+	c = 0;
+	while(c <= g_shell.hash->size - 1)
+	{
+		//printf("%s = %s\n", g_shell.hash->items[c]->key, g_shell.hash->items[c]->value);
+		if (ft_strncmp(g_shell.hash->items[c]->key, key, ft_strlen(key)) == 0)
+		{
+			printf("OLD VALUE: %s\n", g_shell.hash->items[c]->value);
+			g_shell.hash->items[c]->value = NULL;
+			g_shell.hash->items[c]->value = new_val;
+			printf("NEW VALUE: %s\n", g_shell.hash->items[c]->value);
+		}
+		c++;
+	}
+}
+
 static int exec_cmd_one(char **cmd, char **envp)
 {
 	int	i;
 	(void)envp;
 	char *old;
+	char *tmp;
 
 	i = 1;
+	old = NULL;
+	tmp = NULL;
 	//old = find_old_pwd(envp);
 	//printf("%s", old);
 	while (cmd[i])
 		i++;
-
 	if (i > 2)
 	{
 		printf("Minishell: cd's argument is wrong\n");
@@ -165,12 +186,16 @@ static int exec_cmd_one(char **cmd, char **envp)
 	}
 	if (i == 2)
 	{
+		tmp = getcwd(tmp, 0);
 		if (ft_strncmp(cmd[1], "-", 4) == 0)
 		{
 			old = search_hash_by_key("OLDPWD");
 			chdir(old);
 		}
-		chdir(cmd[1]);
+		else
+			chdir(cmd[1]);
+		modify_hash_by_key("OLDPWD", tmp);
+		free(tmp);
 	}
 	return (0);
 }
