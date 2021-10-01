@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/29 23:42:13 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/09/30 23:19:08 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,24 @@ static void	pwd(void)
 	free(pwd);
 }
 
-void    print_split(char **str)
+void	print_split(char **str)
 {
-    int    i;
+	int	i;
 
-    i = -1;
-    while (*(str + ++i) != NULL)
-        printf("%s\n", *(str + i));
+	i = -1;
+	while (*(str + ++i) != NULL)
+		printf("%s\n", *(str + i));
 }
 
-char    *find_old_pwd(char **str)
+char	*find_old_pwd(char **str)
 {
-    int    i;
+	int	i;
 
-    i = -1;
-    while (*(str + ++i) != NULL)
+	i = -1;
+	while (*(str + ++i) != NULL)
 	{
 		if(!ft_strncmp(*(str + i), "OLDPWD=", 7))
-        	return(ft_strchr(*(str + i), '=') + 1);
+			return(ft_strchr(*(str + i), '=') + 1);
 	}
 	return("\0");
 }
@@ -114,6 +114,18 @@ static int echo(char **cmd)
 	return (1);
 }
 
+void	env()
+{
+	int	c;
+
+	c = 0;
+	while(c <= g_shell.hash->size - 1)
+	{
+		printf("%s=%s\n", g_shell.hash->items[c]->key, g_shell.hash->items[c]->value);
+		c++;
+	}
+}
+
 char	*search_hash_by_key(char *key)
 {
 	int	c;
@@ -122,8 +134,9 @@ char	*search_hash_by_key(char *key)
 	while(c <= g_shell.hash->size - 1)
 	{
 		//printf("%s = %s\n", g_shell.hash->items[c]->key, g_shell.hash->items[c]->value);
-		if (g_shell.hash->items[c]->key == key)
+		if (ft_strncmp(g_shell.hash->items[c]->key, key, ft_strlen(key)) == 0)
 		{
+			//printf("%s\n", g_shell.hash->items[c]->value);
 			return(g_shell.hash->items[c]->value);
 		}
 		c++;
@@ -155,7 +168,6 @@ static int exec_cmd_one(char **cmd, char **envp)
 		if (ft_strncmp(cmd[1], "-", 4) == 0)
 		{
 			old = search_hash_by_key("OLDPWD");
-			printf("%s\n", old);
 			chdir(old);
 		}
 		chdir(cmd[1]);
@@ -173,6 +185,8 @@ void execute(char **command, char **envp)
 		exec_cmd_one(command, envp);
 	else if (!(ft_strcmp(command[0], "pwd")))
 		pwd();
+	else if (!(ft_strcmp(command[0], "env")))
+		env();
 /* 	if (ft_strncmp(command, "echo ", 4) == 0)
 		echo(command);
 	else if (ft_strncmp(command, "cd ", 2) == 0)
@@ -213,20 +227,20 @@ static char *do_prompt(void)
 	prompt = ft_strjoin(cwd, "$ ");
 	return (prompt);
 }
-void    ft_free_split(char **str)
+void	ft_free_split(char **str)
 {
-    int    i;
+	int	i;
 
-    i = -1;
-    if (!(str))
-        return ;
-    while (*(str + ++i) != NULL)
-    {
-        free(*(str + i));
-        *(str + i) = NULL;
-    }
-    free(str);
-    str = NULL;
+	i = -1;
+	if (!(str))
+		return ;
+	while (*(str + ++i) != NULL)
+	{
+		free(*(str + i));
+		*(str + i) = NULL;
+	}
+	free(str);
+	str = NULL;
 }
 char	**blank_spaces(char *cmd)
 {

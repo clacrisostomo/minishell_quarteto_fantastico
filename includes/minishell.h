@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/30 14:48:17 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/09/30 22:54:56 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # define INT_MAX 2147483647
 # define HASH_SIZE 256
-# define NULL ((void *)0)
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -82,6 +81,7 @@ void	envp_to_hash(char **envp);
 void	free_item(t_ht_item *items);
 void	free_table(t_hash_table *table);
 void	free_all(t_hash_table *table);
+void	env();
 
 
 #endif
