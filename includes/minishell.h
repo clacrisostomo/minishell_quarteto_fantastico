@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/30 22:54:56 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/02 01:27:47 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	execute(char **command, char **envp);
 char	*find_old_pwd(char **str);
 void	print_split(char **str);
 int		ft_strnstr_indie(const char *big, const char *small, size_t len);
+void	env();
 
 /*
 ** HASH TABLE
@@ -81,7 +82,7 @@ void	envp_to_hash(char **envp);
 void	free_item(t_ht_item *items);
 void	free_table(t_hash_table *table);
 void	free_all(t_hash_table *table);
-void	env();
+void	free_item(t_ht_item *item);
 
 
 #endif

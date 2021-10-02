@@ -4,7 +4,7 @@
 t_ht_item	*insert_table(char *key, char *value)
 {
 	t_ht_item* new_item;
-	
+
 	new_item = create_hash_item(key, value);
 	return (new_item);
 }
@@ -18,11 +18,16 @@ void	free_all(t_hash_table *table)
 	while (i < g_shell.hash->size)
 	{
 		item = table->items[i];
-			free(table->items[i]->key);
-			free(table->items[i]->value);
-			free(item);
+			free_item(item);
 		i++;
 	}
+}
+
+void	free_item(t_ht_item *item)
+{
+	free(item->key);
+	free(item->value);
+	free(item);
 }
 
 void	create_hash_table(int size)
@@ -43,7 +48,7 @@ void	create_hash_table(int size)
 t_ht_item	*create_hash_item(char* key, char* value)
 {
 	t_ht_item *new;
-	
+
 	new = (t_ht_item*) ft_calloc(sizeof(t_ht_item), 1);
 	new->key = ft_strdup(key);
 	new->value = ft_strdup(value);

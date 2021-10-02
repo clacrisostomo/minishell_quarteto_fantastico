@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/09/30 23:57:56 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/02 02:16:35 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	print_split(char **str)
 		printf("%s\n", *(str + i));
 }
 
-char	*find_old_pwd(char **str)
+/*char	*find_old_pwd(char **str)
 {
 	int	i;
 
@@ -73,7 +73,7 @@ char	*find_old_pwd(char **str)
 			return(ft_strchr(*(str + i), '=') + 1);
 	}
 	return("\0");
-}
+}*/
 
 
 static int echo(char **cmd)
@@ -154,9 +154,10 @@ void	modify_hash_by_key(char *key, char *new_val)
 		//printf("%s = %s\n", g_shell.hash->items[c]->key, g_shell.hash->items[c]->value);
 		if (ft_strncmp(g_shell.hash->items[c]->key, key, ft_strlen(key)) == 0)
 		{
+			//printf("VAL: %s\n", new_val);
 			printf("OLD VALUE: %s\n", g_shell.hash->items[c]->value);
-			g_shell.hash->items[c]->value = NULL;
-			g_shell.hash->items[c]->value = new_val;
+			free_item(g_shell.hash->items[c]);
+				g_shell.hash->items[c] = insert_table(key, new_val);
 			printf("NEW VALUE: %s\n", g_shell.hash->items[c]->value);
 		}
 		c++;
@@ -202,7 +203,7 @@ static int exec_cmd_one(char **cmd, char **envp)
 
 void execute(char **command, char **envp)
 {
-	
+
 	//printf("cheguei aqui!\n");
 	if (!(ft_strcmp(command[0], "echo")))
 		echo(command);
@@ -270,7 +271,7 @@ void	ft_free_split(char **str)
 char	**blank_spaces(char *cmd)
 {
 	char **arg_cmd;
-	
+
 	arg_cmd = ft_split(cmd, ' ');
 	return (arg_cmd);
 }
