@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/04 22:39:48 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/04 23:32:33 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,11 +169,13 @@ static int cd(char **cmd)
 	char	*old;
 	char	*tmp;
 	char	*home;
+	char	*slash;
 	int		i;
 
 	i = 1;
 	tmp = NULL;
 	home = search_hash_by_key("HOME");
+	slash = "/";
 	while (cmd[i])
 		i++;
 	if (i > 2)
@@ -203,6 +205,8 @@ static int cd(char **cmd)
 		}
 		else if (ft_strncmp(cmd[1], "~", 4) == 0)
 			chdir(home);
+		else if (ft_strncmp(cmd[1], "/", 4) == 0)
+			chdir(slash);
 		else
 			chdir(cmd[1]);
 		modify_hash_by_key("OLDPWD", tmp);

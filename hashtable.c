@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hashtable.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/04 23:40:05 by csantos-          #+#    #+#             */
+/*   Updated: 2021/10/04 23:41:36 by csantos-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
 t_ht_item	*insert_table(char *key, char *value)
 {
-	t_ht_item* new_item;
+	t_ht_item	*new_item;
 
 	new_item = create_hash_item(key, value);
 	return (new_item);
@@ -11,8 +22,8 @@ t_ht_item	*insert_table(char *key, char *value)
 
 void	free_all(t_hash_table *table)
 {
-	int i;
-	t_ht_item *item;
+	int			i;
+	t_ht_item	*item;
 
 	i = 0;
 	while (i < g_shell.hash->size)
@@ -47,7 +58,7 @@ void	create_hash_table(int size)
 
 t_ht_item	*create_hash_item(char* key, char* value)
 {
-	t_ht_item *new;
+	t_ht_item	*new;
 
 	new = (t_ht_item*) ft_calloc(sizeof(t_ht_item), 1);
 	new->key = ft_strdup(key);
@@ -65,14 +76,14 @@ t_ht_item	*create_hash_item(char* key, char* value)
 char	*find_value(char *line)
 {
 	char	*value;
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	i = 0;
-	while(line[i] != '=')
+	while (line[i] != '=')
 		i++;
 	j = i;
-	while(line[j])
+	while (line[j])
 		j++;
 	value = ft_substr(line, i + 1, j);
 	return (value);
@@ -84,7 +95,7 @@ char	*find_key(char *line)
 	int i;
 
 	i = 0;
-	while(line[i] != '=')
+	while (line[i] != '=')
 		i++;
 	key = ft_substr(line, 0, i);
 	return (key);
@@ -99,7 +110,7 @@ void	envp_to_hash(char **envp)
 
 	i = 0;
 	j = 0;
-	while(envp[i]) //não sei talvez sim
+	while (envp[i]) //não sei talvez sim
 		i++;
 	create_hash_table(i);
 	while (j < i)
