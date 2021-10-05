@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/02 02:16:35 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/10/04 22:39:48 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,70 +155,72 @@ void	modify_hash_by_key(char *key, char *new_val)
 		if (ft_strncmp(g_shell.hash->items[c]->key, key, ft_strlen(key)) == 0)
 		{
 			//printf("VAL: %s\n", new_val);
-			printf("OLD VALUE: %s\n", g_shell.hash->items[c]->value);
+			//printf("OLD VALUE: %s\n", g_shell.hash->items[c]->value);
 			free_item(g_shell.hash->items[c]);
 				g_shell.hash->items[c] = insert_table(key, new_val);
-			printf("NEW VALUE: %s\n", g_shell.hash->items[c]->value);
+			//printf("NEW VALUE: %s\n", g_shell.hash->items[c]->value);
 		}
 		c++;
 	}
 }
 
-static int exec_cmd_one(char **cmd, char **envp)
+static int cd(char **cmd)
 {
-	int	i;
-	(void)envp;
-	char *old;
-	char *tmp;
+	char	*old;
+	char	*tmp;
+	char	*home;
+	int		i;
 
 	i = 1;
-	old = NULL;
 	tmp = NULL;
-	//old = find_old_pwd(envp);
-	//printf("%s", old);
+	home = search_hash_by_key("HOME");
 	while (cmd[i])
 		i++;
 	if (i > 2)
 	{
 		printf("Minishell: cd's argument is wrong\n");
 		g_shell.status_error = 1;
-		//free(old);
 		return (1);
+	}
+	tmp = getcwd(tmp, 0);
+	if (i == 1)
+	{
+		modify_hash_by_key("OLDPWD", tmp);
+		chdir(home);
 	}
 	if (i == 2)
 	{
-		tmp = getcwd(tmp, 0);
 		if (ft_strncmp(cmd[1], "-", 4) == 0)
+		{
+			old = search_hash_by_key("OLDPWD");
+			printf("%s\n", old);
+			chdir(old);
+		}
+		else if (ft_strncmp(cmd[1], "~-", 5) == 0)
 		{
 			old = search_hash_by_key("OLDPWD");
 			chdir(old);
 		}
+		else if (ft_strncmp(cmd[1], "~", 4) == 0)
+			chdir(home);
 		else
 			chdir(cmd[1]);
 		modify_hash_by_key("OLDPWD", tmp);
-		free(tmp);
 	}
+	free(tmp);
 	return (0);
 }
 
-void execute(char **command, char **envp)
+void	execute(char **command)
 {
-
-	//printf("cheguei aqui!\n");
 	if (!(ft_strcmp(command[0], "echo")))
 		echo(command);
 	else if (!(ft_strcmp(command[0], "cd")))
-		exec_cmd_one(command, envp);
+		cd(command);
 	else if (!(ft_strcmp(command[0], "pwd")))
 		pwd();
 	else if (!(ft_strcmp(command[0], "env")))
 		env();
-/* 	if (ft_strncmp(command, "echo ", 4) == 0)
-		echo(command);
-	else if (ft_strncmp(command, "cd ", 2) == 0)
-		exec_cmd_one(command); */
-	//else if (!strcmp("exit", command))
-	//exit();
 }
 
 
@@ -239,7 +241,7 @@ void execute(char **command, char **envp)
 // 	if (posit->pos_echo < posit->pos_cd)
 // 		echo(command);
 // 	else if (ft_strncmp(command, "cd ", 2) == 0)
-// 		exec_cmd_one(command);
+// 		cd(command);
 // 	//else if (!strcmp("exit", command))
 // 	//exit();
 // }
@@ -299,9 +301,9 @@ static void loop(char **envp)
 		cmd = blank_spaces(command);
 		free(command);
 		//parser(command, &posit);
-		execute(cmd, envp);
+		execute(cmd);
 		ft_free_split(cmd);
-		//exec_cmd_one(command);
+		//cd(command);
 		//exec_cmd_two(command);
 	}
 	//while (g_shell.hash->items - 1)

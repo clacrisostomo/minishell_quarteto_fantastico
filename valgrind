@@ -1,22 +1,21 @@
-==7943== Memcheck, a memory error detector
-==7943== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==7943== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==7943== Command: ./minishell
-==7943== Parent PID: 601
-==7943== 
-==7943== error calling PR_SET_PTRACER, vgdb might block
-==7943== 
-==7943== HEAP SUMMARY:
-==7943==     in use at exit: 205,129 bytes in 232 blocks
-==7943==   total heap usage: 715 allocs, 483 frees, 320,614 bytes allocated
-==7943== 
-==7943== LEAK SUMMARY:
-==7943==    definitely lost: 0 bytes in 0 blocks
-==7943==    indirectly lost: 0 bytes in 0 blocks
-==7943==      possibly lost: 0 bytes in 0 blocks
-==7943==    still reachable: 205,129 bytes in 232 blocks
-==7943==         suppressed: 0 bytes in 0 blocks
-==7943== Reachable blocks (those to which a pointer was found) are not shown.
-==7943== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==7943== 
-==7943== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==36173== Memcheck, a memory error detector
+==36173== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==36173== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==36173== Command: ./minishell
+==36173== Parent PID: 23893
+==36173== 
+==36173== 
+==36173== HEAP SUMMARY:
+==36173==     in use at exit: 205,460 bytes in 229 blocks
+==36173==   total heap usage: 943 allocs, 714 frees, 386,906 bytes allocated
+==36173== 
+==36173== LEAK SUMMARY:
+==36173==    definitely lost: 0 bytes in 0 blocks
+==36173==    indirectly lost: 0 bytes in 0 blocks
+==36173==      possibly lost: 0 bytes in 0 blocks
+==36173==    still reachable: 205,460 bytes in 229 blocks
+==36173==         suppressed: 0 bytes in 0 blocks
+==36173== Reachable blocks (those to which a pointer was found) are not shown.
+==36173== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==36173== 
+==36173== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

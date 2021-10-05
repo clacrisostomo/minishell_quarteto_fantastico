@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/02 01:27:47 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/10/04 22:38:49 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_shell	g_shell;
 
 char	**blank_spaces(char *cmd);
 void	ft_free_split(char **str);
-void	execute(char **command, char **envp);
+void	execute(char **command);
 char	*find_old_pwd(char **str);
 void	print_split(char **str);
 int		ft_strnstr_indie(const char *big, const char *small, size_t len);
