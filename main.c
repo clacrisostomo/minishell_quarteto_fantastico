@@ -6,7 +6,7 @@
 /*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/06 23:30:03 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/06 23:36:08 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,30 +170,18 @@ void	modify_hash_by_key(char *key, char *new_val)
 	c = 0;
 	while(c <= g_shell.env->size - 1)
 	{
-		//printf("%s = %s\n", g_shell.env->items[c]->key, g_shell.env->items[c]->value);
 		if (ft_strncmp(g_shell.env->items[c]->key, key, ft_strlen(key)) == 0)
 		{
-			//printf("VAL: %s\n", new_val);
-			//printf("OLD VALUE: %s\n", g_shell.env->items[c]->value);
 			free_item(g_shell.env->items[c]);
 				g_shell.env->items[c] = insert_table(key, new_val);
 			return ;
-			//printf("NEW VALUE: %s\n", g_shell.env->items[c]->value);
 		}
 		c++;
 	}
-	if(g_shell.hash->items[0])
-		free_item(g_shell.hash->items[0]);
-	g_shell.hash->items[0] = insert_table(key, new_val);
-		/* if (g_shell.hash->items[c]->key)
-		{
-			if (ft_strncmp(g_shell.hash->items[c]->key, key, ft_strlen(key)) == 0)
-			{
-				free_item(g_shell.hash->items[c]);
-					g_shell.hash->items[c] = insert_table(key, new_val);
-				return ;
-			}
-		} */
+	c = 0;
+	if(g_shell.hash->items[c])
+		free_item(g_shell.hash->items[c]);
+	g_shell.hash->items[c] = insert_table(key, new_val);
 }
 
 static int cd(char **cmd)
