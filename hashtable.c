@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 23:40:05 by csantos-          #+#    #+#             */
-/*   Updated: 2021/10/04 23:41:36 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/06 23:18:57 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "includes/minishell.h"
 
 t_ht_item	*insert_table(char *key, char *value)
 {
@@ -26,9 +26,10 @@ void	free_all(t_hash_table *table)
 	t_ht_item	*item;
 
 	i = 0;
-	while (i < g_shell.hash->size)
+	while (i < table->size)
 	{
 		item = table->items[i];
+		if (item)
 			free_item(item);
 		i++;
 	}
@@ -41,19 +42,21 @@ void	free_item(t_ht_item *item)
 	free(item);
 }
 
-void	create_hash_table(int size)
+t_hash_table *create_hash_table(int size)
 {
+	t_hash_table *hashtable;
 	int	i;
 
 	i = 0;
-	g_shell.hash = (t_hash_table *)malloc(sizeof(t_hash_table));
-	g_shell.hash->size = size;
-	g_shell.hash->count = 0;
-	g_shell.hash->items = (t_ht_item**) ft_calloc(g_shell.hash->size, sizeof(t_ht_item*));
-	while (i++ < g_shell.hash->size - 1)
+	hashtable = (t_hash_table *)malloc(sizeof(t_hash_table));
+	hashtable->size = size;
+	hashtable->count = 0;
+	hashtable->items = (t_ht_item**) ft_calloc(hashtable->size, sizeof(t_ht_item*));
+	while (i++ < hashtable->size - 1)
 	{
-		g_shell.hash->items[i] = NULL;
+		hashtable->items[i] = NULL;
 	}
+	return(hashtable);
 }
 
 t_ht_item	*create_hash_item(char* key, char* value)
@@ -101,8 +104,9 @@ char	*find_key(char *line)
 	return (key);
 }
 
-void	envp_to_hash(char **envp)
+t_hash_table *envp_to_hash(char **envp)
 {
+	t_hash_table *table;
 	char	*key;
 	char	*value;
 	int		i;
@@ -110,16 +114,17 @@ void	envp_to_hash(char **envp)
 
 	i = 0;
 	j = 0;
-	while (envp[i]) //não sei talvez sim
+	while (envp[i])
 		i++;
-	create_hash_table(i);
+	table = create_hash_table(i);
 	while (j < i)
 	{
 		key = find_key(envp[j]);
 		value = find_value(envp[j]);
-		g_shell.hash->items[j] = insert_table(key, value);
+		table->items[j] = insert_table(key, value);
 		j++;
 		free(key);
 		free(value);
 	}
+	return(table);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/04 23:32:33 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/06 23:30:03 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "includes/minishell.h"
 
 int	ft_strnstr_indie(const char *big, const char *small, size_t len)
 {
@@ -119,7 +119,13 @@ void	env()
 	int	c;
 
 	c = 0;
-	while(c <= g_shell.hash->size - 1)
+	while(c <= g_shell.env->size - 1)
+	{
+		printf("%s=%s\n", g_shell.env->items[c]->key, g_shell.env->items[c]->value);
+		c++;
+	}
+	c = 0;
+	while(g_shell.hash->items[c] && c <= g_shell.hash->size - 1)
 	{
 		printf("%s=%s\n", g_shell.hash->items[c]->key, g_shell.hash->items[c]->value);
 		c++;
@@ -130,6 +136,17 @@ char	*search_hash_by_key(char *key)
 {
 	int	c;
 
+	c = 0;
+	while(c <= g_shell.env->size - 1)
+	{
+		//printf("%s = %s\n", g_shell.env->items[c]->key, g_shell.env->items[c]->value);
+		if (ft_strncmp(g_shell.env->items[c]->key, key, ft_strlen(key)) == 0)
+		{
+			//printf("%s\n", g_shell.env->items[c]->value);
+			return(g_shell.env->items[c]->value);
+		}
+		c++;
+	}
 	c = 0;
 	while(c <= g_shell.hash->size - 1)
 	{
@@ -144,24 +161,39 @@ char	*search_hash_by_key(char *key)
 	return (NULL);
 }
 
+//void	insert_new_item(char *new_key, char *new_val)
+
 void	modify_hash_by_key(char *key, char *new_val)
 {
 	int	c;
 
 	c = 0;
-	while(c <= g_shell.hash->size - 1)
+	while(c <= g_shell.env->size - 1)
 	{
-		//printf("%s = %s\n", g_shell.hash->items[c]->key, g_shell.hash->items[c]->value);
-		if (ft_strncmp(g_shell.hash->items[c]->key, key, ft_strlen(key)) == 0)
+		//printf("%s = %s\n", g_shell.env->items[c]->key, g_shell.env->items[c]->value);
+		if (ft_strncmp(g_shell.env->items[c]->key, key, ft_strlen(key)) == 0)
 		{
 			//printf("VAL: %s\n", new_val);
-			//printf("OLD VALUE: %s\n", g_shell.hash->items[c]->value);
-			free_item(g_shell.hash->items[c]);
-				g_shell.hash->items[c] = insert_table(key, new_val);
-			//printf("NEW VALUE: %s\n", g_shell.hash->items[c]->value);
+			//printf("OLD VALUE: %s\n", g_shell.env->items[c]->value);
+			free_item(g_shell.env->items[c]);
+				g_shell.env->items[c] = insert_table(key, new_val);
+			return ;
+			//printf("NEW VALUE: %s\n", g_shell.env->items[c]->value);
 		}
 		c++;
 	}
+	if(g_shell.hash->items[0])
+		free_item(g_shell.hash->items[0]);
+	g_shell.hash->items[0] = insert_table(key, new_val);
+		/* if (g_shell.hash->items[c]->key)
+		{
+			if (ft_strncmp(g_shell.hash->items[c]->key, key, ft_strlen(key)) == 0)
+			{
+				free_item(g_shell.hash->items[c]);
+					g_shell.hash->items[c] = insert_table(key, new_val);
+				return ;
+			}
+		} */
 }
 
 static int cd(char **cmd)
@@ -195,8 +227,13 @@ static int cd(char **cmd)
 		if (ft_strncmp(cmd[1], "-", 4) == 0)
 		{
 			old = search_hash_by_key("OLDPWD");
-			printf("%s\n", old);
-			chdir(old);
+			if (old)
+			{
+				printf("%s\n", old);
+				chdir(old);
+			}
+			else
+				write(1, "minishell: cd: OLDPWD not set\n", 30);
 		}
 		else if (ft_strncmp(cmd[1], "~-", 5) == 0)
 		{
@@ -282,14 +319,14 @@ char	**blank_spaces(char *cmd)
 	return (arg_cmd);
 }
 
-static void loop(char **envp)
+static void loop()
 {
 	char **cmd;
 	char *command;
 	char *prompt;
 	//t_pos posit;
 
-	envp_to_hash(envp);
+	//envp_to_hash(envp);
 	while (1)
 	{
 		g_shell.status_error = 0;
@@ -315,6 +352,7 @@ static void loop(char **envp)
 	//	free_item(g_shell.hash->items++);
 	//}
 	//free_table(g_shell.hash);
+	free_all(g_shell.env);
 	free_all(g_shell.hash);
 	//free(g_shell.hash);
 }
@@ -330,6 +368,8 @@ int main(int argc, char *argv[], char *envp[])
 		return (0);
 	}
 //	print_split(envp);
-	loop(envp);
+	g_shell.env = envp_to_hash(envp);
+	g_shell.hash = create_hash_table(100);
+	loop();
 	return (1);
 }

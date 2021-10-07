@@ -6,7 +6,7 @@
 /*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/04 22:38:49 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/06 22:26:48 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_hash_table
 typedef struct s_shell
 {
 	t_hash_table *hash;
+	t_hash_table *env;
 	int status_error;
 }	t_shell;
 
@@ -75,14 +76,14 @@ void	env();
 ** HASH TABLE
 */
 
-void	create_hash_table(int size);
-t_ht_item	*create_hash_item(char* key, char* value);
-t_ht_item	*insert_table(char *key, char *value);
-void	envp_to_hash(char **envp);
-void	free_item(t_ht_item *items);
-void	free_table(t_hash_table *table);
-void	free_all(t_hash_table *table);
-void	free_item(t_ht_item *item);
+t_hash_table	*create_hash_table(int size);
+t_ht_item		*create_hash_item(char* key, char* value);
+t_ht_item		*insert_table(char *key, char *value);
+t_hash_table	*envp_to_hash(char **envp);
+void			free_item(t_ht_item *items);
+void			free_table(t_hash_table *table);
+void			free_all(t_hash_table *table);
+void			free_item(t_ht_item *item);
 
 
 #endif
