@@ -6,7 +6,7 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/07 21:37:18 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/10/07 22:37:28 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,40 +17,19 @@ int	ft_strnstr_indie(const char *big, const char *small, size_t len)
 	size_t	needle_len;
 	char	*tmp;
 	int i;
-	//printf("%s\n", big);
-	//printf("%s\n", small);
 	i = 0;
 	tmp = (char *)big;
 	needle_len = ft_strlen(small);
-	//printf("%li\n", len);
-	//printf("%li\n", needle_len);
 	if (!needle_len)
 		return (0);
 	while (*tmp && len >= needle_len)
 	{
-		//printf("%i\n", ft_strncmp(tmp, small, needle_len));
 		if (ft_strncmp(tmp, small, needle_len) == 0)
-		{
-		//printf("%li\n", i + needle_len);
 			return (i + needle_len);
-		}
-		//needle_len++;
 		tmp++;
 		i++;
-		//len--;
 	}
 	return (INT_MAX); //só está assim pq se não tiver nada não fica como 0
-}
-
-static void	pwd(void)
-{
-	char	*pwd;
-
-	pwd = NULL;
-	pwd = getcwd(pwd, 0);
-	if (pwd != NULL)
-		printf("%s\n", pwd);
-	free(pwd);
 }
 
 void	print_split(char **str)
@@ -60,179 +39,6 @@ void	print_split(char **str)
 	i = -1;
 	while (*(str + ++i) != NULL)
 		printf("%s\n", *(str + i));
-}
-
-/*char	*find_old_pwd(char **str)
-{
-	int	i;
-
-	i = -1;
-	while (*(str + ++i) != NULL)
-	{
-		if(!ft_strncmp(*(str + i), "OLDPWD=", 7))
-			return(ft_strchr(*(str + i), '=') + 1);
-	}
-	return("\0");
-}*/
-
-
-static int echo(char **cmd)
-{
-	char	*key;
-	char	*val;
-	int has_n;
-	int i;
-
-	has_n = 0;
-	i = 1;
-	if (ft_strcmp(cmd[i],"-n") == 0)
-	{
-		has_n = 1;
-		i++;
-	}
-	while (cmd && cmd[i])
-	{
-		if (ft_strrchr(cmd[i], '$') && (ft_strcmp(cmd[i], "$\0")))
-		{
-			key = ft_substr(cmd[i], 1, ft_strlen(cmd[i]) - 1);
-			val = search_hash_by_key(key);
-			free(key);
-			if (val != NULL)
-				printf("%s ", val);
-		}
-		else
-			printf("%s ", cmd[i]);
-		i++;
-	}
-	if (has_n != 1)
-		printf("\n");
-	return (1);
-}
-
-void	env()
-{
-	int	c;
-
-	c = 0;
-	while(c <= g_shell.env->size - 1)
-	{
-		printf("%s=%s\n", g_shell.env->items[c]->key, g_shell.env->items[c]->value);
-		c++;
-	}
-	c = 0;
-	while(g_shell.hash->items[c] && c <= g_shell.hash->size - 1)
-	{
-		printf("%s=%s\n", g_shell.hash->items[c]->key, g_shell.hash->items[c]->value);
-		c++;
-	}
-}
-
-char	*search_hash_by_key(char *key)
-{
-	int	c;
-
-	c = 0;
-	while(c <= g_shell.env->size - 1)
-	{
-		//printf("%s = %s\n", g_shell.env->items[c]->key, g_shell.env->items[c]->value);
-		if (ft_strncmp(g_shell.env->items[c]->key, key, ft_strlen(key)) == 0)
-		{
-			//printf("%s\n", g_shell.env->items[c]->value);
-			return(g_shell.env->items[c]->value);
-		}
-		c++;
-	}
-	c = 0;
-	while(g_shell.hash->items[c] && c <= g_shell.hash->size - 1)
-	{
-		//printf("%s = %s\n", g_shell.hash->items[c]->key, g_shell.hash->items[c]->value);
-		if (ft_strncmp(g_shell.hash->items[c]->key, key, ft_strlen(key)) == 0)
-		{
-			//printf("%s\n", g_shell.hash->items[c]->value);
-			return(g_shell.hash->items[c]->value);
-		}
-		c++;
-	}
-	return (NULL);
-}
-
-//void	insert_new_item(char *new_key, char *new_val)
-
-void	modify_hash_by_key(char *key, char *new_val)
-{
-	int	c;
-
-	c = 0;
-	while(c <= g_shell.env->size - 1)
-	{
-		if (ft_strncmp(g_shell.env->items[c]->key, key, ft_strlen(key)) == 0)
-		{
-			free_item(g_shell.env->items[c]);
-				g_shell.env->items[c] = insert_table(key, new_val);
-			return ;
-		}
-		c++;
-	}
-	c = 0;
-	if(g_shell.hash->items[c])
-		free_item(g_shell.hash->items[c]);
-	g_shell.hash->items[c] = insert_table(key, new_val);
-}
-
-static int cd(char **cmd)
-{
-	char	*old;
-	char	*tmp;
-	char	*home;
-	char	*slash;
-	int		i;
-
-	i = 1;
-	tmp = NULL;
-	home = search_hash_by_key("HOME");
-	slash = "/";
-	while (cmd[i])
-		i++;
-	if (i > 2)
-	{
-		printf("Minishell: cd's argument is wrong\n");
-		g_shell.status_error = 1;
-		return (1);
-	}
-	tmp = getcwd(tmp, 0);
-	if (i == 1)
-	{
-		modify_hash_by_key("OLDPWD", tmp);
-		chdir(home);
-	}
-	if (i == 2)
-	{
-		if (ft_strncmp(cmd[1], "-", 4) == 0)
-		{
-			old = search_hash_by_key("OLDPWD");
-			if (old)
-			{
-				printf("%s\n", old);
-				chdir(old);
-			}
-			else
-				write(1, "minishell: cd: OLDPWD not set\n", 30);
-		}
-		else if (ft_strncmp(cmd[1], "~-", 5) == 0)
-		{
-			old = search_hash_by_key("OLDPWD");
-			chdir(old);
-		}
-		else if (ft_strncmp(cmd[1], "~", 4) == 0)
-			chdir(home);
-		else if (ft_strncmp(cmd[1], "/", 4) == 0)
-			chdir(slash);
-		else
-			chdir(cmd[1]);
-		modify_hash_by_key("OLDPWD", tmp);
-	}
-	free(tmp);
-	return (0);
 }
 
 void	execute(char **command)
@@ -245,6 +51,8 @@ void	execute(char **command)
 		pwd();
 	else if (!(ft_strcmp(command[0], "env")))
 		env();
+	else if (!(ft_strcmp(command[0], "export")))
+		export(command);
 }
 
 
@@ -279,6 +87,7 @@ static char *do_prompt(void)
 	prompt = ft_strjoin(cwd, "$ ");
 	return (prompt);
 }
+
 void	ft_free_split(char **str)
 {
 	int	i;
@@ -294,6 +103,7 @@ void	ft_free_split(char **str)
 	free(str);
 	str = NULL;
 }
+
 char	**blank_spaces(char *cmd)
 {
 	char **arg_cmd;
@@ -309,7 +119,6 @@ static void loop()
 	char *prompt;
 	//t_pos posit;
 
-	//envp_to_hash(envp);
 	while (1)
 	{
 		g_shell.status_error = 0;
@@ -327,17 +136,11 @@ static void loop()
 		//parser(command, &posit);
 		execute(cmd);
 		ft_free_split(cmd);
-		//cd(command);
-		//exec_cmd_two(command);
+
 	}
-	//while (g_shell.hash->items - 1)
-	//{
-	//	free_item(g_shell.hash->items++);
-	//}
-	//free_table(g_shell.hash);
 	free_all(g_shell.env);
 	free_all(g_shell.hash);
-	//free(g_shell.hash);
+	free_all(g_shell.temp);
 }
 
 int main(int argc, char *argv[], char *envp[])
@@ -352,7 +155,8 @@ int main(int argc, char *argv[], char *envp[])
 	}
 //	print_split(envp);
 	g_shell.env = envp_to_hash(envp);
-	g_shell.hash = create_hash_table(100);
+	g_shell.hash = create_hash_table(50);
+	g_shell.temp = create_hash_table(50);
 	loop();
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/07 01:49:15 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/10/07 23:37:18 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_shell
 {
 	t_hash_table *hash;
 	t_hash_table *env;
+	t_hash_table *temp;
 	int status_error;
 }	t_shell;
 
@@ -71,13 +72,25 @@ char	*find_old_pwd(char **str);
 void	print_split(char **str);
 int		ft_strnstr_indie(const char *big, const char *small, size_t len);
 void	env();
+void	pwd(void);
+int		echo(char **cmd);
+void	export(char **cmd);
 
 char	*search_hash_by_key(char *key);
+/*
+** CHANGE DIRECTORY
+*/
+
+int 	cd(char **cmd);
+
 
 /*
 ** HASH TABLE
 */
-
+void			modify_hash_by_key(char *key, char *new_val);
+char			*search_hash_by_key(char *key);
+char	*find_key(char *line);
+char	*find_value(char *line);
 t_hash_table	*create_hash_table(int size);
 t_ht_item		*create_hash_item(char* key, char* value);
 t_ht_item		*insert_table(char *key, char *value);
