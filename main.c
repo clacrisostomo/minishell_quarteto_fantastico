@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/06 23:36:08 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/07 21:37:18 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,39 +78,34 @@ void	print_split(char **str)
 
 static int echo(char **cmd)
 {
+	char	*key;
+	char	*val;
 	int has_n;
 	int i;
-	//char 	*temp;
-	//int		start;
-	//printf("cheguei aqui!\n");
+
 	has_n = 0;
 	i = 1;
-	if (ft_strcmp(cmd[1],"-n") == 0)
+	if (ft_strcmp(cmd[i],"-n") == 0)
 	{
 		has_n = 1;
 		i++;
 	}
 	while (cmd && cmd[i])
 	{
-		printf("%s ", cmd[i]);
+		if (ft_strrchr(cmd[i], '$') && (ft_strcmp(cmd[i], "$\0")))
+		{
+			key = ft_substr(cmd[i], 1, ft_strlen(cmd[i]) - 1);
+			val = search_hash_by_key(key);
+			free(key);
+			if (val != NULL)
+				printf("%s ", val);
+		}
+		else
+			printf("%s ", cmd[i]);
 		i++;
 	}
-/* 	if (ft_strncmp(cmd, "echo -n ", 8) == 0)
-	{
-		//has_n = 1;
-		start = ft_strnstr_indie(cmd, "echo -n ", ft_strlen(cmd));
-		temp = ft_substr(cmd, start, (ft_strlen(cmd) - start + 1));
-		printf("%s", temp);
-	}
-	else
-	{
-		start = ft_strnstr_indie(cmd, "echo ", ft_strlen(cmd));
-		temp = ft_substr(cmd, start, (ft_strlen(cmd) - start + 1));
-		printf("%s\n", temp);
-	} */
 	if (has_n != 1)
 		printf("\n");
-	//free (temp);
 	return (1);
 }
 
@@ -148,7 +143,7 @@ char	*search_hash_by_key(char *key)
 		c++;
 	}
 	c = 0;
-	while(c <= g_shell.hash->size - 1)
+	while(g_shell.hash->items[c] && c <= g_shell.hash->size - 1)
 	{
 		//printf("%s = %s\n", g_shell.hash->items[c]->key, g_shell.hash->items[c]->value);
 		if (ft_strncmp(g_shell.hash->items[c]->key, key, ft_strlen(key)) == 0)

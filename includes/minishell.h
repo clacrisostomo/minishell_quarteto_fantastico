@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/06 22:26:48 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/07 01:49:15 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ char	*find_old_pwd(char **str);
 void	print_split(char **str);
 int		ft_strnstr_indie(const char *big, const char *small, size_t len);
 void	env();
+
+char	*search_hash_by_key(char *key);
 
 /*
 ** HASH TABLE
