@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/07 23:37:18 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/10/09 00:10:14 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # define INT_MAX 2147483647
 # define HASH_SIZE 256
+# define NONE 0
+# define ENV 1
+# define HASH 2
+# define TEMP 3
+# define TRUE 1
+# define FALSE 0
+
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -74,7 +81,8 @@ int		ft_strnstr_indie(const char *big, const char *small, size_t len);
 void	env();
 void	pwd(void);
 int		echo(char **cmd);
-void	export(char **cmd);
+void	expt(char **cmd, int exp);
+int		ft_isvar(char **cmd);
 
 char	*search_hash_by_key(char *key);
 /*
@@ -89,8 +97,8 @@ int 	cd(char **cmd);
 */
 void			modify_hash_by_key(char *key, char *new_val);
 char			*search_hash_by_key(char *key);
-char	*find_key(char *line);
-char	*find_value(char *line);
+char			*find_key(char *line);
+char			*find_value(char *line);
 t_hash_table	*create_hash_table(int size);
 t_ht_item		*create_hash_item(char* key, char* value);
 t_ht_item		*insert_table(char *key, char *value);
@@ -99,6 +107,9 @@ void			free_item(t_ht_item *items);
 void			free_table(t_hash_table *table);
 void			free_all(t_hash_table *table);
 void			free_item(t_ht_item *item);
+//int				loop_table_n_insert(t_ht_item *item, int table);
+int		loop_table_n_insert(char *key, char *value, int table);
+int				modify_table_by_key(int table, char *key, char *value);
 
 
 #endif
