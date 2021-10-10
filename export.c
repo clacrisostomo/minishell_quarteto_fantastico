@@ -6,16 +6,11 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:36:28 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/10/09 00:50:36 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/09 20:25:25 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-
-/* void	insert_new_item(t_hash_table *table, char *new_key, char *new_val)
-{
-	int	i;
-} */
 
 static int which_table_by_key(char *key)
 {
@@ -127,10 +122,7 @@ void		insert_if_export(char *key, char *value)
 	c = 0;
 	t = which_table_by_key(key);
 	if(t == 0)
-	{
-		//insert = create_hash_item(key, value);
 		loop_table_n_insert(key, value, HASH);
-	}
 	if (t == 1)
 		modify_table_by_key(ENV, key, value);
 	if (t == 2)
@@ -148,8 +140,6 @@ void		insert_if_export(char *key, char *value)
 		}
 		loop_table_n_insert(key, value, HASH);
 	}
-	free(key);
-	free(value);
 }
 
 void		insert_if_onlyvar(char *key, char *value)
@@ -159,18 +149,13 @@ void		insert_if_onlyvar(char *key, char *value)
 
 	t = which_table_by_key(key);
 	if (t == 0)
-	{
-		//insert = 
 		loop_table_n_insert(key, value, TEMP);
-	}
 	if (t == 1)
 		modify_table_by_key(ENV, key, value);
 	if (t == 2)
 		modify_table_by_key(HASH, key, value);
 	if (t == 3)
 		modify_table_by_key(TEMP, key, value);
-	free(key);
-	free(value);
 }
 
 void expt(char **cmd, int exp)
@@ -184,23 +169,28 @@ void expt(char **cmd, int exp)
 	while (cmd[i])
 	{
 		j = 0;
-		while ((cmd[i][j] <= 90 && cmd[i][j] >= 65) || ft_isdigit(cmd[i][j])) ///PODE SER TUDO!!!!
+		while (ft_isalpha(cmd[i][j]) || cmd[i][j] == '_' || \
+				(ft_isdigit(cmd[i][j]) && (!ft_isdigit(cmd[i][0]))))
 			j++;
 		if (cmd[i][j] == '=')
 		{
 			key = find_key(cmd[i]);
 			value = find_value(cmd[i]);
-			if (exp ==1)
+			if (exp == 1)
 				insert_if_export(key, value);
 			else
 				insert_if_onlyvar(key, value);
+			free(key);
+			//if (value)
+			free(value);
 		}
 		else if (cmd[i][j] == '\0')
 		{
-			key = cmd[i];
+			value = search_hash_by_key(cmd[i]);
 			if (value)
-				value = search_hash_by_key(key);
-			loop_table_n_insert(key, value, HASH);
+				loop_table_n_insert(cmd[i], value, HASH);
+//insert_if_export(key, value);
+//loop_table_n_insert(key, value, HASH);
 		}
 		i++;
 	}

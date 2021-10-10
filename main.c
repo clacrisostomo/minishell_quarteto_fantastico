@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/09 00:35:04 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/10 00:17:15 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ void	execute(char **command)
 		env();
 	else if (!(ft_strcmp(command[0], "export")))
 		expt(command, 1);
+	else if (!(ft_strcmp(command[0], "unset")))
+		unset_(command);
 	else if (ft_isvar(command))
 		expt(command, 0);
-
 }
 
 
@@ -142,15 +143,15 @@ static void loop()
 
 	}
 	free_all(g_shell.env);
-	free_all(g_shell.hash);
+	//free_all(g_shell.hash);
 	//free_all(g_shell.temp);
 }
 
 int main(int argc, char *argv[], char *envp[])
 {
-	(void)argc;
-	(void)argv;
-	(void)envp;
+	//(void)argc;
+	//(void)argv;
+	//(void)envp;
 	if (argc > 1 && argv)
 	{
 		printf("ERROR: TOO MANY ARGS");
