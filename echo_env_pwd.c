@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_env_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:20:39 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/10/07 22:22:26 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/10/13 23:05:30 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	pwd(void)
 	pwd = NULL;
 	pwd = getcwd(pwd, 0);
 	if (pwd != NULL)
-		printf("%s\n", pwd);
+		ft_printf("%s\n", pwd);
 	free(pwd);
 }
 
@@ -45,14 +45,14 @@ int echo(char **cmd)
 			val = search_hash_by_key(key);
 			free(key);
 			if (val != NULL)
-				printf("%s ", val);
+				ft_printf("%s ", val);
 		}
 		else
-			printf("%s ", cmd[i]);
+			ft_printf("%s ", cmd[i]);
 		i++;
 	}
 	if (has_n != 1)
-		printf("\n");
+		ft_printf("\n");
 	return (1);
 }
 
@@ -61,15 +61,15 @@ void	env()
 	int	c;
 
 	c = 0;
-	while(c <= g_shell.env->size - 1)
+	while(g_shell.env->items[c] && c <= g_shell.env->size - 1)
 	{
-		printf("%s=%s\n", g_shell.env->items[c]->key, g_shell.env->items[c]->value);
+		ft_printf("%s=%s\n", g_shell.env->items[c]->key, g_shell.env->items[c]->value);
 		c++;
 	}
 	c = 0;
 	while(g_shell.hash->items[c] && c <= g_shell.hash->size - 1)
 	{
-		printf("%s=%s\n", g_shell.hash->items[c]->key, g_shell.hash->items[c]->value);
+		ft_printf("%s=%s\n", g_shell.hash->items[c]->key, g_shell.hash->items[c]->value);
 		c++;
 	}
 }

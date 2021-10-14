@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/10 00:17:15 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/13 23:05:30 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_split(char **str)
 
 	i = -1;
 	while (*(str + ++i) != NULL)
-		printf("%s\n", *(str + i));
+		ft_printf("%s\n", *(str + i));
 }
 
 void	execute(char **command)
@@ -73,7 +73,7 @@ void	execute(char **command)
 // static void parser(char *command, t_pos *posit)
 // {
 // 	init_pos(command, posit);
-// 	printf("echo %i, cd %i, pwd %i", posit->pos_echo, posit->pos_cd, posit->pos_pwd);
+// 	ft_printf("echo %i, cd %i, pwd %i", posit->pos_echo, posit->pos_cd, posit->pos_pwd);
 // 	if (posit->pos_echo < posit->pos_cd)
 // 		echo(command);
 // 	else if (ft_strncmp(command, "cd ", 2) == 0)
@@ -154,7 +154,7 @@ int main(int argc, char *argv[], char *envp[])
 	//(void)envp;
 	if (argc > 1 && argv)
 	{
-		printf("ERROR: TOO MANY ARGS");
+		ft_printf("ERROR: TOO MANY ARGS");
 		return (0);
 	}
 //	print_split(envp);

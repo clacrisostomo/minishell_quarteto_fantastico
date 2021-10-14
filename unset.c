@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 20:22:59 by csantos-          #+#    #+#             */
-/*   Updated: 2021/10/10 00:43:03 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/13 23:05:52 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,11 @@ void	delete_item(t_hash_table *table, char *key)
 	c = 0;
 	while(table->items[c] && c <= table->size - 1)
 	{
-		if (ft_strncmp(table->items[c]->key, key, ft_strlen(key)) == 0)
+		if (ft_strcmp(table->items[c]->key, key) == 0)
 		{
 			while (table->items[c] && c <= table->size - 1)
 			{
+				ft_printf("ENTROU NESSA COISA BUNITA\n");
 				free_item(table->items[c]);
 				if (table->items[c + 1])
 				{
@@ -100,7 +101,7 @@ void	search_key_to_unset(char *key)
 	int	c;
 
 	c = 0;
-	while(c <= g_shell.env->size - 1)
+	while(g_shell.env->items[c] && c <= g_shell.env->size - 1)
 	{
 		if (ft_strncmp(g_shell.env->items[c]->key, key, ft_strlen(key)) == 0)
 		{

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/20 12:07:51 by gkenzo-s          #+#    #+#              #
-#    Updated: 2021/09/27 23:41:25 by csantos-         ###   ########.fr        #
+#    Updated: 2021/10/13 22:59:34 by mde-figu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 	  ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c \
 	  ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c \
 	  ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
-	  ft_putnbr_fd.c ft_isspace.c\
+	  ft_putnbr_fd.c ft_isspace.c \
 
 BONUS_SRC = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 			ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c \
@@ -32,7 +32,7 @@ OBJ = ft_memset.o ft_bzero.o ft_memcpy.o ft_memccpy.o ft_memmove.o \
 	  ft_strnstr.o ft_atoi.o ft_calloc.o ft_strdup.o \
 	  ft_substr.o ft_strjoin.o ft_strtrim.o ft_split.o ft_itoa.o \
 	  ft_strmapi.o ft_putchar_fd.o ft_putstr_fd.o ft_putendl_fd.o \
-	  ft_putnbr_fd.o ft_isspace.o
+	  ft_putnbr_fd.o ft_isspace.o \
 
 BONUS_OBJ = ft_lstnew.o ft_lstadd_front.o ft_lstsize.o ft_lstlast.o \
 			ft_lstadd_back.o ft_lstdelone.o ft_lstclear.o ft_lstiter.o \
@@ -40,11 +40,15 @@ BONUS_OBJ = ft_lstnew.o ft_lstadd_front.o ft_lstsize.o ft_lstlast.o \
 
 ADDITIONAL_SRC = ft_itohex.c ft_max_width.c ft_putchar.c ft_putstr.c \
 				 ft_put_n_char.c ft_power_of.c ft_ftoa.c ft_strcmp.c \
-				ft_strsplit.c
+				ft_strsplit.c ft_printf.c get_flags.c get_star.c \
+	  print_d_i.c print_ptr.c print_u_hex.c utils_a.c utils.c \
+		print_cs_per.c
 
 ADDITIONAL_OBJ = ft_itohex.o ft_max_width.o ft_putchar.o ft_putstr.o \
 				 ft_put_n_char.o ft_power_of.o ft_ftoa.o ft_strcmp.o \
-				ft_strsplit.o
+				ft_strsplit.o ft_printf.o get_flags.o get_star.o \
+				print_d_i.o print_ptr.o print_u_hex.o utils_a.o utils.o \
+				print_cs_per.o
 
 all: $(NAME)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:36:28 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/10/09 20:25:25 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/13 21:59:05 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int which_table_by_key(char *key)
 
 	c = 0;
 	i = 0;
-	while (c <= g_shell.env->size - 1)
+	while (g_shell.env->items[c] && c <= g_shell.env->size - 1)
 	{
 		if (ft_strncmp(g_shell.env->items[c]->key, key, ft_strlen(key)) == 0)
 			i = i + 1;

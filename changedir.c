@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   changedir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:17:46 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/10/07 22:18:26 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/10/13 23:05:30 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int cd(char **cmd)
 		i++;
 	if (i > 2)
 	{
-		printf("Minishell: cd's argument is wrong\n");
+		ft_printf("Minishell: cd's argument is wrong\n");
 		g_shell.status_error = 1;
 		return (1);
 	}
@@ -45,7 +45,7 @@ int cd(char **cmd)
 			old = search_hash_by_key("OLDPWD");
 			if (old)
 			{
-				printf("%s\n", old);
+				ft_printf("%s\n", old);
 				chdir(old);
 			}
 			else

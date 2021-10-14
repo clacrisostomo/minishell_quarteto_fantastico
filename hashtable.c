@@ -6,7 +6,7 @@
 /*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 23:40:05 by csantos-          #+#    #+#             */
-/*   Updated: 2021/10/06 23:18:57 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/13 22:00:02 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ t_hash_table *envp_to_hash(char **envp)
 	j = 0;
 	while (envp[i])
 		i++;
-	table = create_hash_table(i);
+	table = create_hash_table(i + 10);
 	while (j < i)
 	{
 		key = find_key(envp[j]);
