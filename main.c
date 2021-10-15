@@ -6,7 +6,7 @@
 /*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/13 23:05:30 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/15 00:08:19 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,24 @@ void	print_split(char **str)
 		ft_printf("%s\n", *(str + i));
 }
 
-void	execute(char **command)
+void	execute(char **cmd)
 {
-	if (!(ft_strcmp(command[0], "echo")))
-		echo(command);
-	else if (!(ft_strcmp(command[0], "cd")))
-		cd(command);
-	else if (!(ft_strcmp(command[0], "pwd")))
+	if (!(ft_strcmp(cmd[0], "echo")))
+		echo(cmd);
+	else if (!(ft_strcmp(cmd[0], "cd")))
+		cd(cmd);
+	else if (!(ft_strcmp(cmd[0], "pwd")))
 		pwd();
-	else if (!(ft_strcmp(command[0], "env")))
+	else if (!(ft_strcmp(cmd[0], "env")))
 		env();
-	else if (!(ft_strcmp(command[0], "export")))
-		expt(command, 1);
-	else if (!(ft_strcmp(command[0], "unset")))
-		unset_(command);
-	else if (ft_isvar(command))
-		expt(command, 0);
+	else if (!(ft_strcmp(cmd[0], "export")))
+		expt(cmd, 1);
+	else if (!(ft_strcmp(cmd[0], "unset")))
+		unset_(cmd);
+	else if (ft_isvar(cmd))
+		expt(cmd, 0);
+	else
+		ft_printf("%s: command not found\n", cmd[0]);
 }
 
 
@@ -138,6 +140,7 @@ static void loop()
 		cmd = blank_spaces(command);
 		free(command);
 		//parser(command, &posit);
+		quote_commander(cmd);
 		execute(cmd);
 		ft_free_split(cmd);
 

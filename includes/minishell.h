@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/09 23:27:22 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/14 23:40:23 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int		echo(char **cmd);
 void	expt(char **cmd, int exp);
 void	unset_(char **cmd);
 int		ft_isvar(char **cmd);
+
+void	quote_commander(char **cmd);
 
 char	*search_hash_by_key(char *key);
 /*
