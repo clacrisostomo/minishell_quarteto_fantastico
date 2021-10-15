@@ -6,7 +6,7 @@
 /*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 21:28:08 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/15 00:16:42 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/15 00:53:52 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,23 @@ void	quote_commander(char **cmd)
 	int k;
 
 	j = 0;
-	if (cmd[0][j] == '\"' || cmd[0][j] == '\'')
+	while (cmd[0][j])
 	{
-		k = j + 1;
-		while (cmd[0][k])
+		if (cmd[0][j] == '\"' || cmd[0][j] == '\'')
 		{
-			if (cmd[0][k] == cmd[0][j]) 
+			k = j + 1;
+			while (cmd[0][k])
 			{
-				cmd[0][j] = ' ';
-				cmd[0][k] = ' ';
+				if (cmd[0][k] == cmd[0][j]) 
+				{
+					cmd[0][j] = ' ';
+					cmd[0][k] = ' ';
+					break;
+				}
+				k++;
 			}
-			k++;
+			j = k - 1;
 		}
+		j++;
 	}
 }
