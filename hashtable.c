@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 23:40:05 by csantos-          #+#    #+#             */
-/*   Updated: 2021/10/13 22:00:02 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/15 22:15:32 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,6 @@ t_ht_item	*create_hash_item(char* key, char* value)
 	new->value = ft_strdup(value);
 	return (new);
 }
-
-/* void	create(char* key, char* value)
-{
-	g_shell.hash->items = (t_ht_item**) ft_calloc(sizeof(t_ht_item*), 1);
-	g_shell.hash->items->key = ft_strdup(key);
-	g_shell.hash->items->value = ft_strdup(value);
-} */
 
 char	*find_value(char *line)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/15 00:25:22 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/15 21:10:23 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ int main(int argc, char *argv[], char *envp[])
 	//(void)envp;
 	if (argc > 1 && argv)
 	{
-		ft_printf("ERROR: TOO MANY ARGS");
+		ft_printf("ERROR: TOO MANY ARGS\n");
 		return (0);
 	}
 //	print_split(envp);

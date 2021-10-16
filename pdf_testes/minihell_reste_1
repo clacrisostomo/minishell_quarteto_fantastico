@@ -1,0 +1,89 @@
+echo "foi$SHELL $SHELL saco" foi q saco?
+OK
+
+echo "foi$SHELL $SHELL saco"
+OK
+
+echo "foi$banana"
+OK
+
+echo foi$SHELL $SHELL saco
+OK
+
+echo $SHELL$SHELL
+OK
+
+echo x"$SHELL$SHELL" x
+OK
+
+echo k"eu sou"muito"cuzona"k
+OK
+
+echo k'eu sou'muito'cuzona'k
+OK
+
+echo k'eu sou"muito"cuzona'k
+OK
+	
+echo k"eu sou'muito'cuzona"k
+OK
+
+echo k"eu sou"muito'cuzona'k
+OK
+
+echo k'eu sou'muito"cuzona"k
+OK
+
+echo k"eu sou"muito"cuzona"k $SHELL "$SHELL" '$SHELL'
+echo teste"mais um"teste"de frase"teste $V "$V" '$V'
+OK
+
+echo $SHELL$$$SHELL
+
+echo "$$$SHELL ladainha$SHELL"
+
+echo $$$
+		
+
+		
+
+		
+
+		
+
+echo $SHELII$SHELL
+DEPENDE DA HASH TABLE
+
+echo uahsdhuasd uwhda  $gsad ausda
+DEPENDE DA HASH TABLE
+
+
+REDIRECTS:
+
+echo >arq1 > arq2 "foi$SHELL $SHELL saco" >>arq3 foi q saco?
+
+echo >arq1 > arq2 x"foi$SHELL $SHELL saco"x >>arq3 foi q saco?
+
+echo >arq1 > arq2 "foi$SHELL $SHELL saco" >>arq3 q saco?
+
+echo >arq1 "foi$SHELL $SHELL saco"> arq2 >arq3  q saco?
+
+echo > >arq1 >arq2 > arq3 "não imprime depois pfv"
+		 
+echo >>arq1 >> arq2 "foi$SHELL $SHELL saco"
+	 
+echo >arq1 > arq2 "foi$SHELL $SHELL saco" >>
+		 
+echo >arq1 > arq2 "foi$SHELL $SHELL saco" >>arq3 q saco?
+		 
+echo qlqrmerda>arq1>>>arq2 foi?
+
+echo qlqrmerda>arq1>arq2 foi?
+		 
+echo qlqrmerda>>arq1>>arq2 foi?
+
+echo -n -n >arq1 > arq2 "foi$SHELL $SHELL saco" >>arq3 foi q saco?
+
+>asd -n echo a
+
+

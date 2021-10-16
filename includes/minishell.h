@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/14 23:40:23 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/15 22:16:26 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # define INT_MAX 2147483647
-# define HASH_SIZE 256
+# define HASH_SIZE 256 //ver se vai precisar depois
 # define NONE 0
 # define ENV 1
 # define HASH 2
@@ -33,17 +33,16 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 #include "../libraries/libft/libft.h"
-//#include "../libraries/ft_printf/ft_printf.h"
 
-typedef struct s_pos
-{
-	int	pos_echo;
-	int pos_cd;
-	int pos_pwd;
-	int	pos_exp;
-	int pos_uset;
-	int pos_env;
-} t_pos;
+// typedef struct s_pos
+// {
+// 	int	pos_echo;
+// 	int pos_cd;
+// 	int pos_pwd;
+// 	int	pos_exp;
+// 	int pos_uset;
+// 	int pos_env;
+// } t_pos;
 
 typedef struct s_ht_item
 {
@@ -53,7 +52,7 @@ typedef struct s_ht_item
 
 typedef struct s_hash_table
 {
-	t_ht_item					**items;
+	t_ht_item	**items;
 	int			size;
 	int			count;
 } t_hash_table;

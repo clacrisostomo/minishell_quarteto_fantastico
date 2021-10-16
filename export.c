@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:36:28 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/10/13 21:59:05 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/15 22:11:07 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int which_table_by_key(char *key)
 			i = i + 3;
 		c++;
 	}
-	return (i); //0 =nenhuma,1=env,2=hash, 3=temp, 4=env+temp, 5= hash + temp <<<<Mudar este retorno para um define
+	return (i);
 }
 
 void change_val_by_table(t_hash_table *table, char *key, char *value, int c)
@@ -59,27 +59,18 @@ int modify_table_by_key(int table, char *key, char *value)
 	while (c <= g_shell.env->size - 1 && table == ENV)
 	{
 		change_val_by_table(g_shell.env, key, value, c);
-		/* if (ft_strncmp(g_shell.env->items[c]->key, key, ft_strlen(key)) == 0)
-			g_shell.env->items[c]->value = value;
-		c++; */
 		c++;
 	}
 	c = 0;
 	while (g_shell.hash->items[c] && c <= g_shell.hash->size - 1 && table == HASH)
 	{
 		change_val_by_table(g_shell.hash, key, value, c);
-		/* if (ft_strncmp(g_shell.hash->items[c]->key, key, ft_strlen(key)) == 0)
-			g_shell.hash->items[c]->value = value;
-		c++; */
 		c++;
 	}
 	c = 0;
 	while (g_shell.temp->items[c] && c <= g_shell.temp->size - 1 && table == TEMP)
 	{
 		change_val_by_table(g_shell.temp, key, value, c);
-		/* if (ft_strncmp(g_shell.temp->items[c]->key, key, ft_strlen(key)) == 0)
-			g_shell.temp->items[c]->value = value;
-		c++; */
 		c++;
 	}
 	return (0);
@@ -115,19 +106,18 @@ int		loop_table_n_insert(char *key, char *value, int table)
 
 void		insert_if_export(char *key, char *value)
 {
-	//t_ht_item	*insert;
 	int	t;
 	int c;
 
 	c = 0;
 	t = which_table_by_key(key);
-	if(t == 0)
+	if(t == NONE)
 		loop_table_n_insert(key, value, HASH);
-	if (t == 1)
+	if (t == ENV)
 		modify_table_by_key(ENV, key, value);
-	if (t == 2)
+	if (t == HASH)
 		modify_table_by_key(HASH, key, value);
-	if (t == 3)
+	if (t == TEMP)
 	{
 		while (g_shell.temp->items[c] && c <= g_shell.temp->size - 1)
 		{
@@ -144,17 +134,16 @@ void		insert_if_export(char *key, char *value)
 
 void		insert_if_onlyvar(char *key, char *value)
 {
-	//t_ht_item	*insert;
 	int	t;
 
 	t = which_table_by_key(key);
-	if (t == 0)
+	if (t == NONE)
 		loop_table_n_insert(key, value, TEMP);
-	if (t == 1)
+	if (t == ENV)
 		modify_table_by_key(ENV, key, value);
-	if (t == 2)
+	if (t == HASH)
 		modify_table_by_key(HASH, key, value);
-	if (t == 3)
+	if (t == TEMP)
 		modify_table_by_key(TEMP, key, value);
 }
 
@@ -181,7 +170,6 @@ void expt(char **cmd, int exp)
 			else
 				insert_if_onlyvar(key, value);
 			free(key);
-			//if (value)
 			free(value);
 		}
 		else if (cmd[i][j] == '\0')
@@ -189,8 +177,6 @@ void expt(char **cmd, int exp)
 			value = search_hash_by_key(cmd[i]);
 			if (value)
 				loop_table_n_insert(cmd[i], value, HASH);
-//insert_if_export(key, value);
-//loop_table_n_insert(key, value, HASH);
 		}
 		i++;
 	}
