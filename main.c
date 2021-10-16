@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/15 21:10:23 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/16 01:18:43 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,11 @@ static void loop()
 			break;
 		}
 		add_history(command);
-		cmd = blank_spaces(command);
+		//cmd = blank_spaces(command);
+		cmd = treat_quotes(command);
 		free(command);
 		//parser(command, &posit);
-		quote_commander(cmd);
+		//quote_commander(cmd);
 		execute(cmd);
 		ft_free_split(cmd);
 

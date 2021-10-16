@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/15 22:16:26 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/16 01:17:22 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # define TEMP 3
 # define TRUE 1
 # define FALSE 0
-
+# define S_QUOTE '\''
+# define D_QUOTE '\"'
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -43,6 +44,15 @@
 // 	int pos_uset;
 // 	int pos_env;
 // } t_pos;
+
+typedef struct s_quotes_m
+{
+	int					split_c;
+	int					*id;
+	int					id_size;
+	struct s_quotes_m	*next_quote;
+}	t_quotes_m;
+
 
 typedef struct s_ht_item
 {
@@ -83,7 +93,7 @@ int		echo(char **cmd);
 void	expt(char **cmd, int exp);
 void	unset_(char **cmd);
 int		ft_isvar(char **cmd);
-
+char	**treat_quotes(char *command);
 void	quote_commander(char **cmd);
 
 char	*search_hash_by_key(char *key);
