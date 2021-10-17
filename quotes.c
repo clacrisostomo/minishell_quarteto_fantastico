@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 21:28:08 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/17 00:23:24 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/17 00:41:08 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static char	*expand_var(char *command)
 			while (command[i[1]] != ' ' && command[i[1]] != D_QUOTE
 				&& command[i[1]] != S_QUOTE && (command[i[1]]))
 				i[1]++;
+			swap_var(command, i);
 		}
 		i[0]++;
 	}
@@ -179,7 +180,7 @@ static char	*substitute_quotes(char *command, t_quotes_m *quote_space)
 	return (command);
 }
 
-static char	**bring_spaces_back(char **splitted,
+static char	**swap_spaces(char **splitted,
 		t_quotes_m *lst, t_quotes_m *tmp)
 {
 	while (lst->next_quote != NULL)
@@ -194,13 +195,13 @@ static char	**bring_spaces_back(char **splitted,
 		free(lst);
 		lst = tmp;
 	}
-	while (space_lst->id_size >= 0)
+	while (lst->id_size >= 0)
 	{
-		splitted[space_lst->split_c][space_lst->id[space_lst->id_size]] = ' ';
-		space_lst->id_size--;
+		splitted[lst->split_c][lst->id[lst->id_size]] = ' ';
+		lst->id_size--;
 	}
-	free(space_lst->id);
-	free(space_lst);
+	free(lst->id);
+	free(lst);
 	return (splitted);
 }
 
