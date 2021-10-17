@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   variable.c                                         :+:      :+:    :+:   */
+/*   ft_strnstr_int.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/08 23:00:43 by csantos-          #+#    #+#             */
-/*   Updated: 2021/10/17 00:20:10 by csantos-         ###   ########.fr       */
+/*   Created: 2021/10/17 00:04:32 by csantos-          #+#    #+#             */
+/*   Updated: 2021/10/17 00:22:36 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "libft.h"
 
-int	ft_isvar(char **cmd)
+int	ft_strnstr_indie(const char *big, const char *small, size_t len)
 {
-	int	j;
+	size_t	needle_len;
+	char	*tmp;
+	int		i;
 
-	j = 0;
-	while (ft_isalpha(cmd[0][j]) || cmd[0][j] == '_' || \
-			(ft_isdigit(cmd[0][j]) && (!ft_isdigit(cmd[0][0]))))
-		j++;
-	if (cmd[0][j] == '=')
-		return (1);
-	return (0);
+	i = 0;
+	tmp = (char *)big;
+	needle_len = ft_strlen(small);
+	if (!needle_len)
+		return (0);
+	while (*tmp && len >= needle_len)
+	{
+		if (ft_strncmp(tmp, small, needle_len) == 0)
+			return (i + needle_len);
+		tmp++;
+		i++;
+	}
+	return (INT_MAX);
 }

@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 20:22:59 by csantos-          #+#    #+#             */
-/*   Updated: 2021/10/15 22:11:38 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/17 00:21:31 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 void	delete_item(t_hash_table *table, char *key)
 {
-	int	c;
-	char *value;
+	int		c;
+	char	*value;
 
 	c = 0;
-	while(table->items[c] && c <= table->size - 1)
+	while (table->item[c] && c <= table->size - 1)
 	{
-		if (ft_strcmp(table->items[c]->key, key) == 0)
+		if (ft_strcmp(table->item[c]->key, key) == 0)
 		{
-			while (table->items[c] && c <= table->size - 1)
+			while (table->item[c] && c <= table->size - 1)
 			{
-				free_item(table->items[c]);
-				if (table->items[c + 1])
+				free_item(table->item[c]);
+				if (table->item[c + 1])
 				{
-					key = table->items[c + 1]->key;
-					value = table->items[c + 1]->value;
-					table->items[c] = insert_table(key, value);
+					key = table->item[c + 1]->key;
+					value = table->item[c + 1]->value;
+					table->item[c] = insert_table(key, value);
 				}
 				else
-					table->items[c] = NULL;
+					table->item[c] = NULL;
 				c++;
 			}
 			return ;
@@ -46,9 +46,9 @@ void	search_key_to_unset(char *key)
 	int	c;
 
 	c = 0;
-	while(g_shell.env->items[c] && c <= g_shell.env->size - 1)
+	while (g_shell.env->item[c] && c <= g_shell.env->size - 1)
 	{
-		if (ft_strncmp(g_shell.env->items[c]->key, key, ft_strlen(key)) == 0)
+		if (ft_strncmp(g_shell.env->item[c]->key, key, ft_strlen(key)) == 0)
 		{
 			delete_item(g_shell.env, key);
 			return ;
@@ -56,18 +56,18 @@ void	search_key_to_unset(char *key)
 		c++;
 	}
 	c = 0;
-	while(g_shell.hash->items[c] && c <= g_shell.hash->size - 1)
+	while (g_shell.hash->item[c] && c <= g_shell.hash->size - 1)
 	{
-		if (ft_strncmp(g_shell.hash->items[c]->key, key, ft_strlen(key)) == 0)
+		if (ft_strncmp(g_shell.hash->item[c]->key, key, ft_strlen(key)) == 0)
 		{
 			delete_item(g_shell.hash, key);
 			return ;
 		}
 		c++;
 	}
-	while(g_shell.temp->items[c] && c <= g_shell.temp->size - 1)
+	while (g_shell.temp->item[c] && c <= g_shell.temp->size - 1)
 	{
-		if (ft_strncmp(g_shell.temp->items[c]->key, key, ft_strlen(key)) == 0)
+		if (ft_strncmp(g_shell.temp->item[c]->key, key, ft_strlen(key)) == 0)
 		{
 			delete_item(g_shell.temp, key);
 			return ;
@@ -78,8 +78,8 @@ void	search_key_to_unset(char *key)
 
 void	unset_(char **cmd)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	while (cmd[i])

@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 23:40:05 by csantos-          #+#    #+#             */
-/*   Updated: 2021/10/15 22:15:32 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/17 00:22:30 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_all(t_hash_table *table)
 	i = 0;
 	while (i < table->size)
 	{
-		item = table->items[i];
+		item = table->item[i];
 		if (item)
 			free_item(item);
 		i++;
@@ -42,28 +42,29 @@ void	free_item(t_ht_item *item)
 	free(item);
 }
 
-t_hash_table *create_hash_table(int size)
+t_hash_table	*create_hash_table(int size)
 {
-	t_hash_table *hashtable;
-	int	i;
+	t_hash_table	*hashtable;
+	int				i;
 
 	i = 0;
 	hashtable = (t_hash_table *)malloc(sizeof(t_hash_table));
 	hashtable->size = size;
 	hashtable->count = 0;
-	hashtable->items = (t_ht_item**) ft_calloc(hashtable->size, sizeof(t_ht_item*));
+	hashtable->item = (t_ht_item **) ft_calloc(hashtable->size,
+			sizeof(t_ht_item*));
 	while (i++ < hashtable->size - 1)
 	{
-		hashtable->items[i] = NULL;
+		hashtable->item[i] = NULL;
 	}
-	return(hashtable);
+	return (hashtable);
 }
 
-t_ht_item	*create_hash_item(char* key, char* value)
+t_ht_item	*create_hash_item(char *key, char *value)
 {
 	t_ht_item	*new;
 
-	new = (t_ht_item*) ft_calloc(sizeof(t_ht_item), 1);
+	new = (t_ht_item *) ft_calloc(sizeof(t_ht_item), 1);
 	new->key = ft_strdup(key);
 	new->value = ft_strdup(value);
 	return (new);
@@ -88,7 +89,7 @@ char	*find_value(char *line)
 char	*find_key(char *line)
 {
 	char	*key;
-	int i;
+	int		i;
 
 	i = 0;
 	while (line[i] != '=')
@@ -97,13 +98,13 @@ char	*find_key(char *line)
 	return (key);
 }
 
-t_hash_table *envp_to_hash(char **envp)
+t_hash_table	*envp_to_hash(char **envp)
 {
-	t_hash_table *table;
-	char	*key;
-	char	*value;
-	int		i;
-	int		j;
+	t_hash_table	*table;
+	char			*key;
+	char			*value;
+	int				i;
+	int				j;
 
 	i = 0;
 	j = 0;
@@ -114,10 +115,10 @@ t_hash_table *envp_to_hash(char **envp)
 	{
 		key = find_key(envp[j]);
 		value = find_value(envp[j]);
-		table->items[j] = insert_table(key, value);
+		table->item[j] = insert_table(key, value);
 		j++;
 		free(key);
 		free(value);
 	}
-	return(table);
+	return (table);
 }

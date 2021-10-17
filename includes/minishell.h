@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/16 01:17:22 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/17 00:26:58 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # include <sys/errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-#include "../libraries/libft/libft.h"
+# include "../libraries/libft/libft.h"
 
 // typedef struct s_pos
 // {
@@ -53,7 +53,6 @@ typedef struct s_quotes_m
 	struct s_quotes_m	*next_quote;
 }	t_quotes_m;
 
-
 typedef struct s_ht_item
 {
 	char	*key;
@@ -62,17 +61,17 @@ typedef struct s_ht_item
 
 typedef struct s_hash_table
 {
-	t_ht_item	**items;
+	t_ht_item	**item;
 	int			size;
 	int			count;
-} t_hash_table;
+}	t_hash_table;
 
 typedef struct s_shell
 {
-	t_hash_table *hash;
-	t_hash_table *env;
-	t_hash_table *temp;
-	int status_error;
+	t_hash_table	*hash;
+	t_hash_table	*env;
+	t_hash_table	*temp;
+	int				status_error;
 }	t_shell;
 
 t_shell	g_shell;
@@ -81,47 +80,47 @@ t_shell	g_shell;
 ** MAIN
 */
 
-char	**blank_spaces(char *cmd);
-void	ft_free_split(char **str);
-void	execute(char **command);
-char	*find_old_pwd(char **str);
-void	print_split(char **str);
-int		ft_strnstr_indie(const char *big, const char *small, size_t len);
-void	env();
-void	pwd(void);
-int		echo(char **cmd);
-void	expt(char **cmd, int exp);
-void	unset_(char **cmd);
-int		ft_isvar(char **cmd);
-char	**treat_quotes(char *command);
-void	quote_commander(char **cmd);
+char			*blank_spaces(char *cmd);
+void			ft_free_split(char **str);
+void			execute(char **command);
+char			*find_old_pwd(char **str);
+void			print_split(char **str);
+int				ft_strnstr_indie(const char *big, const char *small,
+					size_t len);
+int				ft_isvar(char **cmd);
+char			**treat_quotes(char *command);
+void			quote_commander(char **cmd);
+char			*search_hash_by_key(char *key);
 
-char	*search_hash_by_key(char *key);
 /*
-** CHANGE DIRECTORY
+** COMMANDERS
 */
 
-int 	cd(char **cmd);
-
+int				cd(char **cmd);
+void			env(void);
+void			pwd(void);
+int				echo(char **cmd);
+void			expt(char **cmd, int exp);
+void			unset_(char **cmd);
 
 /*
 ** HASH TABLE
 */
+
 void			modify_hash_by_key(char *key, char *new_val);
 char			*search_hash_by_key(char *key);
 char			*find_key(char *line);
 char			*find_value(char *line);
 t_hash_table	*create_hash_table(int size);
-t_ht_item		*create_hash_item(char* key, char* value);
+t_ht_item		*create_hash_item(char *key, char*value);
 t_ht_item		*insert_table(char *key, char *value);
 t_hash_table	*envp_to_hash(char **envp);
-void			free_item(t_ht_item *items);
+void			free_item(t_ht_item *item);
 void			free_table(t_hash_table *table);
 void			free_all(t_hash_table *table);
 void			free_item(t_ht_item *item);
 //int				loop_table_n_insert(t_ht_item *item, int table);
-int		loop_table_n_insert(char *key, char *value, int table);
+int				loop_table_n_insert(char *key, char *value, int table);
 int				modify_table_by_key(int table, char *key, char *value);
-
 
 #endif

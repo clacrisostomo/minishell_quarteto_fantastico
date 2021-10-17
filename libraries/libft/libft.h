@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 21:04:23 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/13 22:32:38 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/17 00:05:43 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,6 @@ int					ft_pow_pos(int n, int exp);
 char				*ft_ftoa(float n, int precision);
 int					ft_strcmp(const char *s1, const char *s2);
 char				**ft_strsplit(char const *s, char c);
+int					ft_strnstr_indie(const char *big, const char *small,
+						size_t len);
 #endif

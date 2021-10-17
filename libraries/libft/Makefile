@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/20 12:07:51 by gkenzo-s          #+#    #+#              #
-#    Updated: 2021/10/13 22:59:34 by mde-figu         ###   ########.fr        #
+#    Updated: 2021/10/17 00:05:17 by csantos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,13 +42,13 @@ ADDITIONAL_SRC = ft_itohex.c ft_max_width.c ft_putchar.c ft_putstr.c \
 				 ft_put_n_char.c ft_power_of.c ft_ftoa.c ft_strcmp.c \
 				ft_strsplit.c ft_printf.c get_flags.c get_star.c \
 	  print_d_i.c print_ptr.c print_u_hex.c utils_a.c utils.c \
-		print_cs_per.c
+		print_cs_per.c ft_strnstr_int.c
 
 ADDITIONAL_OBJ = ft_itohex.o ft_max_width.o ft_putchar.o ft_putstr.o \
 				 ft_put_n_char.o ft_power_of.o ft_ftoa.o ft_strcmp.o \
 				ft_strsplit.o ft_printf.o get_flags.o get_star.o \
 				print_d_i.o print_ptr.o print_u_hex.o utils_a.o utils.o \
-				print_cs_per.o
+				print_cs_per.o ft_strnstr_int.o
 
 all: $(NAME)
 
