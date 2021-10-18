@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 21:28:08 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/17 00:41:08 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/17 22:55:45 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,30 @@ static char	*swap_var(char *command, int *i)
 	char	*val;
 	char	*str_start;
 	char	*str_end;
-	char	*str_star_val;
+	char	*str_start_val;
 
+	//ft_printf("command = |%s|, i[0] = %d, i[1] = %d\n", command, i[0], i[1]);
 	key = ft_substr(command, i[0] + 1, i[1] - i[0] - 1);
 	val = search_hash_by_key(key);
+	//ft_printf("val = |%s|\n", val);
 	free(key);
 	str_start = ft_substr(command, 0, i[0]);
+	//ft_printf("str_start = |%s|\n", str_start);
 	str_end = ft_substr(command, i[1], ft_strlen(command) - i[1]);
+	//ft_printf("str_end = |%s|\n", str_end);
 	free(command);
-	str_star_val = ft_strjoin(str_start, val);
+	str_start_val = ft_strjoin(str_start, val);
+	//ft_printf("str_start_val = |%s|\n", str_start_val);
 	free(str_start);
-	command = ft_strjoin(str_star_val, str_end);
+	command = ft_strjoin(str_start_val, str_end);
+	//ft_printf("command = |%s|\n", command);
 	free(str_end);
-	free(str_star_val);
+	free(str_start_val);
 	return (command);
 }
 
 static char	*expand_var(char *command)
-{	
+{
 	int		i[2];
 
 	i[0] = 0;
@@ -47,7 +53,7 @@ static char	*expand_var(char *command)
 			while (command[i[1]] != ' ' && command[i[1]] != D_QUOTE
 				&& command[i[1]] != S_QUOTE && (command[i[1]]))
 				i[1]++;
-			swap_var(command, i);
+			command = swap_var(command, i);
 		}
 		i[0]++;
 	}
@@ -85,6 +91,7 @@ static char	*subs_quote(char *command, int idx, char q_id)
 	command = ft_strjoin(str_start, str_end);
 	free(str_start);
 	free(str_end);
+	//ft_printf("command = |%s|\n", command);
 	return (command);
 }
 
@@ -126,7 +133,11 @@ static char	*check_space(char *command, int idx, char q_id, t_quotes_m *space)
 			if (command[j] == ' ')
 			{
 				command[j] = '@';
-				new_quote->id[i] = j - idx - 1;
+				if (string_count == 0)
+					new_quote->id[i] = j - 1;
+				else
+					new_quote->id[i] = j - idx - 1;
+				//printf("new_quote->id[i]= %d, j = %d, idx = %d\n", new_quote->id[i], j, idx);
 				i++;
 			}
 			j++;
@@ -197,6 +208,7 @@ static char	**swap_spaces(char **splitted,
 	}
 	while (lst->id_size >= 0)
 	{
+		//printf("splitted=|%s|, i = %d, char = %c\n", splitted[lst->split_c], lst->id[lst->id_size], splitted[lst->split_c][lst->id[lst->id_size]]);
 		splitted[lst->split_c][lst->id[lst->id_size]] = ' ';
 		lst->id_size--;
 	}
