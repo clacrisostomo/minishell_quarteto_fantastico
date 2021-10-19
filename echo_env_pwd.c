@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_env_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:20:39 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/10/17 00:12:59 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/18 23:56:31 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	pwd(void)
 
 int	echo(char **cmd)
 {
-	char	*key;
-	char	*val;
+	// char	*key;
+	// char	*val;
 	int		has_n;
 	int		i;
 
@@ -39,7 +39,7 @@ int	echo(char **cmd)
 	}
 	while (cmd && cmd[i])
 	{
-		if (ft_strrchr(cmd[i], '$') && (ft_strcmp(cmd[i], "$\0")))
+/* 		if (ft_strrchr(cmd[i], '$') && (ft_strcmp(cmd[i], "$\0")))
 		{
 			key = ft_substr(cmd[i], 1, ft_strlen(cmd[i]) - 1);
 			val = search_hash_by_key(key);
@@ -47,7 +47,7 @@ int	echo(char **cmd)
 			if (val != NULL)
 				ft_printf("%s ", val);
 		}
-		else
+		else */
 			ft_printf("%s ", cmd[i]);
 		i++;
 	}

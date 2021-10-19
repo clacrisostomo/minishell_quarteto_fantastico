@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/17 21:04:19 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/10/18 23:04:33 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define FALSE 0
 # define S_QUOTE '\''
 # define D_QUOTE '\"'
+# define JOK_C '@'
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -45,13 +46,13 @@
 // 	int pos_env;
 // } t_pos;
 
-typedef struct s_quotes_m
+typedef struct s_joker_m
 {
 	int					split_c;
 	int					*id;
 	int					id_size;
-	struct s_quotes_m	*next_quote;
-}	t_quotes_m;
+	struct s_joker_m	*next_jok;
+}	t_joker_m;
 
 typedef struct s_ht_item
 {
@@ -88,7 +89,7 @@ void			print_split(char **str);
 int				ft_strnstr_indie(const char *big, const char *small,
 					size_t len);
 int				ft_isvar(char **cmd);
-char			**treat_quotes(char *command);
+char			**split_command(char *command);
 void			quote_commander(char **cmd);
 char			*search_hash_by_key(char *key);
 
@@ -122,5 +123,8 @@ void			free_item(t_ht_item *item);
 //int				loop_table_n_insert(t_ht_item *item, int table);
 int				loop_table_n_insert(char *key, char *value, int table);
 int				modify_table_by_key(int table, char *key, char *value);
+
+
+
 
 #endif

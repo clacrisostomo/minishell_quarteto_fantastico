@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/17 00:06:19 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/18 22:55:37 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static void	loop(void)
 			break ;
 		}
 		add_history(command);
-		cmd = treat_quotes(command);
+		cmd = split_command(command);
 		free(command);
 		//parser(command, &posit);
 		execute(cmd);

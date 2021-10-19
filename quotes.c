@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 21:28:08 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/17 22:55:45 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/10/18 21:08:14 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,15 @@ static char	*swap_var(char *command, int *i)
 	char	*str_end;
 	char	*str_start_val;
 
-	//ft_printf("command = |%s|, i[0] = %d, i[1] = %d\n", command, i[0], i[1]);
 	key = ft_substr(command, i[0] + 1, i[1] - i[0] - 1);
 	val = search_hash_by_key(key);
-	//ft_printf("val = |%s|\n", val);
 	free(key);
 	str_start = ft_substr(command, 0, i[0]);
-	//ft_printf("str_start = |%s|\n", str_start);
 	str_end = ft_substr(command, i[1], ft_strlen(command) - i[1]);
-	//ft_printf("str_end = |%s|\n", str_end);
 	free(command);
 	str_start_val = ft_strjoin(str_start, val);
-	//ft_printf("str_start_val = |%s|\n", str_start_val);
 	free(str_start);
 	command = ft_strjoin(str_start_val, str_end);
-	//ft_printf("command = |%s|\n", command);
 	free(str_end);
 	free(str_start_val);
 	return (command);
@@ -91,7 +85,6 @@ static char	*subs_quote(char *command, int idx, char q_id)
 	command = ft_strjoin(str_start, str_end);
 	free(str_start);
 	free(str_end);
-	//ft_printf("command = |%s|\n", command);
 	return (command);
 }
 
@@ -100,47 +93,51 @@ static char	*check_space(char *command, int idx, char q_id, t_quotes_m *space)
 	t_quotes_m	*new_quote;
 	int			space_count;
 	int			string_count;
-	int			i;
-	int			j;
+	int			i[3];
 
-	i = 0;
+	i[0] = 0;
 	space_count = 0;
 	string_count = 0;
-	while (command[i] != '\0' && i < idx)
+	while (command[i[0]] != '\0' && i[0] < idx)
 	{
-		if (command[i] == ' ')
+		if (command[i[0]] == ' ')
+		{
+			while (command[i[0]] == ' ')
+				i[0]++;
 			string_count++;
-		i++;
+			i[1] = i[0];
+		}
+		i[0]++;
 	}
-	i++;
-	j = i;
-	while (command[i] != q_id)
+	if (command[i[0]] == q_id)
+		i[0]++;
+	i[2] = idx + 1;
+	while (command[i[0]] != q_id)
 	{
-		if (command[i] == ' ')
+		if (command[i[0]] == ' ')
 			space_count++;
-		i++;
+		i[0]++;
 	}
 	if (space_count > 0)
 	{
 		new_quote = NULL;
 		new_quote = add_quote_list(space, new_quote);
-		new_quote->id_size = space_count - 1;
 		new_quote->id = ft_calloc(space_count, sizeof(int));
+		new_quote->id_size = space_count - 1;
 		new_quote->split_c = string_count;
-		i = 0;
-		while (command[j] != q_id)
+		i[0] = 0;
+		while (command[i[2]] != q_id)
 		{
-			if (command[j] == ' ')
+			if (command[i[2]] == ' ')
 			{
-				command[j] = '@';
+				command[i[2]] = '@';
 				if (string_count == 0)
-					new_quote->id[i] = j - 1;
+					new_quote->id[i[0]] = i[2] - 1;
 				else
-					new_quote->id[i] = j - idx - 1;
-				//printf("new_quote->id[i]= %d, j = %d, idx = %d\n", new_quote->id[i], j, idx);
-				i++;
+					new_quote->id[i[0]] = i[2] - i[1] - 1;
+				i[0]++;
 			}
-			j++;
+			i[2]++;
 		}
 	}
 	command = subs_quote(command, idx, q_id);
@@ -208,7 +205,6 @@ static char	**swap_spaces(char **splitted,
 	}
 	while (lst->id_size >= 0)
 	{
-		//printf("splitted=|%s|, i = %d, char = %c\n", splitted[lst->split_c], lst->id[lst->id_size], splitted[lst->split_c][lst->id[lst->id_size]]);
 		splitted[lst->split_c][lst->id[lst->id_size]] = ' ';
 		lst->id_size--;
 	}
