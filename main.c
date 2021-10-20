@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/18 22:55:37 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/10/19 23:27:07 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	execute(char **cmd)
+void	execute(char **cmd, char *envp[])
 {
 	if (!(ft_strcmp(cmd[0], "echo")))
 		echo(cmd);
@@ -28,6 +28,12 @@ void	execute(char **cmd)
 		unset_(cmd);
 	else if (ft_isvar(cmd))
 		expt(cmd, 0);
+	else if (is_path(cmd, envp))
+		execve(cmd[0], cmd, envp);
+	else if (execve(cmd[0], cmd, envp) == -1)
+	{
+		ft_printf("%s: command not found\n", cmd[0]);
+	}
 	else
 		ft_printf("%s: command not found\n", cmd[0]);
 }
@@ -79,7 +85,7 @@ void	ft_free_split(char **str)
 	str = NULL;
 }
 
-static void	loop(void)
+static void	loop(char *envp[])
 {
 	char	**cmd;
 	char	*command;
@@ -100,7 +106,7 @@ static void	loop(void)
 		cmd = split_command(command);
 		free(command);
 		//parser(command, &posit);
-		execute(cmd);
+		execute(cmd, envp);
 		ft_free_split(cmd);
 	}
 	free_all(g_shell.env);
@@ -116,6 +122,6 @@ int	main(int argc, char *argv[], char *envp[])
 	g_shell.env = envp_to_hash(envp);
 	g_shell.hash = create_hash_table(50);
 	g_shell.temp = create_hash_table(50);
-	loop();
+	loop(envp);
 	return (1);
 }

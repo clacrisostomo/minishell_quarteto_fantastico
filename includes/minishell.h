@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/18 23:04:33 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/10/19 23:26:51 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,13 @@ t_shell	g_shell;
 
 char			*blank_spaces(char *cmd);
 void			ft_free_split(char **str);
-void			execute(char **command);
+void			execute(char **command, char *envp[]);
 char			*find_old_pwd(char **str);
 void			print_split(char **str);
 int				ft_strnstr_indie(const char *big, const char *small,
 					size_t len);
 int				ft_isvar(char **cmd);
+int				is_path(char **cmd, char **envp);
 char			**split_command(char *command);
 void			quote_commander(char **cmd);
 char			*search_hash_by_key(char *key);
