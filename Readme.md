@@ -1,0 +1,1 @@
+[![Teste_auto_1](https://github.com/clacrisostomo/minishell_quarteto_fantastico/actions/workflows/c-cpp.yml/badge.svg?branch=main)](https://github.com/clacrisostomo/minishell_quarteto_fantastico/actions/workflows/c-cpp.yml)

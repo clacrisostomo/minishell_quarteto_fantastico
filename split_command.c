@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mdefic-vifigu <mdefic-vifigu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 21:28:08 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/20 21:29:20 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/20 23:30:16 by cfimde-vifigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*swap_var(char *command, int i, int idx)
 	command = ft_strjoin(str_start_val, str_end);
 	free(str_end);
 	free(str_start_val);
-	ft_printf("|%s|\n", command);
+	//ft_printf("|%s|\n", command);
 	return (command);
 }
 

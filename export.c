@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-sants <mde-sants@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:36:28 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/10/20 21:50:53 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/20 22:41:28 by santsgu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	which_table_by_key(char *key)
 
 void	change_val_by_table(t_hash_table *table, char *key, char *value, int c)
 {
-	if (ft_strncmp(table->item[c]->key, key, ft_strlen(key)) == 0)
+	if (ft_strcmp(table->item[c]->key, key) == 0)
 	{
 		free_item(table->item[c]);
 		table->item[c] = insert_table(key, value);
@@ -56,7 +56,8 @@ int	modify_table_by_key(int table, char *key, char *value)
 	int	c;
 
 	c = 0;
-	while (c <= g_shell.env->size - 1 && table == ENV)
+	while (g_shell.env->item[c] && c <= g_shell.env->size - 1
+		&& table == ENV)
 	{
 		change_val_by_table(g_shell.env, key, value, c);
 		c++;

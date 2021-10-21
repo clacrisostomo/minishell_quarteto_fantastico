@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   changedir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:17:46 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/10/18 22:41:50 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/10/20 23:30:13 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	cd(char **cmd)
 			chdir(home);
 		else if (ft_strncmp(cmd[1], "/", 4) == 0)
 			chdir(slash);
+		else if (ft_strncmp(cmd[1], "/bin", 4) == 0)
+			chdir("/bin");
 		else
 			chdir(cmd[1]);
 		modify_hash_by_key("OLDPWD", tmp);
