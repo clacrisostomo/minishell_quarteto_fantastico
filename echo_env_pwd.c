@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_env_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:20:39 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/10/18 23:56:31 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/10/20 20:57:37 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,14 @@ int	echo(char **cmd)
 
 	has_n = 0;
 	i = 1;
-	if (ft_strcmp(cmd[i], "-n") == 0)
-	{
-		has_n = 1;
-		i++;
-	}
+	if (cmd[i] != NULL)
+		while (ft_strcmp(cmd[i], "-n") == 0)
+		{
+			has_n = 1;
+			i++;
+			if (cmd[i] == NULL)
+				break ;
+		}
 	while (cmd && cmd[i])
 	{
 /* 		if (ft_strrchr(cmd[i], '$') && (ft_strcmp(cmd[i], "$\0")))
@@ -48,10 +51,12 @@ int	echo(char **cmd)
 				ft_printf("%s ", val);
 		}
 		else */
-			ft_printf("%s ", cmd[i]);
+		ft_printf("%s", cmd[i]);
 		i++;
+		if (cmd[i] != NULL)
+			ft_printf(" ");
 	}
-	if (has_n != 1)
+	if (has_n == FALSE)
 		ft_printf("\n");
 	return (1);
 }

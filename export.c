@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:36:28 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/10/17 00:13:56 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/20 21:50:53 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	expt(char **cmd, int exp)
 	int		i;
 	int		j;
 
-	i = exp;
+	i = 0;
 	while (cmd[i])
 	{
 		j = 0;

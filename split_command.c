@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 21:28:08 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/19 00:16:58 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/10/20 21:29:20 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,15 @@ static char	*swap_var(char *command, int i, int idx)
 	str_start = ft_substr(command, 0, idx);
 	str_end = ft_substr(command, i, ft_strlen(command) - i);
 	free(command);
-	str_start_val = ft_strjoin(str_start, val);
+	if (val == NULL)
+		str_start_val = ft_strjoin(str_start, "");
+	else
+		str_start_val = ft_strjoin(str_start, val);
 	free(str_start);
 	command = ft_strjoin(str_start_val, str_end);
 	free(str_end);
 	free(str_start_val);
+	ft_printf("|%s|\n", command);
 	return (command);
 }
 
@@ -188,7 +192,10 @@ char	*treat_command(char *command, t_joker_m *joker_list)
 	while (command[i])
 	{
 		if (command[i] == '$')
-			command = expand_var(command, i);
+		{
+			if (command[i + 1])
+				command = expand_var(command, i--);
+		}
 		else if (command[i] == D_QUOTE)
 			command = check_second_quote(command, &i, D_QUOTE, joker_list);
 		else if (command[i] == S_QUOTE)
