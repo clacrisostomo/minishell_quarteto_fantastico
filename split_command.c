@@ -12,13 +12,13 @@
 
 #include "includes/minishell.h"
 
-static char	*swap_var(char *command, int i, int idx)
+static char *swap_var(char *command, int i, int idx)
 {
-	char	*key;
-	char	*val;
-	char	*str_start;
-	char	*str_end;
-	char	*str_start_val;
+	char *key;
+	char *val;
+	char *str_start;
+	char *str_end;
+	char *str_start_val;
 
 	key = ft_substr(command, idx + 1, i - idx - 1);
 	val = search_hash_by_key(key);
@@ -34,38 +34,37 @@ static char	*swap_var(char *command, int i, int idx)
 	command = ft_strjoin(str_start_val, str_end);
 	free(str_end);
 	free(str_start_val);
-	//ft_printf("|%s|\n", command);
+	// ft_printf("|%s|\n", command);
 	return (command);
 }
 
-static char	*expand_var(char *command, int idx)
+static char *expand_var(char *command, int idx)
 {
-	int		i;
+	int i;
 
 	i = idx + 1;
-	while (command[i] != ' ' && command[i] != D_QUOTE
-		&& command[i] != S_QUOTE && (command[i]))
+	while (command[i] != ' ' && command[i] != D_QUOTE && command[i] != S_QUOTE && (command[i]))
 		i++;
 	command = swap_var(command, i, idx);
 	return (command);
 }
 
-static char	*expand_quote_var(char *command, int *idx, int q_id)
+static char *expand_quote_var(char *command, int *idx, int q_id)
 {
-	int		i;
+	int i;
 
 	i = *idx;
 	while (command[++i] != q_id)
 	{
-		if (command[i] == '$')
+		if (command[i] == '$' && command[i + 1] != S_QUOTE)
 			command = expand_var(command, i);
 	}
 	return (command);
 }
 
-int	count_string(char *command, int *idx, int *i, int q_id)
+int count_string(char *command, int *idx, int *i, int q_id)
 {
-	int		string_count;
+	int string_count;
 
 	string_count = 0;
 	while (command[i[0]] != '\0' && i[0] < *idx)
@@ -84,10 +83,10 @@ int	count_string(char *command, int *idx, int *i, int q_id)
 	return (string_count);
 }
 
-static char	*subs_quote(char *command, int idx, char q_id)
+static char *subs_quote(char *command, int idx, char q_id)
 {
-	char	*str_start;
-	char	*str_end;
+	char *str_start;
+	char *str_end;
 
 	str_start = ft_substr(command, 0, idx);
 	str_end = ft_substr(command, idx + 1, ft_strlen(command) - idx + 1);
@@ -106,9 +105,9 @@ static char	*subs_quote(char *command, int idx, char q_id)
 	return (command);
 }
 
-static t_joker_m	*add_joker_list(t_joker_m *space, t_joker_m	*new_joker)
+static t_joker_m *add_joker_list(t_joker_m *space, t_joker_m *new_joker)
 {
-	t_joker_m	*tmp;
+	t_joker_m *tmp;
 
 	new_joker = ft_calloc(1, sizeof(t_joker_m));
 	tmp = space;
@@ -118,9 +117,9 @@ static t_joker_m	*add_joker_list(t_joker_m *space, t_joker_m	*new_joker)
 	return (new_joker);
 }
 
-static void	put_jokers_c(char *command, t_joker_m *joker_list, int *i, int q_id)
+static void put_jokers_c(char *command, t_joker_m *joker_list, int *i, int q_id)
 {
-	t_joker_m	*new_joker;
+	t_joker_m *new_joker;
 
 	new_joker = NULL;
 	new_joker = add_joker_list(joker_list, new_joker);
@@ -144,10 +143,10 @@ static void	put_jokers_c(char *command, t_joker_m *joker_list, int *i, int q_id)
 	}
 }
 
-static char	*treat_quotes(char *command, int *idx,
-	int q_id, t_joker_m *joker_list)
+static char *treat_quotes(char *command, int *idx,
+													int q_id, t_joker_m *joker_list)
 {
-	int			i[5];
+	int i[5];
 
 	i[0] = 0;
 	i[4] = 0;
@@ -167,10 +166,10 @@ static char	*treat_quotes(char *command, int *idx,
 	return (command);
 }
 
-char	*check_second_quote(char *command, int *idx,
-	int q_id, t_joker_m *joker_list)
+char *check_second_quote(char *command, int *idx,
+												 int q_id, t_joker_m *joker_list)
 {
-	int		j;
+	int j;
 
 	j = *idx;
 	while (command[j++] != '\0')
@@ -178,15 +177,15 @@ char	*check_second_quote(char *command, int *idx,
 		if (command[j] == q_id)
 		{
 			command = treat_quotes(command, idx, q_id, joker_list);
-			break ;
+			break;
 		}
 	}
 	return (command);
 }
 
-char	*treat_command(char *command, t_joker_m *joker_list)
+char *treat_command(char *command, t_joker_m *joker_list)
 {
-	int		i;
+	int i;
 
 	i = 0;
 	while (command[i])
@@ -194,7 +193,7 @@ char	*treat_command(char *command, t_joker_m *joker_list)
 		if (command[i] == '$')
 		{
 			if (command[i + 1])
-				command = expand_var(command, i--);
+			command = expand_var(command, i--);
 		}
 		else if (command[i] == D_QUOTE)
 			command = check_second_quote(command, &i, D_QUOTE, joker_list);
@@ -205,8 +204,8 @@ char	*treat_command(char *command, t_joker_m *joker_list)
 	return (command);
 }
 
-static char	**swap_spaces(char **splitted,
-		t_joker_m *lst, t_joker_m *tmp)
+static char **swap_spaces(char **splitted,
+													t_joker_m *lst, t_joker_m *tmp)
 {
 	while (lst->next_jok != NULL)
 	{
@@ -230,9 +229,9 @@ static char	**swap_spaces(char **splitted,
 	return (splitted);
 }
 
-static char	**unchange_jok_c(char **splitted, t_joker_m *lst)
+static char **unchange_jok_c(char **splitted, t_joker_m *lst)
 {
-	t_joker_m		*tmp;
+	t_joker_m *tmp;
 
 	tmp = NULL;
 	if (lst->next_jok != NULL)
@@ -244,10 +243,10 @@ static char	**unchange_jok_c(char **splitted, t_joker_m *lst)
 	return (swap_spaces(splitted, lst, tmp));
 }
 
-char	**split_command(char *command)
+char **split_command(char *command)
 {
-	t_joker_m	*joker_list;
-	char		**splitted;
+	t_joker_m *joker_list;
+	char **splitted;
 
 	command = ft_strdup(command);
 	joker_list = ft_calloc(1, sizeof(t_joker_m));
