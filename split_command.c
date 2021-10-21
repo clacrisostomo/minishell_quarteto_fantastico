@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mdefic-vifigu <mdefic-vifigu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 21:28:08 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/20 23:30:16 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/20 23:30:16 by cfimde-vifigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
