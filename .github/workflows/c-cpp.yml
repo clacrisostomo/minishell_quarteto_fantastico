@@ -19,19 +19,18 @@ jobs:
       run: make
     - name: make check
       run: make re
-    run: |
-        ./minishell
-        cd libraries
-        cd ..
-        pwd
-        echo "''" oi
-        ARG=TMP
-        echo $ARG
-        ARG=ENV
-        echo $ARG
-        export ARG
-        echo $ARG
-        ARG=HASH
-        echo $ARG
+    - run: ./minishell
+          cd libraries
+          cd ..
+          pwd
+          echo "''" oi
+          ARG=TMP
+          echo $ARG
+          ARG=ENV
+          echo $ARG
+          export ARG
+          echo $ARG
+          ARG=HASH
+          echo $ARG
         
         
