@@ -24,7 +24,7 @@ int	ft_isvar(char **cmd)
 		while (ft_isalpha(cmd[i][j]) || cmd[i][j] == '_' || \
 				(ft_isdigit(cmd[i][j]) && (!ft_isdigit(cmd[i][0]))))
 			j++;
-		if (cmd[i][j] != '=')
+		if (cmd[i][j] != '=' || j == 0)
 		{
 			if (i > 0)
 			{

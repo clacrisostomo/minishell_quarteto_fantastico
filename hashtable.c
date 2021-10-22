@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 23:40:05 by csantos-          #+#    #+#             */
-/*   Updated: 2021/10/17 00:22:30 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/21 21:33:34 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	free_all(t_hash_table *table)
 			free_item(item);
 		i++;
 	}
+	exit (EXIT_SUCCESS);
 }
 
 void	free_item(t_ht_item *item)

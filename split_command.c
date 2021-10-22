@@ -43,7 +43,8 @@ static char *expand_var(char *command, int idx)
 	int i;
 
 	i = idx + 1;
-	while (command[i] != ' ' && command[i] != D_QUOTE && command[i] != S_QUOTE && (command[i]))
+	while (command[i] != ' ' && command[i] != D_QUOTE 
+		&& command[i] != S_QUOTE && command[i] != '=' && (command[i]))
 		i++;
 	command = swap_var(command, i, idx);
 	return (command);
@@ -192,8 +193,10 @@ char *treat_command(char *command, t_joker_m *joker_list)
 	{
 		if (command[i] == '$')
 		{
-			if (command[i + 1])
-			command = expand_var(command, i--);
+			if (command[i + 1] == D_QUOTE || command[i + 1] == S_QUOTE)
+				command[i] = ' ';
+			else if (command[i + 1])
+				command = expand_var(command, i--);
 		}
 		else if (command[i] == D_QUOTE)
 			command = check_second_quote(command, &i, D_QUOTE, joker_list);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mde-figuvi <mde-figuvi@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/10/20 22:10:00 by mde-figuvi         ###   ########.fr        #
+#    Updated: 2021/10/21 21:47:23 by csantos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

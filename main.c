@@ -26,6 +26,11 @@ void	execute(char **cmd, char *envp[])
 		expt(cmd, 1);
 	else if (!(ft_strcmp(cmd[0], "unset")))
 		unset_(cmd);
+	else if (!(ft_strcmp(cmd[0], "exit")))
+	{
+		ft_free_split(cmd);
+		free_all(g_shell.env);
+	}
 	else if (ft_isvar(cmd))
 		expt(cmd, 0);
 	else if (is_path(cmd, envp))
@@ -91,17 +96,13 @@ static void	loop(char *envp[])
 	char	*command;
 	char	*prompt;
 	//t_pos posit;
+
 	while (1)
 	{
 		g_shell.status_error = 0;
 		prompt = do_prompt();
 		command = readline(prompt);
 		free(prompt);
-		if (!strcmp("exit", command))
-		{
-			free(command);
-			break ;
-		}
 		add_history(command);
 		cmd = split_command(command);
 		free(command);
@@ -109,7 +110,6 @@ static void	loop(char *envp[])
 		execute(cmd, envp);
 		ft_free_split(cmd);
 	}
-	free_all(g_shell.env);
 }
 
 int	main(int argc, char *argv[], char *envp[])
