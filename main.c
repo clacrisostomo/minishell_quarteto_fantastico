@@ -12,6 +12,7 @@
 
 #include "includes/minishell.h"
 
+//TODO: MUDAR AS HASHTABLES
 void	execute(char **cmd, char *envp[])
 {
 	if (!(ft_strcmp(cmd[0], "echo")))
