@@ -1,0 +1,18 @@
+==31608== Memcheck, a memory error detector
+==31608== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==31608== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==31608== Command: ./minishell
+==31608== Parent PID: 5035
+==31608== 
+==31608== Syscall param execve(envp) points to unaddressable byte(s)
+==31608==    at 0x499B2FB: execve (syscall-template.S:78)
+==31608==    by 0x10943D: execute (main.c:44)
+==31608==    by 0x1095F7: loop (main.c:117)
+==31608==    by 0x109680: main (main.c:132)
+==31608==  Address 0x4b1f750 is 0 bytes after a block of size 0 alloc'd
+==31608==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==31608==    by 0x10BF1B: hash_to_str_arr (hash_to_str_arr.c:27)
+==31608==    by 0x109287: execute (main.c:21)
+==31608==    by 0x1095F7: loop (main.c:117)
+==31608==    by 0x109680: main (main.c:132)
+==31608== 

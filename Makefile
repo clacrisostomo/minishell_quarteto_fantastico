@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/10/21 21:47:23 by csantos-         ###   ########.fr        #
+#    Updated: 2021/10/24 23:56:55 by cfico-vi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,14 @@ LIBFT = libraries/libft
 
 
 SRC = main.c hashtable.c hash_by_key.c changedir.c echo_env_pwd.c export.c\
-		variable.c unset.c split_command.c is_path.c
+		variable.c unset.c split_command.c is_path.c hash_to_str_arr.c
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 		make -C $(LIBFT)
-		gcc $(CFLAGS) -g -o $(NAME) $(SRC) -L$(LIBFT) -lft -lreadline -lncurses -I includes -fsanitize=address
+		gcc $(CFLAGS) -g -o $(NAME) $(SRC) -L$(LIBFT) -lft -lreadline -lncurses -I includes
+# -fsanitize=address
 
 %.o: %.c
 		gcc -c $< -I includes

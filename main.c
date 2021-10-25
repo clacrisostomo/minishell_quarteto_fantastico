@@ -3,18 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdefic-vifigu <mdefic-vifigu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/20 22:16:344 by cfimde-vifigu         ###   ########.fr       */
+/*   Updated: 2021/10/24 23:00:254 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
 //TODO: MUDAR AS HASHTABLES
-void	execute(char **cmd, char *envp[])
+void	execute(char **cmd)
 {
+	char	**n_env;
+
+	//n_env[0] = malloc(4 * sizeof(char));
+	n_env = hash_to_str_arr(g_shell.hash);
 	if (!(ft_strcmp(cmd[0], "echo")))
 		echo(cmd);
 	else if (!(ft_strcmp(cmd[0], "cd")))
@@ -30,18 +34,20 @@ void	execute(char **cmd, char *envp[])
 	else if (!(ft_strcmp(cmd[0], "exit")))
 	{
 		ft_free_split(cmd);
+		free(n_env);
 		free_all(g_shell.env);
 	}
 	else if (ft_isvar(cmd))
 		expt(cmd, 0);
-	else if (is_path(cmd, envp))
-		execve(cmd[0], cmd, envp);
-	else if (execve(cmd[0], cmd, envp) == -1)
+	else if (is_path(cmd, n_env))
+		execve(cmd[0], cmd, n_env);
+	else if (execve(cmd[0], cmd, n_env) == -1)
 	{
 		ft_printf("%s: command not found\n", cmd[0]);
 	}
 	else
 		ft_printf("%s: command not found\n", cmd[0]);
+	free(n_env);
 }
 
 /*static void init_pos(char *command, t_pos *posit)
@@ -91,7 +97,7 @@ void	ft_free_split(char **str)
 	str = NULL;
 }
 
-static void	loop(char *envp[])
+static void	loop()
 {
 	char	**cmd;
 	char	*command;
@@ -108,7 +114,7 @@ static void	loop(char *envp[])
 		cmd = split_command(command);
 		free(command);
 		//parser(command, &posit);
-		execute(cmd, envp);
+		execute(cmd);
 		ft_free_split(cmd);
 	}
 }
@@ -123,6 +129,6 @@ int	main(int argc, char *argv[], char *envp[])
 	g_shell.env = envp_to_hash(envp);
 	g_shell.hash = create_hash_table(50);
 	g_shell.temp = create_hash_table(50);
-	loop(envp);
+	loop();
 	return (1);
 }
