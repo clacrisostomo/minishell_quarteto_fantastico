@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/24 23:36:09 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/10/25 22:01:48 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # define HASH_SIZE 256 //ver se vai precisar depois
 # define NONE 0
 # define ENV 1
-# define HASH 2
-# define TEMP 3
+//# define HASH 2
+# define LOCAL 2
 # define TRUE 1
 # define FALSE 0
 # define S_QUOTE '\''
@@ -28,6 +28,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <signal.h>
 # include <sys/types.h>
 # include <sys/file.h>
 # include <sys/stat.h>
@@ -69,9 +70,9 @@ typedef struct s_hash_table
 
 typedef struct s_shell
 {
-	t_hash_table	*hash;
+	//t_hash_table	*hash;
 	t_hash_table	*env;
-	t_hash_table	*temp;
+	t_hash_table	*local;
 	int				status_error;
 }	t_shell;
 
@@ -93,6 +94,8 @@ int				is_path(char **cmd, char **n_env);
 char			**split_command(char *command);
 void			quote_commander(char **cmd);
 char			*search_hash_by_key(char *key);
+
+void delete_item(t_hash_table *table, char *key);
 
 /*
 ** COMMANDERS
@@ -130,6 +133,13 @@ int				modify_table_by_key(int table, char *key, char *value);
 */
 char			**hash_to_str_arr(t_hash_table *n_env);
 
+/*
+** SIGNAL
+*/
+
+void define_signals(void);
+void prompt_handler(int signal);
+void	interrupt_process(int signal);
 
 
 #endif

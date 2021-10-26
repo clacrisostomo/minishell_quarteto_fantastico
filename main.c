@@ -18,7 +18,7 @@ void	execute(char **cmd)
 	char	**n_env;
 
 	//n_env[0] = malloc(4 * sizeof(char));
-	n_env = hash_to_str_arr(g_shell.hash);
+	n_env = hash_to_str_arr(g_shell.env);
 	if (!(ft_strcmp(cmd[0], "echo")))
 		echo(cmd);
 	else if (!(ft_strcmp(cmd[0], "cd")))
@@ -107,6 +107,7 @@ static void	loop()
 	while (1)
 	{
 		g_shell.status_error = 0;
+		define_signals();
 		prompt = do_prompt();
 		command = readline(prompt);
 		free(prompt);
@@ -127,8 +128,8 @@ int	main(int argc, char *argv[], char *envp[])
 		return (0);
 	}
 	g_shell.env = envp_to_hash(envp);
-	g_shell.hash = create_hash_table(50);
-	g_shell.temp = create_hash_table(50);
+	//g_shell.hash = create_hash_table(50);
+	g_shell.local = create_hash_table(50);
 	loop();
 	return (1);
 }

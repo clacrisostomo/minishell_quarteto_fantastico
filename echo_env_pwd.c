@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_env_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:20:39 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/10/20 20:57:37 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/25 21:58:00 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ void	env(void)
 			g_shell.env->item[c]->value);
 		c++;
 	}
-	c = 0;
+	/* c = 0;
 	while (g_shell.hash->item[c] && c <= g_shell.hash->size - 1)
 	{
 		ft_printf("%s=%s\n", g_shell.hash->item[c]->key,
 			g_shell.hash->item[c]->value);
 		c++;
-	}
+	} */
 }

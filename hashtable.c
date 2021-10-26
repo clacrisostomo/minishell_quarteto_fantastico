@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 23:40:05 by csantos-          #+#    #+#             */
-/*   Updated: 2021/10/24 22:15:15 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/10/25 21:55:14 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ t_hash_table	*envp_to_hash(char **envp)
 	j = 0;
 	while (envp[i])
 		i++;
-	table = create_hash_table(i + 10);
+	table = create_hash_table(i + 60);
 	while (j < i)
 	{
 		key = find_key(envp[j]);

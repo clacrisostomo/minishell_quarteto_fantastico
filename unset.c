@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 20:22:59 by csantos-          #+#    #+#             */
-/*   Updated: 2021/10/17 00:21:31 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/10/25 21:56:51 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	delete_item(t_hash_table *table, char *key)
+void delete_item(t_hash_table *table, char *key)
 {
-	int		c;
-	char	*value;
+	int c;
+	char *value;
 
 	c = 0;
 	while (table->item[c] && c <= table->size - 1)
@@ -35,15 +35,15 @@ void	delete_item(t_hash_table *table, char *key)
 					table->item[c] = NULL;
 				c++;
 			}
-			return ;
+			return;
 		}
 		c++;
 	}
 }
 
-void	search_key_to_unset(char *key)
+void search_key_to_unset(char *key)
 {
-	int	c;
+	int c;
 
 	c = 0;
 	while (g_shell.env->item[c] && c <= g_shell.env->size - 1)
@@ -51,42 +51,42 @@ void	search_key_to_unset(char *key)
 		if (ft_strncmp(g_shell.env->item[c]->key, key, ft_strlen(key)) == 0)
 		{
 			delete_item(g_shell.env, key);
-			return ;
+			return;
 		}
 		c++;
 	}
-	c = 0;
+	/* c = 0;
 	while (g_shell.hash->item[c] && c <= g_shell.hash->size - 1)
 	{
 		if (ft_strncmp(g_shell.hash->item[c]->key, key, ft_strlen(key)) == 0)
 		{
 			delete_item(g_shell.hash, key);
-			return ;
+			return;
 		}
 		c++;
-	}
-	while (g_shell.temp->item[c] && c <= g_shell.temp->size - 1)
+	} */
+	while (g_shell.local->item[c] && c <= g_shell.local->size - 1)
 	{
-		if (ft_strncmp(g_shell.temp->item[c]->key, key, ft_strlen(key)) == 0)
+		if (ft_strncmp(g_shell.local->item[c]->key, key, ft_strlen(key)) == 0)
 		{
-			delete_item(g_shell.temp, key);
-			return ;
+			delete_item(g_shell.local, key);
+			return;
 		}
 		c++;
 	}
 }
 
-void	unset_(char **cmd)
+void unset_(char **cmd)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
 	i = 1;
 	while (cmd[i])
 	{
 		j = 0;
-		while (ft_isalpha(cmd[i][j]) || cmd[i][j] == '_' || \
-				(ft_isdigit(cmd[i][j]) && (!ft_isdigit(cmd[i][0]))))
+		while (ft_isalpha(cmd[i][j]) || cmd[i][j] == '_' ||
+					 (ft_isdigit(cmd[i][j]) && (!ft_isdigit(cmd[i][0]))))
 			j++;
 		if (cmd[i][j] == '=')
 		{
