@@ -1,0 +1,104 @@
+readline > sabemos
+void rl_clear_history(void) CIRO > limpa o histórico de comandos, além de limpar dados privados que a Readline salva
+int rl_on_new_line(void) CIRO > Diz para a rotina de atualização que nós nos movemos para uma nova linha vazia, normalmente depois de output uma nova linha.
+void rl_replace_line(const char *text, int clear_undo) CIRO > troca o buffer da readline pelo text. se clear_undo for diferente de 0, a lista de desfazer associada à essa linha é limpa
+void rl_redisplay(void) CIRO > muda o que é mostrado na tela, para corresponder ao buffer da readline
+add_history > feito
+printf > sabemos
+malloc > sabemos
+free > sabemos
+write > sabemos
+access CIRO > checa as permissões de acesso de determinado arquivo
+open > sabemos
+read > sabemos
+close > sabemos
+fork CIRO - fork o processo atual, retorna o pid do child para o parent, e 0 para o children
+wait, waitpid, wait3 e wait4 (include sys/wait.h) > esperam o processo mudar de estado. Mudança de estado = filho terminou, filho foi parado por um sinal ou filho foi retomado por um sinal.
+wait (int *wstatus) -> Suspende a execução da thread de chamada até que um dos filhos termine. 
+    wait(&status) = waitpid(-1, &wstatus, 0)
+waitpid (pid_t pid, int *wstatus, int options) -> suspende a execução da thread de chamada até que o filho especificado pelo pid tenha mudado de estado. A função pode ser modificada da seguinte forma:
+    Se o valor do pid for:
+    < -1: espera por qualquer processo filho que tenha um pid igual ao valor absoluto do pid.
+    -1: espera por qualquer processo filho
+    0: espera por qualquer processo filho cujo pid seja igual ao da thread de chamada no momento da chamada da função waitpid
+    > 0: espera pelo processo filho cujo pid é igual ao valor do pid (no lugar de 0 podem ser usadas as constantes WNOHANG, WUNTRACED e WCONTINUED)
+    Se o wstatus não for NULL, as duas funções acima guardam a info de status no int para o qual aponta. Esse int pode ser inspecionado com as seguintes macros:
+    WIFEXITED - retorna true se o filho terminou normalmente
+    WEXITSTATUS - retorna o exit status do filho
+    WIFSIGNALED - retorna true se o filho foi terminado por um sinal
+    WTERMSIG - retorna o número do sinal que causou o término do filho
+    WCOREDUMP - retorna true se o filho produziu um core dump (só pode ser usada se WIFSIGNALED tiver retornado true)
+    WIFSTOPPED - retorna true se o filho foi parado pela entrega de um sinal (só se a chamada foi feita com WUNTRACED)
+    WSTOPSIG - retorna o número do sinal que causou a parada do filho
+    WIFCONTINUED - retorna true se o filho foi restabelecido pela entrega de SIGCONT
+wait3 - obsoleta - equivale a wait
+wait4 - obsoleta - equivale a waitpid
+signal > sabemos
+sigaction > sabemos
+kill > sabemos
+exit > sabemos
+getcwd > usamos
+chdir > usamos
+stat CIRO > retorna uma struct preenchida com o status de determinado arquivo
+lstat CIRO > retorna uma struct preenchida com o status de determinado link simbólico
+fstat CIRO > retorna uma struct preenchida com o status de determinado fd
+unlink CIRO > exclui o arquivo enviado, se ele não estiver aberto em lugar nenhum
+execve > tamo usando
+dup - MARKUS >> Cria uma copia de um FD, recebe (int OLDFD), usa o menor numero de FD disponivel, em caso de sucesso, ambos FDs (novo e antigo) podem ser usados, eles se referem ao mesmo conteudo
+dup2 - MARKUS >> mesma coisa que o dup() soh que recebe um segundo argumento (int OLDFD, int NEWFD) que eh o numero especifico que deve ser aberto o FD
+pipe > CIRO >> trabalha em dois fds, o [0] é para leitura e o [1] é para escrever, que serão usados em um fork (depois do fork cada instância fecha o fd que não utilizará) https://tldp.org/LDP/lpg/node11.html
+opendir - NAT >> (include dirent.h) -> abre o diretorio especificado no argumento
+readdir - (include dirent.h) -> retorna um ponteiro para uma struct dirent representando a próxima entrada de diretório apontada por dirp. Retorna nulo se chegar no final da stream de diretórios ou se ocorrer um erro. 
+closedir - NAT >> (include dirent.h) -> deve obrigatoriamente fechar o diretorio especificado no argumento.
+strerror - NAT >> Passa um numero errnum e retorna um ponteiro de string de erro; -> exemplo: (printf("Error: %s\n", strerror(errno));)
+perror - NAT >> Imprime uma mensagem de erro descritiva para stderr. exemplo: (if (!fd) {perror("Error: ");} -> resultado : (Error: : No such file or directory))
+isatty - MARKUS >> Passa o inteiro referente a um FD e retorna 1 se for um terminal, 0 se nao for
+ttyname - MARKUS >> Pega o PATH onde esta rodando um terminal definido no STDIN_FILENO
+ttyslot - MARKUS >> Opera a base de dados utmpx, da pra pegar o PID e passar pro wait()
+ioctl - MARKUS >> Controla dispositivos(terminais, sockets,streams) associados ao fildes(??lista de FDs?), recebe inteiro do FD, cmd e uma terceira opcao de tipo variavel
+getenv > sabemos 
+int tcsetattr(int fd, int optional_actions, const struct termios *termios_p) CIRO - configura os parâmetros associados ao objeto do fd e guardados na struct termios
+int tcgetattr(int fd, struct termios *termios_p) CIRO - pega os parâmetros associados ao objeto do fd e guarda nessa struc termios
+tgetent	- MARKUS >> Busca uma entrada de Termcap pelo nome
+tgetflag	- MARKUS >> Pega uma entrada do tipo Bool de um Termcap pelo Id
+tgetnum	- MARKUS >> Pega uma entrada numerica de um Termcap pelo Id
+tgetstr	- MARKUS >> Pega uma entrada string de um Termcap pelo Id, copia a string da entrada para o Buffer apontado pelo argumento *area
+tgoto	- MARKUS >> instancia os parametros linha e coluna no cap e retorna um ponteiro para a string daquela posicao
+tputs(const char *str, int affcnt, int (*putfunc)(int))	curses.h - MARKUS  >> solta uma string com informacao de padding, a string de entrada deve ser uma string de terminfo
+
+struct termios {
+tcflag_t c_iflag;      /* input modes */
+tcflag_t c_oflag;      /* output modes */
+tcflag_t c_cflag;      /* control modes */
+tcflag_t c_lflag;      /* local modes */
+cc_t     c_cc[NCCS];   /* special characters */
+}
+
+struct utmpx	{
+	short	   ut_type;    /* Type of entry. */
+	struct timeval  ut_tv;      /* Time entry was made. */
+	char		   ut_id[];    /* Record identifier. */
+	pid_t	   ut_pid;      /* Process ID. */
+	char		   ut_user[];  /* User login name. */
+	char		   ut_line[];  /* Device name. */
+	char		   ut_host[];  /* Remote hostname. */
+};
+
+cmd 1 | cmd 2 | cmd 3 | cmd 4
+
+parent fork   		print_terminal	
+child 1 fork  		cmd 4				cmd 1
+child 2 fork  		cmd 3				cmd 2
+child 3 fork  		cmd 2				cmd 3
+child 4 fork  		cmd 1				cmd 4 > print_terminal 	
+
+cmd 1 | cmd 2 | cmd 3 | cmd 4
+
+cmd 1
+	parent fork
+		child 2 cmd 2 fork
+				child 3 cmd 3 fork
+						child 4 cmd 4 > print_terminal 
+				child 3 SIGKILL child 4
+		child 2 SIGKILL child 3
+	Parent SIGKILL child 2

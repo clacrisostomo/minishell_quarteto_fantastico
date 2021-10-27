@@ -113,6 +113,9 @@ static void	loop()
 		free(prompt);
 		add_history(command);
 		cmd = split_command(command);
+		if(cmd)
+			cmd = retoken_pipe_or_redir(cmd);
+		printf("%s, %s, %s", cmd[0], cmd[1], cmd[2]);
 		free(command);
 		//parser(command, &posit);
 		execute(cmd);

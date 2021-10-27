@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/25 22:01:48 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/10/26 22:17:14 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,26 @@ char			**split_command(char *command);
 void			quote_commander(char **cmd);
 char			*search_hash_by_key(char *key);
 
-void delete_item(t_hash_table *table, char *key);
+void			delete_item(t_hash_table *table, char *key);
 
+/*
+** RETOKEN PIPE OR REDIR
+*/
+
+char			**retoken_pipe_or_redir(char **cmd);
+int				retoken_catch_redir_append_out(char **cmd);
+int				retoken_catch_redir_input(char **cmd);
+int				retoken_catch_redir_output(char **cmd);
+int				retoken_catch_pipe(char **cmd);
+
+/*
+** FIND PIPE OR REDIR
+*/
+
+int				catch_pipe(char **cmd);
+int				catch_redir_output(char **cmd);
+int				catch_redir_input(char **cmd);
+int				catch_redir_append_out(char **cmd);
 /*
 ** COMMANDERS
 */

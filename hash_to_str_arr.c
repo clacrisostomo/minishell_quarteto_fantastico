@@ -14,23 +14,22 @@
 
 char	**hash_to_str_arr(t_hash_table *n_env)
 {
-	int     i;
-    int     j;
-    char	**ret;
-    char    *key;
-    char    *val;
+	int		i;
+	int		j;
+	char	**ret;
+	char	*str_start;
 
-    j = 0;
-    i = 0;
-    while(n_env->item[j])
-        j++;
-    ret = (char **)malloc(j * sizeof(char *));
-    while(n_env->item[i])
-    {
-        key = n_env->item[i]->key;
-        val = n_env->item[i]->value;
-        ret[i] = ft_strjoin(ft_strjoin(key, "="), val);
-        i++;
-    }
-    return (ret);
+	j = 0;
+	i = 0;
+	while(n_env->item[j])
+		j++;
+	ret = (char **)malloc(j * sizeof(char *));
+	while(n_env->item[i])
+	{
+		str_start = ft_strjoin(n_env->item[i]->key, "=");
+		ret[i] = ft_strjoin(str_start, n_env->item[i]->value);
+		free(str_start);
+		i++;
+	}
+	return (ret);
 }
