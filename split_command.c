@@ -202,6 +202,8 @@ char *treat_command(char *command, t_joker_m *joker_list)
 			command = check_second_quote(command, &i, D_QUOTE, joker_list);
 		else if (command[i] == S_QUOTE)
 			command = check_second_quote(command, &i, S_QUOTE, joker_list);
+		else if (command[i] == INPUT || command[i] == PIPE || command[i] == OUTPUT)
+			command = set_space_for_redir(command, &i);
 		i++;
 	}
 	return (command);

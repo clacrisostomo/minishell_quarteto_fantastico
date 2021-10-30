@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/26 22:17:14 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/10/29 23:32:16 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # define FALSE 0
 # define S_QUOTE '\''
 # define D_QUOTE '\"'
+# define PIPE '|'
+# define INPUT '<'
+# define OUTPUT '>'
 # define JOK_C '@'
 
 # include <unistd.h>
@@ -92,6 +95,9 @@ int				ft_strnstr_indie(const char *big, const char *small,
 int				ft_isvar(char **cmd);
 int				is_path(char **cmd, char **n_env);
 char			**split_command(char *command);
+char			*set_space_for_redir(char *cmd, int *i);
+char			*put_space_after(char *cmd, int i);
+char			*put_space_before(char *cmd, int i);
 void			quote_commander(char **cmd);
 char			*search_hash_by_key(char *key);
 
@@ -101,11 +107,11 @@ void			delete_item(t_hash_table *table, char *key);
 ** RETOKEN PIPE OR REDIR
 */
 
-char			**retoken_pipe_or_redir(char **cmd);
+/* char			**retoken_pipe_or_redir(char **cmd);
 int				retoken_catch_redir_append_out(char **cmd);
 int				retoken_catch_redir_input(char **cmd);
 int				retoken_catch_redir_output(char **cmd);
-int				retoken_catch_pipe(char **cmd);
+int				retoken_catch_pipe(char **cmd); */
 
 /*
 ** FIND PIPE OR REDIR

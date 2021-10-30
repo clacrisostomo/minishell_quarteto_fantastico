@@ -1,195 +1,40 @@
-==72959== Memcheck, a memory error detector
-==72959== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==72959== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==72959== Command: ./minishell
-==72959== Parent PID: 52090
-==72959== 
-==72959== Invalid write of size 8
-==72959==    at 0x10CFFE: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959==  Address 0x4b23580 is 0 bytes inside a block of size 1 alloc'd
-==72959==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==72959==    by 0x10CF89: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959== 
-==72959== Conditional jump or move depends on uninitialised value(s)
-==72959==    at 0x10D01A: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959== 
-==72959== Use of uninitialised value of size 8
-==72959==    at 0x10D070: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959== 
-==72959== Use of uninitialised value of size 8
-==72959==    at 0x10D0AE: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959== 
-==72959== Invalid write of size 1
-==72959==    at 0x10D0AE: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959==  Address 0x4b235d2 is 0 bytes after a block of size 2 alloc'd
-==72959==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==72959==    by 0x10CFFD: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959== 
-==72959== Invalid write of size 8
-==72959==    at 0x10D0E3: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959==  Address 0x4b23588 is 7 bytes after a block of size 1 alloc'd
-==72959==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==72959==    by 0x10CF89: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959== 
-==72959== Use of uninitialised value of size 8
-==72959==    at 0x10C41A: insert_arr_to_arr (retoken_pipe_or_redir.c:106)
-==72959==    by 0x10C651: retoken_pipe_or_redir (retoken_pipe_or_redir.c:161)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959==  Uninitialised value was created by a stack allocation
-==72959==    at 0x10C3DB: insert_arr_to_arr (retoken_pipe_or_redir.c:96)
-==72959== 
-==72959== Invalid read of size 8
-==72959==    at 0x10C41A: insert_arr_to_arr (retoken_pipe_or_redir.c:106)
-==72959==    by 0x10C651: retoken_pipe_or_redir (retoken_pipe_or_redir.c:161)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959==  Address 0x2a43e080 is not stack'd, malloc'd or (recently) free'd
-==72959== 
-==72959== 
-==72959== Process terminating with default action of signal 11 (SIGSEGV)
-==72959==  Access not within mapped region at address 0x2A43E080
-==72959==    at 0x10C41A: insert_arr_to_arr (retoken_pipe_or_redir.c:106)
-==72959==    by 0x10C651: retoken_pipe_or_redir (retoken_pipe_or_redir.c:161)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959==  If you believe this happened as a result of a stack
-==72959==  overflow in your program's main thread (unlikely but
-==72959==  possible), you can try to increase the size of the
-==72959==  main thread stack using the --main-stacksize= flag.
-==72959==  The main thread stack size used in this run was 8388608.
-==72959== 
-==72959== HEAP SUMMARY:
-==72959==     in use at exit: 211,479 bytes in 447 blocks
-==72959==   total heap usage: 803 allocs, 356 frees, 237,211 bytes allocated
-==72959== 
-==72959== 2 bytes in 1 blocks are definitely lost in loss record 2 of 73
-==72959==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==72959==    by 0x10CFFD: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959== 
-==72959== LEAK SUMMARY:
-==72959==    definitely lost: 2 bytes in 1 blocks
-==72959==    indirectly lost: 0 bytes in 0 blocks
-==72959==      possibly lost: 0 bytes in 0 blocks
-==72959==    still reachable: 211,477 bytes in 446 blocks
-==72959==         suppressed: 0 bytes in 0 blocks
-==72959== Reachable blocks (those to which a pointer was found) are not shown.
-==72959== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==72959== 
-==72959== ERROR SUMMARY: 10 errors from 9 contexts (suppressed: 0 from 0)
-==72959== 
-==72959== 1 errors in context 1 of 9:
-==72959== Invalid read of size 8
-==72959==    at 0x10C41A: insert_arr_to_arr (retoken_pipe_or_redir.c:106)
-==72959==    by 0x10C651: retoken_pipe_or_redir (retoken_pipe_or_redir.c:161)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959==  Address 0x2a43e080 is not stack'd, malloc'd or (recently) free'd
-==72959== 
-==72959== 
-==72959== 1 errors in context 2 of 9:
-==72959== Use of uninitialised value of size 8
-==72959==    at 0x10C41A: insert_arr_to_arr (retoken_pipe_or_redir.c:106)
-==72959==    by 0x10C651: retoken_pipe_or_redir (retoken_pipe_or_redir.c:161)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959==  Uninitialised value was created by a stack allocation
-==72959==    at 0x10C3DB: insert_arr_to_arr (retoken_pipe_or_redir.c:96)
-==72959== 
-==72959== 
-==72959== 1 errors in context 3 of 9:
-==72959== Invalid write of size 8
-==72959==    at 0x10D0E3: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959==  Address 0x4b23588 is 7 bytes after a block of size 1 alloc'd
-==72959==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==72959==    by 0x10CF89: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959== 
-==72959== 
-==72959== 1 errors in context 4 of 9:
-==72959== Invalid write of size 1
-==72959==    at 0x10D0AE: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959==  Address 0x4b235d2 is 0 bytes after a block of size 2 alloc'd
-==72959==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==72959==    by 0x10CFFD: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959== 
-==72959== 
-==72959== 1 errors in context 5 of 9:
-==72959== Use of uninitialised value of size 8
-==72959==    at 0x10D0AE: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959== 
-==72959== 
-==72959== 1 errors in context 6 of 9:
-==72959== Conditional jump or move depends on uninitialised value(s)
-==72959==    at 0x10D01A: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959== 
-==72959== 
-==72959== 1 errors in context 7 of 9:
-==72959== Invalid write of size 8
-==72959==    at 0x10CFFE: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959==  Address 0x4b23580 is 0 bytes inside a block of size 1 alloc'd
-==72959==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==72959==    by 0x10CF89: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959== 
-==72959== 
-==72959== 2 errors in context 8 of 9:
-==72959== Use of uninitialised value of size 8
-==72959==    at 0x10D070: ft_strsplit (in /home/mirks/Documents/42-Cursus/minishell/minishell)
-==72959==    by 0x10C637: retoken_pipe_or_redir (retoken_pipe_or_redir.c:160)
-==72959==    by 0x109697: loop (main.c:117)
-==72959==    by 0x10975F: main (main.c:136)
-==72959== 
-==72959== ERROR SUMMARY: 10 errors from 9 contexts (suppressed: 0 from 0)
+==19814== Memcheck, a memory error detector
+==19814== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==19814== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==19814== Command: ./minishell
+==19814== Parent PID: 15646
+==19814== 
+==19814== Invalid read of size 8
+==19814==    at 0x108EBE: loop (main.c:118)
+==19814==    by 0x108F75: main (main.c:136)
+==19814==  Address 0x56dc1e0 is 0 bytes after a block of size 16 alloc'd
+==19814==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==19814==    by 0x10C15D: ft_split (in /home/mirkios/Documents/42-Cursus/minishell/minishell)
+==19814==    by 0x10B411: split_command (split_command.c:259)
+==19814==    by 0x108EB1: loop (main.c:115)
+==19814==    by 0x108F75: main (main.c:136)
+==19814== 
+==19814== 
+==19814== HEAP SUMMARY:
+==19814==     in use at exit: 144,966 bytes in 368 blocks
+==19814==   total heap usage: 1,090 allocs, 722 frees, 180,819 bytes allocated
+==19814== 
+==19814== 8,938 bytes in 166 blocks are definitely lost in loss record 48 of 50
+==19814==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==19814==    by 0x10BF46: ft_strjoin (in /home/mirkios/Documents/42-Cursus/minishell/minishell)
+==19814==    by 0x10B591: hash_to_str_arr (hash_to_str_arr.c:30)
+==19814==    by 0x108B64: execute (main.c:21)
+==19814==    by 0x108EFE: loop (main.c:121)
+==19814==    by 0x108F75: main (main.c:136)
+==19814== 
+==19814== LEAK SUMMARY:
+==19814==    definitely lost: 8,938 bytes in 166 blocks
+==19814==    indirectly lost: 0 bytes in 0 blocks
+==19814==      possibly lost: 0 bytes in 0 blocks
+==19814==    still reachable: 136,028 bytes in 202 blocks
+==19814==         suppressed: 0 bytes in 0 blocks
+==19814== Reachable blocks (those to which a pointer was found) are not shown.
+==19814== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==19814== 
+==19814== For counts of detected and suppressed errors, rerun with: -v
+==19814== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
