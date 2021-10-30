@@ -23,7 +23,7 @@ char	**hash_to_str_arr(t_hash_table *n_env)
 	i = 0;
 	while(n_env->item[j])
 		j++;
-	ret = (char **)malloc(j * sizeof(char *));
+	ret = (char **)malloc((j + 1) * sizeof(char *));
 	while(n_env->item[i])
 	{
 		str_start = ft_strjoin(n_env->item[i]->key, "=");
@@ -31,5 +31,7 @@ char	**hash_to_str_arr(t_hash_table *n_env)
 		free(str_start);
 		i++;
 	}
+	ret[i] = NULL;
+	printf(" O valor de I: %i\n", i);
 	return (ret);
 }

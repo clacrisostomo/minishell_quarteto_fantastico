@@ -6,7 +6,7 @@
 /*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/29 23:32:16 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/10/30 11:21:49 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ t_shell	g_shell;
 
 char			*blank_spaces(char *cmd);
 void			ft_free_split(char **str);
+void			free_n_env(char **n_env);
 void			execute(char **command);
 char			*find_old_pwd(char **str);
 void			print_split(char **str);

@@ -34,7 +34,8 @@ void	execute(char **cmd)
 	else if (!(ft_strcmp(cmd[0], "exit")))
 	{
 		ft_free_split(cmd);
-		free(n_env);
+		ft_free_split(n_env);
+		//free(n_env);
 		free_all(g_shell.env);
 	}
 	else if (ft_isvar(cmd))
@@ -47,7 +48,7 @@ void	execute(char **cmd)
 	}
 	else
 		ft_printf("%s: command not found\n", cmd[0]);
-	free(n_env);
+	ft_free_split(n_env);
 }
 
 /*static void init_pos(char *command, t_pos *posit)
@@ -81,6 +82,23 @@ char	*do_prompt(void)
 	return (prompt);
 }
 
+void	free_n_env(char **n_env)
+{
+	int i;
+
+	i = 0;
+	if (n_env)
+	{
+		while (n_env[i])
+		{
+			free (n_env[i]);
+			i++;
+		}
+		free(n_env);
+	}
+	return ;
+}
+
 void	ft_free_split(char **str)
 {
 	int	i;
@@ -90,6 +108,7 @@ void	ft_free_split(char **str)
 		return ;
 	while (*(str + ++i) != NULL)
 	{
+		printf(" O valor de I Liberado : %i\n", i);
 		free(*(str + i));
 		*(str + i) = NULL;
 	}
@@ -115,7 +134,7 @@ static void	loop()
 		cmd = split_command(command);
 /* 		if(cmd)
 			cmd = retoken_pipe_or_redir(cmd); */
-		printf("%s, %s, %s", cmd[0], cmd[1], cmd[2]);
+		//printf("%s, %s, %s", cmd[0], cmd[1], cmd[2]);
 		free(command);
 		//parser(command, &posit);
 		execute(cmd);
