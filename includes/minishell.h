@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/25 22:01:48 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/10/30 11:21:49 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # define FALSE 0
 # define S_QUOTE '\''
 # define D_QUOTE '\"'
+# define PIPE '|'
+# define INPUT '<'
+# define OUTPUT '>'
 # define JOK_C '@'
 
 # include <unistd.h>
@@ -84,6 +87,7 @@ t_shell	g_shell;
 
 char			*blank_spaces(char *cmd);
 void			ft_free_split(char **str);
+void			free_n_env(char **n_env);
 void			execute(char **command);
 char			*find_old_pwd(char **str);
 void			print_split(char **str);
@@ -92,11 +96,32 @@ int				ft_strnstr_indie(const char *big, const char *small,
 int				ft_isvar(char **cmd);
 int				is_path(char **cmd, char **n_env);
 char			**split_command(char *command);
+char			*set_space_for_redir(char *cmd, int *i);
+char			*put_space_after(char *cmd, int i);
+char			*put_space_before(char *cmd, int i);
 void			quote_commander(char **cmd);
 char			*search_hash_by_key(char *key);
 
-void delete_item(t_hash_table *table, char *key);
+void			delete_item(t_hash_table *table, char *key);
 
+/*
+** RETOKEN PIPE OR REDIR
+*/
+
+/* char			**retoken_pipe_or_redir(char **cmd);
+int				retoken_catch_redir_append_out(char **cmd);
+int				retoken_catch_redir_input(char **cmd);
+int				retoken_catch_redir_output(char **cmd);
+int				retoken_catch_pipe(char **cmd); */
+
+/*
+** FIND PIPE OR REDIR
+*/
+
+int				catch_pipe(char **cmd);
+int				catch_redir_output(char **cmd);
+int				catch_redir_input(char **cmd);
+int				catch_redir_append_out(char **cmd);
 /*
 ** COMMANDERS
 */

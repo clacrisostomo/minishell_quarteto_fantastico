@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/10/25 22:01:06 by nbarreir         ###   ########.fr        #
+#    Updated: 2021/10/30 00:01:55 by mirkios          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,20 +14,18 @@ NAME = minishell
 
 CFLAGS = -Wall -Wextra -Werror
 INCLUDES = includes/minishell.h libraries/libft/libft.h
-#LIBFT = libft
 LIBFT = libraries/libft
-#PRINTF = libraries/ft_printf
 
 
 SRC = main.c hashtable.c hash_by_key.c changedir.c echo_env_pwd.c export.c\
-		variable.c unset.c split_command.c is_path.c hash_to_str_arr.c signal.c
+		variable.c unset.c split_command.c is_path.c hash_to_str_arr.c signal.c\
+		catch_pipe_or_redir.c set_space_for_redir.c
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 		make -C $(LIBFT)
-		gcc $(CFLAGS) -g -o $(NAME) $(SRC) -L$(LIBFT) -lft -lreadline -lncurses -I includes
-# -fsanitize=address
+		gcc $(CFLAGS) -g -o $(NAME) $(SRC) -L $(LIBFT) -lft -lreadline -I includes -fsanitize=address
 
 %.o: %.c
 		gcc -c $< -I includes
