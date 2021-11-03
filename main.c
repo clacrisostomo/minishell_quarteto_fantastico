@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/21 20:52:52 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/10/24 23:00:254 by mirkios          ###   ########.fr       */
+/*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
+/*   Updated: 2021/11/03 17:17:22 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	execute(char **cmd)
 {
 	char	**n_env;
 
-	//n_env[0] = malloc(4 * sizeof(char));
 	n_env = hash_to_str_arr(g_shell.env);
 	if (!(ft_strcmp(cmd[0], "echo")))
 		echo(cmd);
@@ -108,7 +107,6 @@ void	ft_free_split(char **str)
 		return ;
 	while (*(str + ++i) != NULL)
 	{
-		printf(" O valor de I Liberado : %i\n", i);
 		free(*(str + i));
 		*(str + i) = NULL;
 	}

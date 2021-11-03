@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+         #
+#    By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/10/30 00:01:55 by mirkios          ###   ########.fr        #
+#    Updated: 2021/11/03 17:22:29 by cfico-vi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ LIBFT = libraries/libft
 
 
 SRC = main.c hashtable.c hash_by_key.c changedir.c echo_env_pwd.c export.c\
-		variable.c unset.c split_command.c is_path.c hash_to_str_arr.c signal.c\
-		catch_pipe_or_redir.c set_space_for_redir.c
+		variable.c unset.c split_command_0.c is_path.c hash_to_str_arr.c signal.c\
+		set_space_for_redir.c split_command_1.c split_command_2.c
 
 all: $(NAME)
 

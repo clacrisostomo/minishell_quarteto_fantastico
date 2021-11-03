@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_to_str_arr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/24 22:58:09 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/10/24 23:110:02 by mirkios          ###   ########.fr       */
+/*   Created: 2021/11/03 15:24:49 by cfico-vi          #+#    #+#             */
+/*   Updated: 2021/11/03 15:25:18 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ char	**hash_to_str_arr(t_hash_table *n_env)
 
 	j = 0;
 	i = 0;
-	while(n_env->item[j])
+	while (n_env->item[j])
 		j++;
 	ret = (char **)malloc((j + 1) * sizeof(char *));
-	while(n_env->item[i])
+	while (n_env->item[i])
 	{
 		str_start = ft_strjoin(n_env->item[i]->key, "=");
 		ret[i] = ft_strjoin(str_start, n_env->item[i]->value);
@@ -32,6 +32,5 @@ char	**hash_to_str_arr(t_hash_table *n_env)
 		i++;
 	}
 	ret[i] = NULL;
-	printf(" O valor de I: %i\n", i);
 	return (ret);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_env_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:20:39 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/10/25 21:58:00 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/03 16:18:03 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,22 @@ int	echo(char **cmd)
 	// char	*val;
 	int		has_n;
 	int		i;
+	int		ret;
 
 	has_n = 0;
 	i = 1;
 	if (cmd[i] != NULL)
-		while (ft_strcmp(cmd[i], "-n") == 0)
+	{
+		ret = ft_strcmp(cmd[i], "-n");
+		while (ret == FALSE)
 		{
 			has_n = 1;
 			i++;
 			if (cmd[i] == NULL)
 				break ;
+			ret = ft_strcmp(cmd[i], "-n");
 		}
+	}
 	while (cmd && cmd[i])
 	{
 /* 		if (ft_strrchr(cmd[i], '$') && (ft_strcmp(cmd[i], "$\0")))
