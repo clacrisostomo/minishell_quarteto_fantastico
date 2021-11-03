@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/03 17:17:22 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/03 17:52:31 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,11 @@ static void	loop()
 		define_signals();
 		prompt = do_prompt();
 		command = readline(prompt);
+		if (!command)
+		{
+			ft_printf("exit\n");
+			free_all(g_shell.env);
+		}
 		free(prompt);
 		add_history(command);
 		cmd = split_command(command);
