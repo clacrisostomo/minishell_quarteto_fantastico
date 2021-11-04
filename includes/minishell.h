@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/03 17:16:30 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/03 23:17:36 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ t_ht_item		*insert_table(char *key, char *value);
 t_hash_table	*envp_to_hash(char **envp);
 void			free_item(t_ht_item *item);
 void			free_table(t_hash_table *table);
-void			free_all(t_hash_table *table);
+void			free_n_exit(t_hash_table *table);
 void			free_item(t_ht_item *item);
 //int				loop_table_n_insert(t_ht_item *item, int table);
 int				loop_table_n_insert(char *key, char *value, int table);
@@ -145,6 +145,7 @@ void			put_jokers_c(char *command, t_joker_m *joker_list, int *i,
 char			*subs_quote(char *command, int idx, char q_id);
 int				count_string(char *command, int *idx, int *i, int q_id);
 char			*expand_quote_var(char *command, int *idx, int q_id);
+char			*expand_error(char *command, int i);
 
 /*
 ** UTILS

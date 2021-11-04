@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_0.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/03 16:53:43 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/03 23:04:44 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+
+char	*expand_error(char *command, int i)
+{
+	char		*str_errno;
+	char		*str_start;
+	char		*str_end;
+	char		*str_start_val;
+
+	str_errno = ft_itoa(g_shell.status_error);
+	str_start = ft_substr(command, 0, i);
+	str_end = ft_substr(command, i + 2, ft_strlen(command) - (i + 2));
+	free(command);
+	str_start_val = ft_strjoin(str_start, str_errno);
+	free(str_errno);
+	free(str_start);
+	command = ft_strjoin(str_start_val, str_end);
+	free(str_end);
+	free(str_start_val);
+	return (command);
+}
 
 static char	**swap_spaces(char **splitted,
 												t_joker_m *lst, t_joker_m *tmp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/03 17:52:31 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/03 23:17:59 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	execute(char **cmd)
 		ft_free_split(cmd);
 		ft_free_split(n_env);
 		//free(n_env);
-		free_all(g_shell.env);
+		free_n_exit(g_shell.env);
 	}
 	else if (ft_isvar(cmd))
 		expt(cmd, 0);
@@ -119,29 +119,38 @@ static void	loop()
 	char	**cmd;
 	char	*command;
 	char	*prompt;
+	int		i;
 	//t_pos posit;
 
+	i = 0;
 	while (1)
 	{
-		g_shell.status_error = 0;
 		define_signals();
 		prompt = do_prompt();
 		command = readline(prompt);
 		if (!command)
 		{
 			ft_printf("exit\n");
-			free_all(g_shell.env);
+			free_n_exit(g_shell.env);
 		}
 		free(prompt);
-		add_history(command);
-		cmd = split_command(command);
-/* 		if(cmd)
-			cmd = retoken_pipe_or_redir(cmd); */
-		//printf("%s, %s, %s", cmd[0], cmd[1], cmd[2]);
-		free(command);
-		//parser(command, &posit);
-		execute(cmd);
-		ft_free_split(cmd);
+		while (ft_isalpha(command[i]) == 0 && command[i] != '\0')
+			i++;
+		if (command[i] == '\0')
+		{
+			g_shell.status_error = 0;
+			free(command);
+		}
+		else
+		{
+			add_history(command);
+			cmd = split_command(command);
+			//printf("%s, %s, %s", cmd[0], cmd[1], cmd[2]);
+			free(command);
+			//parser(command, &posit);
+			execute(cmd);
+			ft_free_split(cmd);
+		}
 	}
 }
 
@@ -152,6 +161,7 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_printf("ERROR: TOO MANY ARGS\n");
 		return (0);
 	}
+	g_shell.status_error = 0;
 	g_shell.env = envp_to_hash(envp);
 	//g_shell.hash = create_hash_table(50);
 	g_shell.local = create_hash_table(50);

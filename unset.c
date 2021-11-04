@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 20:22:59 by csantos-          #+#    #+#             */
-/*   Updated: 2021/11/03 17:16:05 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/03 23:23:08 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,13 @@ void	unset_(char **cmd)
 			ft_putstr_fd("Minishell: unset: '", 2);
 			ft_putstr_fd(cmd[i], 2);
 			ft_putendl_fd("': not a valid identifier", 2);
+			g_shell.status_error = 1;
 		}
 		else
+		{
 			search_key_to_unset(cmd[i]);
+			g_shell.status_error = 0;
+		}
 		i++;
 	}
 }
