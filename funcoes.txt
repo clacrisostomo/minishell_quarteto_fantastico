@@ -102,3 +102,22 @@ cmd 1
 				child 3 SIGKILL child 4
 		child 2 SIGKILL child 3
 	Parent SIGKILL child 2
+
+PIPE
+-> Save saida/entrada padrao
+-> Fazer saida/entrada pipe e colocar no lugar da saida/entrada padrão
+-> Fazer comando
+-> voltar ao padrao
+
+REDIRECT
+-> Save saida/entrada padrao
+-> Fazer saida ou entrada redirect e colocar no lugar da saida ou entrada padrão
+-> Fazer comando
+-> voltar ao padrao
+
+REDIRECT antes do PIPE
+-> Save saida/entrada padrao
+-> Fazer saida/entrada pipe e colocar no lugar da saida/entrada padrão
+-> Fazer saida ou entrada redirect e colocar no lugar da saida ou entrada do pipe
+-> Fazer comando
+-> voltar ao padrao

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 23:40:05 by csantos-          #+#    #+#             */
-/*   Updated: 2021/10/25 21:55:14 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/03 23:17:26 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_ht_item	*insert_table(char *key, char *value)
 	return (new_item);
 }
 
-void	free_all(t_hash_table *table)
+void	free_n_exit(t_hash_table *table)
 {
 	int			i;
 	t_ht_item	*item;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/03 16:53:27 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/03 22:45:20 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ char	*treat_command(char *command, t_joker_m *joker_list)
 		{
 			if (command[i + 1] == D_QUOTE || command[i + 1] == S_QUOTE)
 				command[i] = ' ';
+			else if (command[i + 1] == '?')
+				command = expand_error(command, i);
 			else if (command[i + 1])
 				command = expand_var(command, i--);
 		}
