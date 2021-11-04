@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/03 23:04:44 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/11/04 00:10:06 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*expand_error(char *command, int i)
 	char		*str_end;
 	char		*str_start_val;
 
-	str_errno = ft_itoa(g_shell.status_error);
+	str_errno = ft_itoa(errno);
 	str_start = ft_substr(command, 0, i);
 	str_end = ft_substr(command, i + 2, ft_strlen(command) - (i + 2));
 	free(command);

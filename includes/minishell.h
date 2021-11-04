@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/03 23:17:36 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/11/04 00:51:32 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void			pwd(void);
 int				echo(char **cmd);
 void			expt(char **cmd, int exp);
 void			unset_(char **cmd);
+void			exit_terminal(char **cmd, char	**n_env);
 
 /*
 ** HASH TABLE

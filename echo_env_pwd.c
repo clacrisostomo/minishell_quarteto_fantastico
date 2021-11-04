@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_env_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:20:39 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/03 16:18:03 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/04 00:53:53 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,28 @@ void	env(void)
 			g_shell.hash->item[c]->value);
 		c++;
 	} */
+}
+
+void	exit_terminal(char **cmd, char	**n_env)
+{
+	int i;
+	
+	i = 0;
+	if (cmd[1])
+	{
+		while (ft_isdigit(cmd[1][i]))
+			i++;
+		if (cmd[1][i] == '\0' && !cmd[2])
+			errno = ft_atoi(cmd[1]);
+		else if (cmd[2])
+			errno = 1;
+		else if (!cmd[2] && cmd[1][i] != '\0')
+			errno = 2;
+	}
+	else
+		errno = 0;
+	ft_free_split(cmd);
+	ft_free_split(n_env);
+	//free(n_env);
+	free_n_exit(g_shell.env);
 }

@@ -6,7 +6,7 @@
 /*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/03 23:17:59 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/11/04 00:50:12 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,13 @@ void	execute(char **cmd)
 	else if (!(ft_strcmp(cmd[0], "unset")))
 		unset_(cmd);
 	else if (!(ft_strcmp(cmd[0], "exit")))
-	{
-		ft_free_split(cmd);
-		ft_free_split(n_env);
-		//free(n_env);
-		free_n_exit(g_shell.env);
-	}
+		exit_terminal(cmd, n_env);
 	else if (ft_isvar(cmd))
 		expt(cmd, 0);
 	else if (is_path(cmd, n_env))
 		execve(cmd[0], cmd, n_env);
 	else if (execve(cmd[0], cmd, n_env) == -1)
-	{
 		ft_printf("%s: command not found\n", cmd[0]);
-	}
 	else
 		ft_printf("%s: command not found\n", cmd[0]);
 	ft_free_split(n_env);
@@ -131,6 +124,7 @@ static void	loop()
 		if (!command)
 		{
 			ft_printf("exit\n");
+			errno = 0;
 			free_n_exit(g_shell.env);
 		}
 		free(prompt);
@@ -138,7 +132,7 @@ static void	loop()
 			i++;
 		if (command[i] == '\0')
 		{
-			g_shell.status_error = 0;
+			errno = 0;
 			free(command);
 		}
 		else
@@ -161,7 +155,7 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_printf("ERROR: TOO MANY ARGS\n");
 		return (0);
 	}
-	g_shell.status_error = 0;
+	errno = 0;
 	g_shell.env = envp_to_hash(envp);
 	//g_shell.hash = create_hash_table(50);
 	g_shell.local = create_hash_table(50);
