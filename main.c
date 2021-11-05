@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/04 00:50:12 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/11/05 00:02:35 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,12 +152,11 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	if (argc > 1 && argv)
 	{
-		ft_printf("ERROR: TOO MANY ARGS\n");
-		return (0);
+		ft_putstr_fd("ERROR: TOO MANY ARGS\n", 2);
+		return (EXIT_FAILURE);
 	}
 	errno = 0;
 	g_shell.env = envp_to_hash(envp);
-	//g_shell.hash = create_hash_table(50);
 	g_shell.local = create_hash_table(50);
 	loop();
 	return (1);
