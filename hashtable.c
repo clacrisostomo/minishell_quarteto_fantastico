@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 23:40:05 by csantos-          #+#    #+#             */
-/*   Updated: 2021/11/05 17:53:16 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/05 20:39:17 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ t_hash_table	*create_hash_table(int size)
 	if (!hashtable)
 	{
 		perror("Error: ");
-		//ft_putstr_fd("Error: Cannot allocate memory\n", STDERR_FILENO);
 		free_n_exit();
 	}
 	hashtable->size = size;
@@ -87,7 +86,6 @@ t_hash_table	*create_hash_table(int size)
 	if (!hashtable->item)
 	{
 		perror("Error: ");
-		//ft_putstr_fd("Error: Cannot allocate memory\n", STDERR_FILENO);
 		free_n_exit();
 	}
 	while (i++ < hashtable->size - 1)
@@ -105,7 +103,6 @@ t_ht_item	*create_hash_item(char *key, char *value)
 	if (!new)
 	{
 		perror("Error: ");
-		//free(new);
 		return (NULL);
 	}
 	new->key = ft_strdup(key);
