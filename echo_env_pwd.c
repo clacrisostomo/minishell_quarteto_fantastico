@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_env_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:20:39 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/04 00:56:52 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/11/05 17:14:28 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	env(void)
 void	exit_terminal(char **cmd, char	**n_env)
 {
 	int i;
-	
+
 	i = 0;
 	if (cmd[1])
 	{
@@ -106,6 +106,5 @@ void	exit_terminal(char **cmd, char	**n_env)
 		errno = 0;
 	ft_free_split(cmd);
 	ft_free_split(n_env);
-	//free(n_env);
-	free_n_exit(g_shell.env);
+	free_n_exit();
 }

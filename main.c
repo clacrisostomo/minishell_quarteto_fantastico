@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/05 00:02:35 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/11/05 17:17:46 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,6 @@ void	execute(char **cmd)
 		ft_printf("%s: command not found\n", cmd[0]);
 	ft_free_split(n_env);
 }
-
-/*static void init_pos(char *command, t_pos *posit)
-{
-	posit->pos_echo = ft_strnstr_indie(command, "echo", ft_strlen(command));
-	posit->pos_cd = ft_strnstr_indie(command, "cd", ft_strlen(command));
-	posit->pos_pwd = ft_strnstr_indie(command, "pwd", ft_strlen(command));
-	posit->pos_exp = ft_strnstr_indie(command, "export", ft_strlen(command));
-	posit->pos_uset = ft_strnstr_indie(command, "unset", ft_strlen(command));
-	posit->pos_env = ft_strnstr_indie(command, "env", ft_strlen(command));
-}*/
-
-// static void parser(char *command, t_pos *posit)
-// {
-// 	init_pos(command, posit);
-// 	if (posit->pos_echo < posit->pos_cd)
-// 		echo(command);
-// 	else if (ft_strncmp(command, "cd ", 2) == 0)
-// 		cd(command);
-// 	//else if (!strcmp("exit", command))
-// 	//exit();
-// }
 
 char	*do_prompt(void)
 {
@@ -113,7 +92,6 @@ static void	loop()
 	char	*command;
 	char	*prompt;
 	int		i;
-	//t_pos posit;
 
 	i = 0;
 	while (1)
@@ -125,7 +103,7 @@ static void	loop()
 		{
 			ft_printf("exit\n");
 			errno = 0;
-			free_n_exit(g_shell.env);
+			free_n_exit();
 		}
 		free(prompt);
 		while (ft_isalpha(command[i]) == 0 && command[i] != '\0')
@@ -139,9 +117,7 @@ static void	loop()
 		{
 			add_history(command);
 			cmd = split_command(command);
-			//printf("%s, %s, %s", cmd[0], cmd[1], cmd[2]);
 			free(command);
-			//parser(command, &posit);
 			execute(cmd);
 			ft_free_split(cmd);
 		}
@@ -152,7 +128,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	if (argc > 1 && argv)
 	{
-		ft_putstr_fd("ERROR: TOO MANY ARGS\n", 2);
+		ft_putstr_fd("Error: Too many arguments\n", 2);
 		return (EXIT_FAILURE);
 	}
 	errno = 0;

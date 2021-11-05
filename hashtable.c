@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 23:40:05 by csantos-          #+#    #+#             */
-/*   Updated: 2021/11/05 00:05:46 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/11/05 17:53:16 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,42 @@ t_ht_item	*insert_table(char *key, char *value)
 	return (new_item);
 }
 
-void	free_n_exit(t_hash_table *table)
+void	free_n_exit(void)
 {
 	int			i;
 	t_ht_item	*item;
 
 	i = 0;
-	while (i < table->size)
+	if (g_shell.env != NULL)
 	{
-		item = table->item[i];
-		if (item)
-			free_item(item);
-		i++;
+		if (g_shell.env->item)
+		{
+			while (i < g_shell.env->size)
+			{
+				item = g_shell.env->item[i];
+				if (item)
+					free_item(item);
+				i++;
+			}
+			free(g_shell.env->item);
+		}
+		free(g_shell.env);
+	}
+	i = 0;
+	if (g_shell.local != NULL)
+	{
+		if (g_shell.local->item)
+		{
+			while (i < g_shell.local->size)
+			{
+				item = g_shell.local->item[i];
+				if (item)
+					free_item(item);
+				i++;
+			}
+			free(g_shell.local->item);
+		}
+		free(g_shell.local);
 	}
 	exit (errno);
 }
@@ -52,8 +76,9 @@ t_hash_table	*create_hash_table(int size)
 	hashtable = (t_hash_table *)malloc(sizeof(t_hash_table));
 	if (!hashtable)
 	{
-		ft_putstr_fd("Error: Cannot allocate memory\n", 2);
-		free_n_exit(hashtable);
+		perror("Error: ");
+		//ft_putstr_fd("Error: Cannot allocate memory\n", STDERR_FILENO);
+		free_n_exit();
 	}
 	hashtable->size = size;
 	hashtable->count = 0;
@@ -61,8 +86,9 @@ t_hash_table	*create_hash_table(int size)
 			sizeof(t_ht_item*));
 	if (!hashtable->item)
 	{
-		ft_putstr_fd("Error: Cannot allocate memory\n", 2);
-		free_n_exit(hashtable);
+		perror("Error: ");
+		//ft_putstr_fd("Error: Cannot allocate memory\n", STDERR_FILENO);
+		free_n_exit();
 	}
 	while (i++ < hashtable->size - 1)
 	{
@@ -78,8 +104,8 @@ t_ht_item	*create_hash_item(char *key, char *value)
 	new = (t_ht_item *) ft_calloc(sizeof(t_ht_item), 1);
 	if (!new)
 	{
-		ft_putstr_fd("Error: Cannot allocate memory\n", 2);
-		free(new);
+		perror("Error: ");
+		//free(new);
 		return (NULL);
 	}
 	new->key = ft_strdup(key);

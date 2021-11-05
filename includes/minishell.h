@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/04 00:51:32 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/11/05 17:13:29 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_hash_table
 {
 	t_ht_item	**item;
 	int			size;
-	int			count;
+	int			count; //o que que é count??
 }	t_hash_table;
 
 typedef struct s_shell
@@ -122,7 +122,7 @@ t_ht_item		*insert_table(char *key, char *value);
 t_hash_table	*envp_to_hash(char **envp);
 void			free_item(t_ht_item *item);
 void			free_table(t_hash_table *table);
-void			free_n_exit(t_hash_table *table);
+void			free_n_exit(void);
 void			free_item(t_ht_item *item);
 //int				loop_table_n_insert(t_ht_item *item, int table);
 int				loop_table_n_insert(char *key, char *value, int table);
