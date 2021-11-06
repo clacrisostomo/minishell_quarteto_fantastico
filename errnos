@@ -1,3 +1,5 @@
+valgrind --leak-check=full --show-leak-kinds=all -s ./minishell
+
 0: Success
 1: EPERM: Operation not permitted
 2: ENOENT: No such file or directory
@@ -295,4 +297,4 @@
 [EWOULDBLOCK]
     Operation would block (may be the same value as [EAGAIN]).
 [EXDEV]
-    Cross-device link. 
+    Cross-device link.

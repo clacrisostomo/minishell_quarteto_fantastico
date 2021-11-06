@@ -6,10 +6,11 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 23:40:05 by csantos-          #+#    #+#             */
-/*   Updated: 2021/11/06 11:03:42 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/06 11:05:20 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "includes/minishell.h"
 
 t_ht_item	*insert_table(char *key, char *value)
 {
@@ -94,11 +95,7 @@ t_ht_item	*create_hash_item(char *key, char *value)
 	if (!new)
 	{
 		perror("Error: ");
-<<<<<<< HEAD
-		return (NULL);
-=======
 		free_n_exit();
->>>>>>> f29159667b09c8415742efc26364a753a97832f1
 	}
 	new->key = ft_strdup(key);
 	new->value = ft_strdup(value);

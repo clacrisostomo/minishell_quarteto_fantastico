@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/03 22:45:20 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/11/06 13:14:35 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,55 @@
 
 static char	*swap_var(char *command, int i, int idx)
 {
-	char		*key;
-	char		*val;
-	char		*str_start;
-	char		*str_end;
-	char		*str_start_val;
+	char	*val;
+	char 	**str_var;
+	int		j;
 
-	key = ft_substr(command, idx + 1, i - idx - 1);
-	val = search_hash_by_key(key);
-	free(key);
-	str_start = ft_substr(command, 0, idx);
-	str_end = ft_substr(command, i, ft_strlen(command) - i);
-	free(command);
+	str_var = (char **)ft_calloc(6, sizeof(char *));
+	if (str_var == NULL)
+	{
+		perror("Error: ");
+		free(command);
+		return (NULL);
+	}
+	j = 0;
+	while (j < 6)
+		str_var[j++] = NULL;
+	str_var[0] = command;
+	str_var[1] = ft_substr(str_var[0], idx + 1, i - idx - 1);
+	if (str_var[1] == NULL)
+	{
+		perror("Error: ");
+		ft_free_split(str_var);
+		return (NULL);
+	}
+	val = search_hash_by_key(str_var[1]);
+	str_var[2] = ft_substr(str_var[0], 0, idx);
+	if (str_var[2] == NULL)
+	{
+		perror("Error: ");
+		ft_free_split(str_var);
+		return (NULL);
+	}
+	str_var[3] = ft_substr(str_var[0], i, ft_strlen(str_var[0]) - i);
+	if (str_var[3] == NULL)
+	{
+		perror("Error: ");
+		ft_free_split(str_var);
+		return (NULL);
+	}
 	if (val == NULL)
-		str_start_val = ft_strjoin(str_start, "");
+		str_var[4] = ft_strjoin(str_var[2], "");
 	else
-		str_start_val = ft_strjoin(str_start, val);
-	free(str_start);
-	command = ft_strjoin(str_start_val, str_end);
-	free(str_end);
-	free(str_start_val);
+		str_var[4] = ft_strjoin(str_var[2], val);
+	if (str_var[4] == NULL)
+	{
+		perror("Error: ");
+		ft_free_split(str_var);
+		return (NULL);
+	}
+	command = ft_strjoin(str_var[4], str_var[3]);
+	ft_free_split(str_var);
 	return (command);
 }
 
@@ -59,7 +88,14 @@ static char	*treat_quotes(char *command, int *idx,
 	i[3] = count_string(command, idx, i, q_id);
 	i[2] = *idx;
 	if (q_id == D_QUOTE)
+	{
 		command = expand_quote_var(command, idx, q_id);
+		if (command == NULL)
+		{
+			free_joker_list(joker_list);
+			free_n_exit();
+		}
+	}
 	while (command[++(*idx)] != q_id)
 	{
 		if (command[*idx] == ' ')
@@ -69,7 +105,11 @@ static char	*treat_quotes(char *command, int *idx,
 	if (i[4] > 0)
 		put_jokers_c(command, joker_list, i, q_id);
 	command = subs_quote(command, i[2], q_id);
-	return (command);
+	if (command == NULL)
+	{
+		free_joker_list(joker_list);
+		free_n_exit();
+	}	return (command);
 }
 
 static char	*check_second_quote(char *command, int *idx,
@@ -101,9 +141,23 @@ char	*treat_command(char *command, t_joker_m *joker_list)
 			if (command[i + 1] == D_QUOTE || command[i + 1] == S_QUOTE)
 				command[i] = ' ';
 			else if (command[i + 1] == '?')
+			{
 				command = expand_error(command, i);
+				if (command == NULL)
+				{
+					free_joker_list(joker_list);
+					free_n_exit();
+				}
+			}
 			else if (command[i + 1])
+			{
 				command = expand_var(command, i--);
+				if (command == NULL)
+				{
+					free_joker_list(joker_list);
+					free_n_exit();
+				}
+			}
 		}
 		else if (command[i] == D_QUOTE)
 			command = check_second_quote(command, &i, D_QUOTE, joker_list);
@@ -111,7 +165,14 @@ char	*treat_command(char *command, t_joker_m *joker_list)
 			command = check_second_quote(command, &i, S_QUOTE, joker_list);
 		else if (command[i] == INPUT || command[i] == PIPE
 			|| command[i] == OUTPUT)
+		{
 			command = set_space_for_redir(command, &i);
+			if (command == NULL)
+			{
+				free_joker_list(joker_list);
+				free_n_exit();
+			}
+		}
 		i++;
 	}
 	return (command);

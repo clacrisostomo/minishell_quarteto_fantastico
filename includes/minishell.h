@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/05 21:47:19 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/11/06 12:52:09 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ char			*subs_quote(char *command, int idx, char q_id);
 int				count_string(char *command, int *idx, int *i, int q_id);
 char			*expand_quote_var(char *command, int *idx, int q_id);
 char			*expand_error(char *command, int i);
+void			free_joker_list(t_joker_m *lst);
 
 /*
 ** UTILS

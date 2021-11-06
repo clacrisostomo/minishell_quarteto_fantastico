@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 21:52:11 by mirkios           #+#    #+#             */
-/*   Updated: 2021/11/03 15:17:59 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/06 12:09:39 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ char	*put_space_before(char *cmd, int i)
 	int		j;
 
 	ret = ft_calloc(ft_strlen(cmd) + 1, sizeof(char *));
+	if (ret == NULL)
+	{
+		perror("Error: ");
+		free(cmd);
+		return (NULL);
+	}
 	j = 0;
 	while (j < i)
 	{
@@ -37,6 +43,12 @@ char	*put_space_after(char *cmd, int i)
 	int		j;
 
 	ret = ft_calloc(ft_strlen(cmd) + 1, sizeof(char *));
+	if (ret == NULL)
+	{
+		perror("Error: ");
+		free(cmd);
+		return (NULL);
+	}
 	j = 0;
 	while (j <= i)
 	{
@@ -60,6 +72,8 @@ char	*set_space_for_redir(char *cmd, int *i)
 		{
 			j = *i;
 			cmd = put_space_before(cmd, j);
+			if (cmd == NULL)
+				return (NULL);
 			(*i)++;
 		}
 	}
@@ -69,6 +83,8 @@ char	*set_space_for_redir(char *cmd, int *i)
 	{
 		j = *i;
 		cmd = put_space_after(cmd, j);
+		if (cmd == NULL)
+			return (NULL);
 	}
 	return (cmd);
 }
