@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 13:11:02 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/03 22:15:50 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/11/06 00:21:04 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,13 @@
 
 void	interrupt(int signal)
 {
-	//(void)signal;
-	g_shell.status_error = 128 + signal;
+	errno = 128 + signal;
 	ft_printf("\n");
 }
 
 void	prompt_handler(int signal)
 {
-	//(void)signal;
-	g_shell.status_error = 128 + signal;
-	//ft_printf("\n%i", g_shell.status_error);
+	errno = 128 + signal;
 	ft_printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();

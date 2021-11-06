@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 20:22:59 by csantos-          #+#    #+#             */
-/*   Updated: 2021/11/04 00:17:27 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/11/06 00:19:00 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	unset_(char **cmd)
 			ft_putstr_fd("Minishell: unset: '", 2);
 			ft_putstr_fd(cmd[i], 2);
 			ft_putendl_fd("': not a valid identifier", 2);
-			errno = 1;
+			errno = EPERM;
 		}
 		else
 		{

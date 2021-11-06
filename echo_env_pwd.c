@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_env_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:20:39 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/05 17:14:28 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/06 00:44:00 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,26 @@ void	pwd(void)
 	pwd = NULL;
 	pwd = getcwd(pwd, 0);
 	if (pwd != NULL)
+	{
 		ft_printf("%s\n", pwd);
-	free(pwd);
+		free(pwd);
+		errno = 0;
+	}
+}
+
+static void	print_echo(char **cmd, int i)
+{
+	while (cmd && cmd[i])
+	{
+		ft_printf("%s", cmd[i]);
+		i++;
+		if (cmd[i] != NULL)
+			ft_printf(" ");
+	}
 }
 
 int	echo(char **cmd)
 {
-	// char	*key;
-	// char	*val;
 	int		has_n;
 	int		i;
 	int		ret;
@@ -45,24 +57,10 @@ int	echo(char **cmd)
 			ret = ft_strcmp(cmd[i], "-n");
 		}
 	}
-	while (cmd && cmd[i])
-	{
-/* 		if (ft_strrchr(cmd[i], '$') && (ft_strcmp(cmd[i], "$\0")))
-		{
-			key = ft_substr(cmd[i], 1, ft_strlen(cmd[i]) - 1);
-			val = search_hash_by_key(key);
-			free(key);
-			if (val != NULL)
-				ft_printf("%s ", val);
-		}
-		else */
-		ft_printf("%s", cmd[i]);
-		i++;
-		if (cmd[i] != NULL)
-			ft_printf(" ");
-	}
+	print_echo(cmd, i);
 	if (has_n == FALSE)
 		ft_printf("\n");
+	errno = 0;
 	return (1);
 }
 
@@ -77,13 +75,7 @@ void	env(void)
 			g_shell.env->item[c]->value);
 		c++;
 	}
-	/* c = 0;
-	while (g_shell.hash->item[c] && c <= g_shell.hash->size - 1)
-	{
-		ft_printf("%s=%s\n", g_shell.hash->item[c]->key,
-			g_shell.hash->item[c]->value);
-		c++;
-	} */
+	errno = 0;
 }
 
 void	exit_terminal(char **cmd, char	**n_env)
@@ -98,9 +90,9 @@ void	exit_terminal(char **cmd, char	**n_env)
 		if (cmd[1][i] == '\0' && !cmd[2])
 			errno = ft_atoi(cmd[1]);
 		else if (cmd[2])
-			errno = 1;
+			errno = EPERM;
 		else if (!cmd[2] && cmd[1][i] != '\0')
-			errno = 2;
+			errno = ENOENT;
 	}
 	else
 		errno = 0;
