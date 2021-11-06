@@ -116,8 +116,6 @@ void insert_if_export(char *key, char *value)
 		loop_table_n_insert(key, value, ENV);
 	if (t == ENV)
 		modify_table_by_key(ENV, key, value);
-	// if (t == HASH)
-	//	modify_table_by_key(HASH, key, value);
 	if (t == LOCAL)
 	{
 		while (g_shell.local->item[c] && c <= g_shell.local->size - 1)
@@ -143,8 +141,6 @@ void insert_if_onlyvar(char *key, char *value)
 		loop_table_n_insert(key, value, LOCAL);
 	if (t == ENV)
 		modify_table_by_key(ENV, key, value);
-	// if (t == HASH)
-	//	modify_table_by_key(HASH, key, value);
 	if (t == LOCAL)
 		modify_table_by_key(LOCAL, key, value);
 }

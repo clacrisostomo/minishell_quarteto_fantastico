@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/05 17:17:46 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/06 00:34:07 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	execute(char **cmd)
 		execve(cmd[0], cmd, n_env);
 	else if (execve(cmd[0], cmd, n_env) == -1)
 		ft_printf("%s: command not found\n", cmd[0]);
-	else
-		ft_printf("%s: command not found\n", cmd[0]);
+/* 	else
+		ft_printf("%s: command not found\n", cmd[0]); */
 	ft_free_split(n_env);
 }
 
@@ -50,6 +50,11 @@ char	*do_prompt(void)
 
 	getcwd(cwd, 2048);
 	prompt = ft_strjoin(cwd, "$ ");
+	if (prompt == NULL)
+	{
+		perror("Error: ");
+		free_n_exit();
+	}
 	return (prompt);
 }
 
@@ -92,13 +97,16 @@ static void	loop()
 	char	*command;
 	char	*prompt;
 	int		i;
+	int		old_errno;
 
 	i = 0;
 	while (1)
 	{
+		old_errno = errno;
 		define_signals();
 		prompt = do_prompt();
 		command = readline(prompt);
+		errno = old_errno;
 		if (!command)
 		{
 			ft_printf("exit\n");
@@ -131,7 +139,6 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_putstr_fd("Error: Too many arguments\n", 2);
 		return (EXIT_FAILURE);
 	}
-	errno = 0;
 	g_shell.env = envp_to_hash(envp);
 	g_shell.local = create_hash_table(50);
 	loop();

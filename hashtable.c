@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 23:40:05 by csantos-          #+#    #+#             */
-/*   Updated: 2021/11/05 17:53:16 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/05 23:20:10 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,50 +20,42 @@ t_ht_item	*insert_table(char *key, char *value)
 	return (new_item);
 }
 
-void	free_n_exit(void)
+static void	free_all(t_hash_table	*table)
 {
 	int			i;
 	t_ht_item	*item;
 
 	i = 0;
-	if (g_shell.env != NULL)
+	if (table != NULL)
 	{
-		if (g_shell.env->item)
+		if (table->item)
 		{
-			while (i < g_shell.env->size)
+			while (i < table->size)
 			{
-				item = g_shell.env->item[i];
+				item = table->item[i];
 				if (item)
 					free_item(item);
 				i++;
 			}
-			free(g_shell.env->item);
+			free(table->item);
 		}
-		free(g_shell.env);
+		free(table);
 	}
-	i = 0;
-	if (g_shell.local != NULL)
-	{
-		if (g_shell.local->item)
-		{
-			while (i < g_shell.local->size)
-			{
-				item = g_shell.local->item[i];
-				if (item)
-					free_item(item);
-				i++;
-			}
-			free(g_shell.local->item);
-		}
-		free(g_shell.local);
-	}
+}
+
+void	free_n_exit(void)
+{
+	free_all(g_shell.env);
+	free_all(g_shell.local);
 	exit (errno);
 }
 
 void	free_item(t_ht_item *item)
 {
-	free(item->key);
-	free(item->value);
+	if (item->key)
+		free(item->key);
+	if (item->value)
+		free(item->value);
 	free(item);
 }
 
@@ -77,7 +69,6 @@ t_hash_table	*create_hash_table(int size)
 	if (!hashtable)
 	{
 		perror("Error: ");
-		//ft_putstr_fd("Error: Cannot allocate memory\n", STDERR_FILENO);
 		free_n_exit();
 	}
 	hashtable->size = size;
@@ -87,7 +78,6 @@ t_hash_table	*create_hash_table(int size)
 	if (!hashtable->item)
 	{
 		perror("Error: ");
-		//ft_putstr_fd("Error: Cannot allocate memory\n", STDERR_FILENO);
 		free_n_exit();
 	}
 	while (i++ < hashtable->size - 1)
@@ -105,11 +95,15 @@ t_ht_item	*create_hash_item(char *key, char *value)
 	if (!new)
 	{
 		perror("Error: ");
-		//free(new);
-		return (NULL);
+		free_n_exit();
 	}
 	new->key = ft_strdup(key);
 	new->value = ft_strdup(value);
+	if (new->key == NULL || new->value == NULL)
+	{
+		perror("Error: ");
+		free_n_exit();
+	}
 	return (new);
 }
 
