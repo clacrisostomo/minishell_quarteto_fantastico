@@ -6,13 +6,13 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/07 00:08:02 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/07 00:16:16 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static char *expand_error_control_two(char **str_var, char *command)
+static char	*expand_error_control_two(char **str_var, char *command)
 {
 	if (str_var[4] == NULL)
 	{
@@ -28,7 +28,7 @@ static char *expand_error_control_two(char **str_var, char *command)
 		return (NULL);
 	}
 	ft_free_split(str_var);
-	return(command);
+	return (command);
 }
 
 static char	**expand_error_control_one(char **str_var)
@@ -53,12 +53,12 @@ static char	**expand_error_control_one(char **str_var)
 		ft_free_split(str_var);
 		return (NULL);
 	}
-	return(str_var);
+	return (str_var);
 }
 
 char	*expand_error(char *command, int i)
 {
-	char 	**str_var;
+	char	**str_var;
 	int		j;
 
 	str_var = (char **)ft_calloc(6, sizeof(char *));
