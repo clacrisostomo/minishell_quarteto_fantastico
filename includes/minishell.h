@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/06 12:52:09 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/07 02:30:55 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,15 @@
 // 	int pos_uset;
 // 	int pos_env;
 // } t_pos;
+
+typedef struct s_cd
+{
+	char			*tmp;
+	char			*home;
+	char			*slash;
+	int				i;
+}	t_cd;
+
 
 typedef struct s_joker_m
 {
