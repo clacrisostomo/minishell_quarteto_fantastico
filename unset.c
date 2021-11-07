@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 20:22:59 by csantos-          #+#    #+#             */
-/*   Updated: 2021/11/06 00:19:00 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/11/07 01:34:53 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,6 @@ static void	search_key_to_unset(char *key)
 		}
 		c++;
 	}
-	/* c = 0;
-	while (g_shell.hash->item[c] && c <= g_shell.hash->size - 1)
-	{
-		if (ft_strncmp(g_shell.hash->item[c]->key, key, ft_strlen(key)) == 0)
-		{
-			delete_item(g_shell.hash, key);
-			return;
-		}
-		c++;
-	} */
 	while (g_shell.local->item[c] && c <= g_shell.local->size - 1)
 	{
 		if (ft_strncmp(g_shell.local->item[c]->key, key, ft_strlen(key)) == 0)

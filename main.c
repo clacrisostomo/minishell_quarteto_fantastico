@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/06 00:34:07 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/11/07 01:36:59 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*do_prompt(void)
 
 void	free_n_env(char **n_env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (n_env)
@@ -91,7 +91,7 @@ void	ft_free_split(char **str)
 	str = NULL;
 }
 
-static void	loop()
+static void	loop(void)
 {
 	char	**cmd;
 	char	*command;

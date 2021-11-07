@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_by_key.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:18:04 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/03 15:25:45 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/07 01:33:15 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@ char	*search_hash_by_key(char *key)
 			return (g_shell.env->item[c]->value);
 		c++;
 	}
-	/* c = 0;
-	while (g_shell.hash->item[c] && c <= g_shell.hash->size - 1)
-	{
-		if (ft_strncmp(g_shell.hash->item[c]->key, key, ft_strlen(key)) == 0)
-			return (g_shell.hash->item[c]->value);
-		c++;
-	} */
 	c = 0;
 	while (g_shell.local->item[c] && c <= g_shell.local->size - 1)
 	{
@@ -55,17 +48,6 @@ void	modify_hash_by_key(char *key, char *new_val)
 		}
 		c++;
 	}
-	/* c = 0;
-	while (g_shell.hash->item[c] && c <= g_shell.hash->size - 1)
-	{
-		if (ft_strncmp(g_shell.hash->item[c]->key, key, ft_strlen(key)) == 0)
-		{
-			free_item(g_shell.hash->item[c]);
-			g_shell.hash->item[c] = insert_table(key, new_val);
-			return ;
-		}
-		c++;
-	} */
 	c = 0;
 	while (g_shell.local->item[c] && c <= g_shell.local->size - 1)
 	{
