@@ -6,52 +6,11 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:17:46 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/07 03:15:07 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/08 20:08:06 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
-
-static void	control_cd_minus(char *tmp)
-{
-	char	*old;
-
-	old = search_hash_by_key("OLDPWD");
-	if (old)
-	{
-		ft_printf("%s\n", old);
-		chdir(old);
-		errno = 0;
-	}
-	else
-	{
-		ft_putstr_fd("Minishell: cd: OLDPWD not set\n", STDERR_FILENO);
-		free(tmp);
-		errno = EPERM;
-	}
-}
-
-static void	control_cd_minus_two(char **cmd, char *slash, char *home)
-{
-	if (ft_strncmp(cmd[1], "~-", 5) == 0)
-		chdir(search_hash_by_key("OLDPWD"));
-	else if (ft_strncmp(cmd[1], "~", 4) == 0
-		|| ft_strncmp(cmd[1], "--", 4) == 0)
-		chdir(home);
-	else if (ft_strncmp(cmd[1], "/", 4) == 0)
-		chdir(slash);
-	else if (ft_strncmp(cmd[1], "/bin", 4) == 0)
-		chdir("/bin");
-	else
-		chdir(cmd[1]);
-}
-
-static void	cd_error_file(char **cmd)
-{
-	ft_putstr_fd("Minishell: cd: ", STDERR_FILENO);
-	ft_putstr_fd(cmd[1], STDERR_FILENO);
-	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-}
 
 static int	cd_args(char **cmd, int i)
 {
