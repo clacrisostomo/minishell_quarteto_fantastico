@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 20:22:59 by csantos-          #+#    #+#             */
-/*   Updated: 2021/11/03 23:23:08 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/11/07 01:34:53 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,6 @@ static void	search_key_to_unset(char *key)
 		}
 		c++;
 	}
-	/* c = 0;
-	while (g_shell.hash->item[c] && c <= g_shell.hash->size - 1)
-	{
-		if (ft_strncmp(g_shell.hash->item[c]->key, key, ft_strlen(key)) == 0)
-		{
-			delete_item(g_shell.hash, key);
-			return;
-		}
-		c++;
-	} */
 	while (g_shell.local->item[c] && c <= g_shell.local->size - 1)
 	{
 		if (ft_strncmp(g_shell.local->item[c]->key, key, ft_strlen(key)) == 0)
@@ -93,12 +83,12 @@ void	unset_(char **cmd)
 			ft_putstr_fd("Minishell: unset: '", 2);
 			ft_putstr_fd(cmd[i], 2);
 			ft_putendl_fd("': not a valid identifier", 2);
-			g_shell.status_error = 1;
+			errno = EPERM;
 		}
 		else
 		{
 			search_key_to_unset(cmd[i]);
-			g_shell.status_error = 0;
+			errno = 0;
 		}
 		i++;
 	}

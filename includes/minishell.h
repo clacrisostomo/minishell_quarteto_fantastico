@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/03 23:17:36 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/11/06 12:52:09 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_hash_table
 {
 	t_ht_item	**item;
 	int			size;
-	int			count;
+	int			count; //o que que é count??
 }	t_hash_table;
 
 typedef struct s_shell
@@ -107,6 +107,7 @@ void			pwd(void);
 int				echo(char **cmd);
 void			expt(char **cmd, int exp);
 void			unset_(char **cmd);
+void			exit_terminal(char **cmd, char	**n_env);
 
 /*
 ** HASH TABLE
@@ -121,7 +122,7 @@ t_ht_item		*insert_table(char *key, char *value);
 t_hash_table	*envp_to_hash(char **envp);
 void			free_item(t_ht_item *item);
 void			free_table(t_hash_table *table);
-void			free_n_exit(t_hash_table *table);
+void			free_n_exit(void);
 void			free_item(t_ht_item *item);
 //int				loop_table_n_insert(t_ht_item *item, int table);
 int				loop_table_n_insert(char *key, char *value, int table);
@@ -146,6 +147,7 @@ char			*subs_quote(char *command, int idx, char q_id);
 int				count_string(char *command, int *idx, int *i, int q_id);
 char			*expand_quote_var(char *command, int *idx, int q_id);
 char			*expand_error(char *command, int i);
+void			free_joker_list(t_joker_m *lst);
 
 /*
 ** UTILS

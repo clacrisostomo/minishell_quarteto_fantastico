@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 23:40:05 by csantos-          #+#    #+#             */
-/*   Updated: 2021/11/03 23:17:26 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/11/06 11:05:20 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,42 @@ t_ht_item	*insert_table(char *key, char *value)
 	return (new_item);
 }
 
-void	free_n_exit(t_hash_table *table)
+static void	free_all(t_hash_table	*table)
 {
 	int			i;
 	t_ht_item	*item;
 
 	i = 0;
-	while (i < table->size)
+	if (table != NULL)
 	{
-		item = table->item[i];
-		if (item)
-			free_item(item);
-		i++;
+		if (table->item)
+		{
+			while (i < table->size)
+			{
+				item = table->item[i];
+				if (item)
+					free_item(item);
+				i++;
+			}
+			free(table->item);
+		}
+		free(table);
 	}
-	exit (EXIT_SUCCESS);
+}
+
+void	free_n_exit(void)
+{
+	free_all(g_shell.env);
+	free_all(g_shell.local);
+	exit (errno);
 }
 
 void	free_item(t_ht_item *item)
 {
-	free(item->key);
-	free(item->value);
+	if (item->key)
+		free(item->key);
+	if (item->value)
+		free(item->value);
 	free(item);
 }
 
@@ -50,10 +66,20 @@ t_hash_table	*create_hash_table(int size)
 
 	i = 0;
 	hashtable = (t_hash_table *)malloc(sizeof(t_hash_table));
+	if (!hashtable)
+	{
+		perror("Error: ");
+		free_n_exit();
+	}
 	hashtable->size = size;
 	hashtable->count = 0;
 	hashtable->item = (t_ht_item **) ft_calloc(hashtable->size,
 			sizeof(t_ht_item*));
+	if (!hashtable->item)
+	{
+		perror("Error: ");
+		free_n_exit();
+	}
 	while (i++ < hashtable->size - 1)
 	{
 		hashtable->item[i] = NULL;
@@ -66,8 +92,18 @@ t_ht_item	*create_hash_item(char *key, char *value)
 	t_ht_item	*new;
 
 	new = (t_ht_item *) ft_calloc(sizeof(t_ht_item), 1);
+	if (!new)
+	{
+		perror("Error: ");
+		free_n_exit();
+	}
 	new->key = ft_strdup(key);
 	new->value = ft_strdup(value);
+	if (new->key == NULL || new->value == NULL)
+	{
+		perror("Error: ");
+		free_n_exit();
+	}
 	return (new);
 }
 

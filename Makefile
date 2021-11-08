@@ -6,7 +6,7 @@
 #    By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/11/03 17:22:29 by cfico-vi         ###   ########.fr        #
+#    Updated: 2021/11/05 16:45:16 by cfico-vi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 		make -C $(LIBFT)
-		gcc $(CFLAGS) -g -o $(NAME) $(SRC) -L $(LIBFT) -lft -lreadline -I includes -fsanitize=address
+		gcc $(CFLAGS) -g -o $(NAME) $(SRC) -L $(LIBFT) -lft -lreadline -I includes
+#-fsanitize=address
 
 %.o: %.c
 		gcc -c $< -I includes

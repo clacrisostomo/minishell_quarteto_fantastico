@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/03 16:48:09 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/11/07 00:44:32 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,86 @@ int	count_string(char *command, int *idx, int *i, int q_id)
 	return (string_count);
 }
 
+static char	**subs_quote_ctrl_one(char *cmd, int idx, char **var)
+{
+	var[0] = cmd;
+	var[1] = ft_substr(var[0], 0, idx);
+	if (var[1] == NULL)
+	{
+		perror("Error: ");
+		ft_free_split(var);
+		return (NULL);
+	}
+	var[2] = ft_substr(var[0], idx + 1, ft_strlen(var[0]) - idx + 1);
+	if (var[2] == NULL)
+	{
+		perror("Error: ");
+		ft_free_split(var);
+		return (NULL);
+	}
+	free(var[0]);
+	var[0] = ft_strjoin(var[1], var[2]);
+	if (var[0] == NULL)
+	{
+		perror("Error: ");
+		var[0] = var[2];
+		ft_free_split(var);
+		return (NULL);
+	}
+	return (var);
+}
+
+static char	*subs_quote_ctrl_two(char *cmd, int idx, char **var)
+{
+	var[1] = ft_substr(var[0], 0, idx);
+	if (var[1] == NULL)
+	{
+		perror("Error: ");
+		var[1] = var[2];
+		ft_free_split(var);
+		return (NULL);
+	}
+	free(var[2]);
+	var[2] = ft_substr(var[0], idx + 1, ft_strlen(var[0]) - idx + 1);
+	if (var[0] == NULL)
+	{
+		perror("Error: ");
+		ft_free_split(var);
+		return (NULL);
+	}
+	cmd = ft_strjoin(var[1], var[2]);
+	if (cmd == NULL)
+	{
+		perror("Error: ");
+		ft_free_split(var);
+		return (NULL);
+	}
+	ft_free_split(var);
+	return (cmd);
+}
+
 char	*subs_quote(char *command, int idx, char q_id)
 {
-	char		*str_start;
-	char		*str_end;
+	char	**str_var;
+	int		j;
 
-	str_start = ft_substr(command, 0, idx);
-	str_end = ft_substr(command, idx + 1, ft_strlen(command) - idx + 1);
-	free(command);
-	command = ft_strjoin(str_start, str_end);
-	free(str_start);
-	free(str_end);
-	while (command[idx] != q_id)
+	str_var = (char **)ft_calloc(4, sizeof(char *));
+	if (str_var == NULL)
+	{
+		perror("Error: ");
+		free(command);
+		return (NULL);
+	}
+	j = 0;
+	while (j < 4)
+		str_var[j++] = NULL;
+	str_var = subs_quote_ctrl_one(command, idx, str_var);
+	if (str_var == NULL)
+		return (NULL);
+	while (str_var[0][idx] != q_id)
 		idx++;
-	str_start = ft_substr(command, 0, idx);
-	str_end = ft_substr(command, idx + 1, ft_strlen(command) - idx + 1);
-	free(command);
-	command = ft_strjoin(str_start, str_end);
-	free(str_start);
-	free(str_end);
+	free(str_var[1]);
+	command = subs_quote_ctrl_two(command, idx, str_var);
 	return (command);
 }
 
@@ -73,6 +134,11 @@ static t_joker_m	*add_joker_list(t_joker_m *space, t_joker_m *new_joker)
 	t_joker_m	*tmp;
 
 	new_joker = ft_calloc(1, sizeof(t_joker_m));
+	if (new_joker == NULL)
+	{
+		perror("Error: ");
+		return (NULL);
+	}
 	tmp = space;
 	while (tmp->next_jok != NULL)
 		tmp = tmp->next_jok;
@@ -80,22 +146,15 @@ static t_joker_m	*add_joker_list(t_joker_m *space, t_joker_m *new_joker)
 	return (new_joker);
 }
 
-void	put_jokers_c(char *command, t_joker_m *joker_list, int *i, int q_id)
+static void	put_jokers_c_ctrl(char *cmd, t_joker_m *new_joker, int *i, int q_id)
 {
-	t_joker_m	*new_joker;
-
-	new_joker = NULL;
-	new_joker = add_joker_list(joker_list, new_joker);
-	new_joker->id = ft_calloc(i[4], sizeof(int));
-	new_joker->id_size = i[4] - 1;
-	new_joker->split_c = i[3];
 	i[0] = 0;
 	i[4] = i[2] + 1;
-	while (command[i[4]] != q_id)
+	while (cmd[i[4]] != q_id)
 	{
-		if (command[i[4]] == ' ')
+		if (cmd[i[4]] == ' ')
 		{
-			command[i[4]] = JOK_C;
+			cmd[i[4]] = JOK_C;
 			if (i[3] == 0)
 				new_joker->id[i[0]] = i[4] - 1;
 			else
@@ -104,4 +163,52 @@ void	put_jokers_c(char *command, t_joker_m *joker_list, int *i, int q_id)
 		}
 		i[4]++;
 	}
+}
+
+void	put_jokers_c(char *command, t_joker_m *joker_list, int *i, int q_id)
+{
+	t_joker_m	*new_joker;
+
+	new_joker = NULL;
+	new_joker = add_joker_list(joker_list, new_joker);
+	if (new_joker == NULL)
+	{
+		free_joker_list(joker_list);
+		free_n_exit();
+	}
+	new_joker->id = ft_calloc(i[4], sizeof(int));
+	if (new_joker->id == NULL)
+	{
+		perror("Error: ");
+		free_joker_list(joker_list);
+		free_n_exit();
+	}
+	new_joker->id_size = i[4] - 1;
+	new_joker->split_c = i[3];
+	put_jokers_c_ctrl(command, new_joker, i, q_id);
+}
+
+void	free_joker_list(t_joker_m *lst)
+{
+	t_joker_m	*tmp;
+
+	tmp = NULL;
+	if (lst->next_jok != NULL)
+		tmp = lst->next_jok;
+	free(lst);
+	lst = tmp;
+	if (lst == NULL)
+		return ;
+	while (lst->next_jok != NULL)
+	{
+		if (lst->id)
+			free(lst->id);
+		tmp = lst->next_jok;
+		free(lst);
+		lst = tmp;
+	}
+	if (lst->id)
+		free(lst->id);
+	free(lst);
+	return ;
 }
