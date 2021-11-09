@@ -3,41 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/07 01:36:59 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/09 01:22:25 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-//TODO: MUDAR AS HASHTABLES
-void	execute(char **cmd)
+char	**get_paths()
+{
+	char *paths;
+	char **ret;
+	int	i;
+
+	i = 0;
+	paths = search_hash_by_key("PATH");
+	while (*paths++ != '\0')
+	{
+		if (*paths == ':')
+			i++;
+	}
+	ret = (char **)malloc((i + 1) * sizeof(char *));
+	ret = ft_split(paths, ':');
+	return (ret);
+}
+
+void	execute(char **cmd, int i)
 {
 	char	**n_env;
+	int status;
+	//char	**paths;
+	pid_t	pid;
+	int		fd[2];
+	//int		c;
 
+	//c = 1;
+	//paths = get_paths();
 	n_env = hash_to_str_arr(g_shell.env);
-	if (!(ft_strcmp(cmd[0], "echo")))
+	if (!(ft_strcmp(cmd[i], "echo")))
 		echo(cmd);
-	else if (!(ft_strcmp(cmd[0], "cd")))
+	else if (!(ft_strcmp(cmd[i], "cd")))
 		cd(cmd);
-	else if (!(ft_strcmp(cmd[0], "pwd")))
+	else if (!(ft_strcmp(cmd[i], "pwd")))
 		pwd();
-	else if (!(ft_strcmp(cmd[0], "env")))
+	else if (!(ft_strcmp(cmd[i], "env")))
 		env();
-	else if (!(ft_strcmp(cmd[0], "export")))
+	else if (!(ft_strcmp(cmd[i], "export")))
 		expt(cmd, 1);
-	else if (!(ft_strcmp(cmd[0], "unset")))
+	else if (!(ft_strcmp(cmd[i], "unset")))
 		unset_(cmd);
-	else if (!(ft_strcmp(cmd[0], "exit")))
+	else if (!(ft_strcmp(cmd[i], "exit")))
 		exit_terminal(cmd, n_env);
 	else if (ft_isvar(cmd))
-		expt(cmd, 0);
+		expt(cmd, i);
 	else if (is_path(cmd, n_env))
-		execve(cmd[0], cmd, n_env);
-	else if (execve(cmd[0], cmd, n_env) == -1)
-		ft_printf("%s: command not found\n", cmd[0]);
+	{
+		pipe(fd);
+		pid = fork();
+		if (pid == -1)
+		{
+			perror("Error: ");
+			free_n_exit();
+		}
+		else if(pid == 0)
+			execve(cmd[i], cmd, n_env);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			errno = WIFEXITED(status);
+	}
+/* 	else if (execve(paths[0], cmd, n_env) == -1)
+	{
+		while (paths[c][0] != '\0')
+		{
+			execve("/bin/", cmd, n_env);
+			c++;
+		}
+	} */
+	else if (execve(cmd[i], cmd, n_env) == -1)
+		ft_printf("%s: command not found\n", cmd[i]);
 /* 	else
 		ft_printf("%s: command not found\n", cmd[0]); */
 	ft_free_split(n_env);
@@ -91,6 +136,64 @@ void	ft_free_split(char **str)
 	str = NULL;
 }
 
+void	save_origin_fd(int *save_fd)
+{
+	save_fd[0] = dup(0);
+	save_fd[1] = dup(1);
+}
+
+void	reset_fd(int *save_fd)
+{
+	dup2(save_fd[0], 0);
+	close(save_fd[0]);
+	dup2(save_fd[1], 1);
+	close(save_fd[1]);
+}
+
+void	ms_pipe(char **cmd, int i)
+{
+	pid_t	pid;
+	int	fd[2];
+	//int	save_fd[2];
+
+	pid = 0;
+
+	//save_origin_fd(save_fd);
+	pipe(fd);
+	pid = fork();   
+	if (pid == -1)
+	{
+		perror("Error: ");
+		free_n_exit();
+	}
+	else if (pid != 0)
+	{
+		waitpid(pid, NULL, 0);
+	}
+	else if(pid == 0)
+	{
+	//config_pip
+		dup2(fd[1], STDOUT);
+		printf("fez fork");
+		parser(cmd, i + 1);
+		//execute(cmd, c);
+	}
+}
+
+
+void	parser(char **cmd, int i)
+{
+	int c;
+
+	c = i;
+	while (!(ft_strcmp(cmd[i], "|")) && !(ft_strcmp(cmd[i], "\0")))
+		i++;
+	if (!(ft_strcmp(cmd[i], "\0")))
+		ms_pipe(cmd, i);
+	else
+		execute(cmd, c);
+}
+
 static void	loop(void)
 {
 	char	**cmd;
@@ -126,7 +229,8 @@ static void	loop(void)
 			add_history(command);
 			cmd = split_command(command);
 			free(command);
-			execute(cmd);
+			parser(cmd, 0);
+			//execute(cmd);
 			ft_free_split(cmd);
 		}
 	}
