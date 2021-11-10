@@ -6,27 +6,38 @@
 /*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/09 01:22:25 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/11/09 23:14:31 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
+char	*get_path_str()
+{
+	int c;
+
+	c = 0;
+	while (g_shell.env->item[c] && c <= g_shell.env->size - 1)
+	{
+		if(!ft_strcmp(g_shell.env->item[c]->key, "PATH"))
+		return(g_shell.env->item[c]->value);
+		c++;
+	}
+	return ("");
+}
+
 char	**get_paths()
 {
 	char *paths;
 	char **ret;
-	int	i;
+/* 	int	i;
 
-	i = 0;
-	paths = search_hash_by_key("PATH");
-	while (*paths++ != '\0')
-	{
-		if (*paths == ':')
-			i++;
-	}
-	ret = (char **)malloc((i + 1) * sizeof(char *));
+	i = 0; */
+	paths = get_path_str();
+	//printf("retorno do get_path is: %s\n", paths);
+	//printf("%i\n", i);
 	ret = ft_split(paths, ':');
+	//printf("retorno do ret is: %s\n", ret[2]);
 	return (ret);
 }
 
@@ -34,14 +45,17 @@ void	execute(char **cmd, int i)
 {
 	char	**n_env;
 	int status;
-	//char	**paths;
+	char	**paths;
 	pid_t	pid;
 	int		fd[2];
-	//int		c;
+	int		c;
+	char **new_cmd;
+	char *new_path;
 
-	//c = 1;
-	//paths = get_paths();
+	c = 1;
+	paths = get_paths();
 	n_env = hash_to_str_arr(g_shell.env);
+	new_cmd = (char **)malloc(sizeof(char **));
 	if (!(ft_strcmp(cmd[i], "echo")))
 		echo(cmd);
 	else if (!(ft_strcmp(cmd[i], "cd")))
@@ -73,18 +87,38 @@ void	execute(char **cmd, int i)
 		if (WIFEXITED(status))
 			errno = WIFEXITED(status);
 	}
-/* 	else if (execve(paths[0], cmd, n_env) == -1)
+	/* while(paths[c++])
+		printf("paths no execute:%s\n", paths[c]); */
+	else if (execve(paths[0], cmd, n_env) == -1)
 	{
-		while (paths[c][0] != '\0')
+		pipe(fd);
+		pid = fork();
+		if (pid == -1)
 		{
-			execve("/bin/", cmd, n_env);
-			c++;
+			perror("Error: ");
+			free_n_exit();
 		}
-	} */
+		else if(pid == 0)
+		{
+			while (paths[c])
+			{
+				new_path = ft_strjoin(paths[c], "/");
+				new_cmd[0] = ft_strjoin(new_path, cmd[0]);
+				if (cmd[1])
+					new_cmd[1] = ft_strjoin(new_cmd[0], cmd[1]);
+				execve(new_cmd[i], new_cmd, n_env);
+				///printf("testou:%s \t\t retornou:%i\n",ft_strjoin(paths[c], "/"), execve(ft_strjoin(paths[c], "/"), cmd, n_env));
+				printf("path: %s\n", new_cmd[i]);
+				printf("cmd: %s%s\n", new_cmd[0], new_cmd[1]);
+				c++;
+			}
+		}
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			errno = WIFEXITED(status);
+	}
 	else if (execve(cmd[i], cmd, n_env) == -1)
 		ft_printf("%s: command not found\n", cmd[i]);
-/* 	else
-		ft_printf("%s: command not found\n", cmd[0]); */
 	ft_free_split(n_env);
 }
 
