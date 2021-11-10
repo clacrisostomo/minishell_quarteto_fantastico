@@ -6,7 +6,7 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/07 02:30:55 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/08 20:17:20 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef struct s_cd
 	char			*slash;
 	int				i;
 }	t_cd;
-
 
 typedef struct s_joker_m
 {
@@ -115,8 +114,18 @@ void			env(void);
 void			pwd(void);
 int				echo(char **cmd);
 void			expt(char **cmd, int exp);
+void			export_only(void);
 void			unset_(char **cmd);
 void			exit_terminal(char **cmd, char	**n_env);
+
+void	cd_error_file(char **cmd);
+void	control_cd_minus_two(char **cmd, char *slash, char *home);
+void	control_cd_minus(char *tmp);
+char	*put_quotes(t_ht_item *new_env);
+char **env_with_quotes(void);
+void	print_export_env(char **array, int fd);
+void	error_export(char **cmd, int i);
+
 
 /*
 ** HASH TABLE
@@ -133,9 +142,10 @@ void			free_item(t_ht_item *item);
 void			free_table(t_hash_table *table);
 void			free_n_exit(void);
 void			free_item(t_ht_item *item);
-//int				loop_table_n_insert(t_ht_item *item, int table);
 int				loop_table_n_insert(char *key, char *value, int table);
 int				modify_table_by_key(int table, char *key, char *value);
+int				which_table_by_key(char *key);
+void			change_val_by_table(t_hash_table *table, char *key, char *value, int c);
 
 /*
 ** SIGNAL
