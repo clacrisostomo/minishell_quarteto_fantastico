@@ -6,7 +6,7 @@
 /*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/08 23:56:19 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/11/18 01:17:10 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ void			free_n_env(char **n_env);
 void			execute(char **command, int i);
 void			quote_commander(char **cmd);
 void			delete_item(t_hash_table *table, char *key);
-void			parser(char **cmd, int i);
-void			ms_pipe(char **cmd, int i);
+void			parser(char **cmd, int i, int *old_fd);
+void			ms_pipe(int *old_fd);
 
 /*
 ** SET SPACE FOR REDIR

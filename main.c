@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/09 23:14:31 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/11/110 21:551:0:04 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	execute(char **cmd, int i)
 	c = 1;
 	paths = get_paths();
 	n_env = hash_to_str_arr(g_shell.env);
-	new_cmd = (char **)malloc(sizeof(char **));
+	new_cmd = NULL;
+	printf("oiiii no execute\n");
 	if (!(ft_strcmp(cmd[i], "echo")))
 		echo(cmd);
 	else if (!(ft_strcmp(cmd[i], "cd")))
@@ -82,16 +83,20 @@ void	execute(char **cmd, int i)
 			free_n_exit();
 		}
 		else if(pid == 0)
-			execve(cmd[i], cmd, n_env);
+		{
+			execve(*cmd, cmd, n_env);
+			errno = 2;
+			exit(errno);
+		}
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			errno = WIFEXITED(status);
 	}
 	/* while(paths[c++])
 		printf("paths no execute:%s\n", paths[c]); */
-	else if (execve(paths[0], cmd, n_env) == -1)
+	else if (execve(paths[0], cmd, n_env) == -1)   //<<<<<<<<<<EXECVE SEM PATH
 	{
-		pipe(fd);
+		//pipe(fd);
 		pid = fork();
 		if (pid == -1)
 		{
@@ -100,26 +105,40 @@ void	execute(char **cmd, int i)
 		}
 		else if(pid == 0)
 		{
+			new_cmd = (char **)malloc(sizeof(char **));
 			while (paths[c])
 			{
 				new_path = ft_strjoin(paths[c], "/");
 				new_cmd[0] = ft_strjoin(new_path, cmd[0]);
 				if (cmd[1])
-					new_cmd[1] = ft_strjoin(new_cmd[0], cmd[1]);
-				execve(new_cmd[i], new_cmd, n_env);
+					new_cmd[1] = ft_strdup(cmd[1]);
+				new_cmd[2] = NULL;
+				execve(new_cmd[i], cmd, n_env);
 				///printf("testou:%s \t\t retornou:%i\n",ft_strjoin(paths[c], "/"), execve(ft_strjoin(paths[c], "/"), cmd, n_env));
-				printf("path: %s\n", new_cmd[i]);
-				printf("cmd: %s%s\n", new_cmd[0], new_cmd[1]);
+				//printf("path: %s\n", new_cmd[i]);
+				//printf("cmd: %s%s\n", new_cmd[0], new_cmd[1]);
 				c++;
 			}
+			ft_putstr_fd("Minishell: '", 2);
+			ft_putstr_fd(cmd[0], 2);
+			ft_putstr_fd("': ", 2);
+			ft_putstr_fd(strerror(errno), 2);
+			ft_putstr_fd("\n", 2);
+			exit(errno);
 		}
 		waitpid(pid, &status, 0);
+		//close(fd[0]);
+		//close(fd[1]);
 		if (WIFEXITED(status))
 			errno = WIFEXITED(status);
+		ft_free_split(new_cmd);
 	}
 	else if (execve(cmd[i], cmd, n_env) == -1)
 		ft_printf("%s: command not found\n", cmd[i]);
 	ft_free_split(n_env);
+	ft_free_split(paths);
+	if(new_cmd)
+		ft_free_split(new_cmd);
 }
 
 char	*do_prompt(void)
@@ -180,52 +199,80 @@ void	reset_fd(int *save_fd)
 {
 	dup2(save_fd[0], 0);
 	close(save_fd[0]);
-	dup2(save_fd[1], 1);
-	close(save_fd[1]);
+	//dup2(save_fd[1], 1);
+	//close(save_fd[1]);
 }
 
-void	ms_pipe(char **cmd, int i)
+void	ms_pipe(int *old_fd)
 {
-	pid_t	pid;
 	int	fd[2];
 	//int	save_fd[2];
-
-	pid = 0;
-
+	dup2(*old_fd, STDIN);
+	if (old_fd != 0)
+		close(*old_fd);
 	//save_origin_fd(save_fd);
 	pipe(fd);
-	pid = fork();   
-	if (pid == -1)
-	{
-		perror("Error: ");
-		free_n_exit();
-	}
-	else if (pid != 0)
-	{
-		waitpid(pid, NULL, 0);
-	}
-	else if(pid == 0)
-	{
-	//config_pip
-		dup2(fd[1], STDOUT);
-		printf("fez fork");
-		parser(cmd, i + 1);
-		//execute(cmd, c);
-	}
+	dup2(fd[1], STDOUT);
+	close(fd[1]);
+	*old_fd = dup(fd[0]);
+	close(fd[0]);
 }
 
-
-void	parser(char **cmd, int i)
+char	**cmd_till_pipe(char **cmd, int begin, int end)
 {
+	char	**sub_cmd;
+	int		k;
+
+	k = 0;
+	sub_cmd = (char **)calloc((end - begin + 1), sizeof(char *));
+	while (begin != end)
+		sub_cmd[k++] = cmd[begin++];
+	sub_cmd[k] = NULL;
+	return(sub_cmd);
+}
+
+void	parser(char **cmd, int i, int *old_fd)
+{
+	int	save_fd[2];
 	int c;
+	char **sub_cmd;
 
 	c = i;
-	while (!(ft_strcmp(cmd[i], "|")) && !(ft_strcmp(cmd[i], "\0")))
+	save_origin_fd(save_fd);
+	ft_putstr_fd(ft_itoa(i), 2);
+	ft_putstr_fd("\n", 2);
+	while (ft_strcmp(cmd[i], "|") && (cmd[i + 1]))
+	{
 		i++;
-	if (!(ft_strcmp(cmd[i], "\0")))
-		ms_pipe(cmd, i);
-	else
-		execute(cmd, c);
+		//printf("i = %d\n", i);
+		ft_putstr_fd(ft_itoa(i), 2);
+		ft_putstr_fd("\n", 2);
+	}
+	ft_putstr_fd("foi\n", 2);
+	//printf("%s\n", cmd[i - 1]);
+	if (!(ft_strcmp(cmd[i], "|")))
+	{
+		sub_cmd = cmd_till_pipe(cmd, c, i);
+		ms_pipe(old_fd);
+		execute(sub_cmd, c);
+		if (sub_cmd)
+			ft_free_split(sub_cmd);
+		parser(cmd, i + 1, old_fd);
+	}
+	else{
+		dup2(save_fd[1], 1);
+		close(save_fd[1]);
+		sub_cmd = cmd_till_pipe(cmd, c, i + 1);
+		ft_putstr_fd(sub_cmd[0], 2);
+		ft_putstr_fd("\n", 2);
+		ft_putstr_fd(sub_cmd[1], 2);
+		ft_putstr_fd("\n", 2);
+		ft_putstr_fd("oiiiiii ciro\n", 2);
+		execute(sub_cmd, 0);
+		if (sub_cmd)
+			ft_free_split(sub_cmd);
+	}
+	reset_fd(save_fd);
 }
 
 static void	loop(void)
@@ -235,10 +282,12 @@ static void	loop(void)
 	char	*prompt;
 	int		i;
 	int		old_errno;
+	int		old_fd;
 
 	i = 0;
 	while (1)
 	{
+		old_fd = STDIN;
 		old_errno = errno;
 		define_signals();
 		prompt = do_prompt();
@@ -263,9 +312,11 @@ static void	loop(void)
 			add_history(command);
 			cmd = split_command(command);
 			free(command);
-			parser(cmd, 0);
+			//verifica se tem redirect, troca stdin e stdout
+			parser(cmd, 0, &old_fd);
 			//execute(cmd);
-			ft_free_split(cmd);
+			//ft_free_split(cmd);
+			//volta o stdin e stdout originais
 		}
 	}
 }
