@@ -53,10 +53,10 @@ void	execute(char **cmd, int i)
 	char *new_path;
 
 	c = 1;
+	//printf("oiiii no execute\n");
 	paths = get_paths();
 	n_env = hash_to_str_arr(g_shell.env);
 	new_cmd = NULL;
-	printf("oiiii no execute\n");
 	if (!(ft_strcmp(cmd[i], "echo")))
 		echo(cmd);
 	else if (!(ft_strcmp(cmd[i], "cd")))
@@ -212,7 +212,7 @@ void	ms_pipe(int *old_fd)
 		close(*old_fd);
 	//save_origin_fd(save_fd);
 	pipe(fd);
-	dup2(fd[1], STDOUT);
+	dup2(fd[1], STDIN);
 	close(fd[1]);
 	*old_fd = dup(fd[0]);
 	close(fd[0]);
@@ -239,18 +239,19 @@ void	parser(char **cmd, int i, int *old_fd)
 
 	c = i;
 	save_origin_fd(save_fd);
-	ft_putstr_fd(ft_itoa(i), 2);
-	ft_putstr_fd("\n", 2);
+	//printf("i na entrada do parser:");
+	//ft_putstr_fd(ft_itoa(i), 2);
+	//ft_putstr_fd("\n", 2);
 	while (ft_strcmp(cmd[i], "|") && (cmd[i + 1]))
 	{
 		i++;
 		//printf("i = %d\n", i);
-		ft_putstr_fd(ft_itoa(i), 2);
-		ft_putstr_fd("\n", 2);
+		//ft_putstr_fd(ft_itoa(i), 2);
+		//ft_putstr_fd("\n", 2);
 	}
-	ft_putstr_fd("foi\n", 2);
+	//ft_putstr_fd("passou controle do pipe\n", 2);
 	//printf("%s\n", cmd[i - 1]);
-	if (!(ft_strcmp(cmd[i], "|")))
+	if (!(ft_strcmp(cmd[i], "|")))   //<<<<<<<<<<<<<<<<ENTRADA DO PIPE
 	{
 		sub_cmd = cmd_till_pipe(cmd, c, i);
 		ms_pipe(old_fd);
@@ -263,11 +264,11 @@ void	parser(char **cmd, int i, int *old_fd)
 		dup2(save_fd[1], 1);
 		close(save_fd[1]);
 		sub_cmd = cmd_till_pipe(cmd, c, i + 1);
-		ft_putstr_fd(sub_cmd[0], 2);
-		ft_putstr_fd("\n", 2);
-		ft_putstr_fd(sub_cmd[1], 2);
-		ft_putstr_fd("\n", 2);
-		ft_putstr_fd("oiiiiii ciro\n", 2);
+		//ft_putstr_fd(sub_cmd[0], 2);
+		//ft_putstr_fd("\n", 2);
+		//ft_putstr_fd(sub_cmd[1], 2);
+		//ft_putstr_fd("\n", 2);
+		//ft_putstr_fd("oiiiiii ciro\n", 2);
 		execute(sub_cmd, 0);
 		if (sub_cmd)
 			ft_free_split(sub_cmd);

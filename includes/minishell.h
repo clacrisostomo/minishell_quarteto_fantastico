@@ -6,7 +6,7 @@
 /*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/18 01:17:10 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/11/18 23:17:45 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	cd_error_file(char **cmd);
 void	control_cd_minus_two(char **cmd, char *slash, char *home);
 void	control_cd_minus(char *tmp);
 char	*put_quotes(t_ht_item *new_env);
-char **env_with_quotes(void);
+char	**env_with_quotes(void);
 void	print_export_env(char **array, int fd);
 void	error_export(char **cmd, int i);
 
