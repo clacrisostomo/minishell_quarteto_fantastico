@@ -103,7 +103,7 @@ void			execute(char **command, int i);
 void			quote_commander(char **cmd);
 void			delete_item(t_hash_table *table, char *key);
 void			parser(char **cmd, int i, int *old_fd);
-void			ms_pipe(int *old_fd);
+void			ms_pipe(char **cmd, int i, int *old_fd);
 
 /*
 ** SET SPACE FOR REDIR

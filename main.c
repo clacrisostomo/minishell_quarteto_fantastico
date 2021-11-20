@@ -47,13 +47,12 @@ void	execute(char **cmd, int i)
 	int status;
 	char	**paths;
 	pid_t	pid;
-	int		fd[2];
+	//int		fd[2];
 	int		c;
 	char **new_cmd;
 	char *new_path;
 
 	c = 1;
-	//printf("oiiii no execute\n");
 	paths = get_paths();
 	n_env = hash_to_str_arr(g_shell.env);
 	new_cmd = NULL;
@@ -75,7 +74,6 @@ void	execute(char **cmd, int i)
 		expt(cmd, i);
 	else if (is_path(cmd, n_env))
 	{
-		pipe(fd);
 		pid = fork();
 		if (pid == -1)
 		{
@@ -92,11 +90,8 @@ void	execute(char **cmd, int i)
 		if (WIFEXITED(status))
 			errno = WIFEXITED(status);
 	}
-	/* while(paths[c++])
-		printf("paths no execute:%s\n", paths[c]); */
 	else if (execve(paths[0], cmd, n_env) == -1)   //<<<<<<<<<<EXECVE SEM PATH
 	{
-		//pipe(fd);
 		pid = fork();
 		if (pid == -1)
 		{
@@ -110,13 +105,7 @@ void	execute(char **cmd, int i)
 			{
 				new_path = ft_strjoin(paths[c], "/");
 				new_cmd[0] = ft_strjoin(new_path, cmd[0]);
-				if (cmd[1])
-					new_cmd[1] = ft_strdup(cmd[1]);
-				new_cmd[2] = NULL;
 				execve(new_cmd[i], cmd, n_env);
-				///printf("testou:%s \t\t retornou:%i\n",ft_strjoin(paths[c], "/"), execve(ft_strjoin(paths[c], "/"), cmd, n_env));
-				//printf("path: %s\n", new_cmd[i]);
-				//printf("cmd: %s%s\n", new_cmd[0], new_cmd[1]);
 				c++;
 			}
 			ft_putstr_fd("Minishell: '", 2);
@@ -127,8 +116,6 @@ void	execute(char **cmd, int i)
 			exit(errno);
 		}
 		waitpid(pid, &status, 0);
-		//close(fd[0]);
-		//close(fd[1]);
 		if (WIFEXITED(status))
 			errno = WIFEXITED(status);
 		ft_free_split(new_cmd);
@@ -199,11 +186,11 @@ void	reset_fd(int *save_fd)
 {
 	dup2(save_fd[0], 0);
 	close(save_fd[0]);
-	//dup2(save_fd[1], 1);
-	//close(save_fd[1]);
+	dup2(save_fd[1], 1);
+	close(save_fd[1]);
 }
 
-void	ms_pipe(int *old_fd)
+void	ms_pipe(char **cmd, int i,int *old_fd)
 {
 	int	fd[2];
 	//int	save_fd[2];
@@ -211,11 +198,15 @@ void	ms_pipe(int *old_fd)
 	if (old_fd != 0)
 		close(*old_fd);
 	//save_origin_fd(save_fd);
-	pipe(fd);
-	dup2(fd[1], STDIN);
-	close(fd[1]);
-	*old_fd = dup(fd[0]);
-	close(fd[0]);
+	if (!(ft_strcmp(cmd[i], "|")))
+	{
+		//ft_putstr_fd("oiiiiii\n", 2);
+		pipe(fd);
+		dup2(fd[1], STDOUT);
+		close(fd[1]);
+		*old_fd = dup(fd[0]);
+		close(fd[0]);
+	}
 }
 
 char	**cmd_till_pipe(char **cmd, int begin, int end)
@@ -239,41 +230,24 @@ void	parser(char **cmd, int i, int *old_fd)
 
 	c = i;
 	save_origin_fd(save_fd);
-	//printf("i na entrada do parser:");
-	//ft_putstr_fd(ft_itoa(i), 2);
-	//ft_putstr_fd("\n", 2);
+
 	while (ft_strcmp(cmd[i], "|") && (cmd[i + 1]))
-	{
 		i++;
-		//printf("i = %d\n", i);
-		//ft_putstr_fd(ft_itoa(i), 2);
-		//ft_putstr_fd("\n", 2);
-	}
-	//ft_putstr_fd("passou controle do pipe\n", 2);
-	//printf("%s\n", cmd[i - 1]);
-	if (!(ft_strcmp(cmd[i], "|")))   //<<<<<<<<<<<<<<<<ENTRADA DO PIPE
-	{
+	if (!(ft_strcmp(cmd[i], "|")))
 		sub_cmd = cmd_till_pipe(cmd, c, i);
-		ms_pipe(old_fd);
-		execute(sub_cmd, c);
-		if (sub_cmd)
-			ft_free_split(sub_cmd);
-		parser(cmd, i + 1, old_fd);
-	}
-	else{
-		dup2(save_fd[1], 1);
-		close(save_fd[1]);
+	else
 		sub_cmd = cmd_till_pipe(cmd, c, i + 1);
-		//ft_putstr_fd(sub_cmd[0], 2);
-		//ft_putstr_fd("\n", 2);
-		//ft_putstr_fd(sub_cmd[1], 2);
-		//ft_putstr_fd("\n", 2);
-		//ft_putstr_fd("oiiiiii ciro\n", 2);
-		execute(sub_cmd, 0);
-		if (sub_cmd)
-			ft_free_split(sub_cmd);
-	}
+	ms_pipe(cmd, i, old_fd);
+	//ft_putstr_fd(sub_cmd[0], 2);0 1
+	//ft_putstr_fd("\n", 2);
+	//ft_putstr_fd(sub_cmd[1], 2);
+	//ft_putstr_fd("\n", 2);
+	execute(sub_cmd, 0);
 	reset_fd(save_fd);
+	if (sub_cmd)
+		ft_free_split(sub_cmd);
+	if (!(ft_strcmp(cmd[i], "|")))
+		parser(cmd, i + 1, old_fd);
 }
 
 static void	loop(void)
