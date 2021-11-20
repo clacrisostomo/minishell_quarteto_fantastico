@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/08 20:17:20 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/18 23:17:45 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 # define INPUT '<'
 # define OUTPUT '>'
 # define JOK_C '@'
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -38,6 +41,7 @@
 # include <sys/file.h>
 # include <sys/stat.h>
 # include <sys/errno.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libraries/libft/libft.h"
@@ -95,9 +99,11 @@ t_shell	g_shell;
 */
 void			ft_free_split(char **str);
 void			free_n_env(char **n_env);
-void			execute(char **command);
+void			execute(char **command, int i);
 void			quote_commander(char **cmd);
 void			delete_item(t_hash_table *table, char *key);
+void			parser(char **cmd, int i, int *old_fd);
+void			ms_pipe(char **cmd, int i, int *old_fd);
 
 /*
 ** SET SPACE FOR REDIR
@@ -122,7 +128,7 @@ void	cd_error_file(char **cmd);
 void	control_cd_minus_two(char **cmd, char *slash, char *home);
 void	control_cd_minus(char *tmp);
 char	*put_quotes(t_ht_item *new_env);
-char **env_with_quotes(void);
+char	**env_with_quotes(void);
 void	print_export_env(char **array, int fd);
 void	error_export(char **cmd, int i);
 
