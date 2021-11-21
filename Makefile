@@ -6,21 +6,36 @@
 #    By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/11/08 20:12:01 by nbarreir         ###   ########.fr        #
+#    Updated: 2021/11/20 20:39:17 by nbarreir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CFLAGS = -Wall -Wextra -Werror
-INCLUDES = includes/minishell.h libraries/libft/libft.h
+INCLUDES = ../includes/minishell.h libraries/libft/libft.h
 LIBFT = libraries/libft
+SRC_PATH = ./source/
 
 
-SRC = main.c hashtable.c hash_by_key.c changedir.c echo_env_pwd.c export.c\
-		variable.c unset.c split_command_0.c is_path.c hash_to_str_arr.c signal.c\
-		set_space_for_redir.c split_command_1.c split_command_2.c export_only.c\
-		changedir_control.c export_utils.c
+SRC = $(SRC_PATH)main.c\
+			$(SRC_PATH)variable_env_local/hashtable.c\
+			$(SRC_PATH)variable_env_local/hash_by_key.c\
+			$(SRC_PATH)variable_env_local/hash_to_str_arr.c\
+			$(SRC_PATH)builtins/changedir.c\
+			$(SRC_PATH)builtins/changedir_control.c\
+			$(SRC_PATH)builtins/echo_env_pwd.c\
+			$(SRC_PATH)builtins/export.c\
+			$(SRC_PATH)builtins/export_only.c\
+			$(SRC_PATH)builtins/export_utils.c\
+			$(SRC_PATH)builtins/unset.c\
+			$(SRC_PATH)variable_env_local/variable.c\
+			$(SRC_PATH)parser/split_command_0.c\
+			$(SRC_PATH)parser/split_command_1.c\
+			$(SRC_PATH)parser/split_command_2.c\
+			$(SRC_PATH)is_path.c\
+			$(SRC_PATH)signal.c\
+			$(SRC_PATH)parser/set_space_for_redir.c
 
 all: $(NAME)
 

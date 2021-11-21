@@ -81,4 +81,5 @@ int					ft_strcmp(const char *s1, const char *s2);
 char				**ft_strsplit(char const *s, char c);
 int					ft_strnstr_indie(const char *big, const char *small,
 						size_t len);
+char **			ft_strsplit(char const *s, char c);
 #endif
