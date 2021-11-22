@@ -12,35 +12,6 @@
 
 #include "../includes/minishell.h"
 
-char *get_path_str()
-{
-	int c;
-
-	c = 0;
-	while (g_shell.env->item[c] && c <= g_shell.env->size - 1)
-	{
-		if (!ft_strcmp(g_shell.env->item[c]->key, "PATH"))
-			return (g_shell.env->item[c]->value);
-		c++;
-	}
-	return ("");
-}
-
-char **get_paths()
-{
-	char *paths;
-	char **ret;
-	/* 	int	i;
-
-	i = 0; */
-	paths = get_path_str();
-	//printf("retorno do get_path is: %s\n", paths);
-	//printf("%i\n", i);
-	ret = ft_split(paths, ':');
-	//printf("retorno do ret is: %s\n", ret[2]);
-	return (ret);
-}
-
 void execute(char **cmd, int i)
 {
 	char **n_env;
@@ -126,21 +97,6 @@ void execute(char **cmd, int i)
 	ft_free_split(paths);
 	if (new_cmd)
 		ft_free_split(new_cmd);
-}
-
-char *do_prompt(void)
-{
-	char cwd[2048];
-	char *prompt;
-
-	getcwd(cwd, 2048);
-	prompt = ft_strjoin(cwd, "$ ");
-	if (prompt == NULL)
-	{
-		perror("Error: ");
-		free_n_exit();
-	}
-	return (prompt);
 }
 
 void free_n_env(char **n_env)
