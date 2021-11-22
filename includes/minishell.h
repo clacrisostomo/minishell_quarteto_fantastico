@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/22 19:17:53 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/11/22 19:54:02 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ typedef struct s_ht_item
 
 typedef struct s_hash_table
 {
-	t_ht_item	**item;
-	int			size;
-	int			count; //o que que é count??
+	t_ht_item		**item;
+	int				size;
+	int				count; //o que que é count??
 }	t_hash_table;
 
 typedef struct s_shell
@@ -132,7 +132,6 @@ char			**env_with_quotes(void);
 void			print_export_env(char **array, int fd);
 void			error_export(char **cmd, int i);
 
-
 /*
 ** HASH TABLE
 */
@@ -151,7 +150,8 @@ void			free_item(t_ht_item *item);
 int				loop_table_n_insert(char *key, char *value, int table);
 int				modify_table_by_key(int table, char *key, char *value);
 int				which_table_by_key(char *key);
-void			change_val_by_table(t_hash_table *table, char *key, char *value, int c);
+void			change_val_by_table(t_hash_table *table, char *key,
+					char *value, int c);
 
 /*
 ** SIGNAL
@@ -177,8 +177,8 @@ void			free_joker_list(t_joker_m *lst);
 /*
 ** PATH HANDLERS
 */
-char			*get_path_str();
-char			**get_paths();
+char			*get_path_str(void);
+char			**get_paths(void);
 char			*do_prompt(void);
 int				is_path(char **cmd, char **n_env);
 
