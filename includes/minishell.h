@@ -6,7 +6,7 @@
 /*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/18 23:17:45 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/11/22 19:17:53 by mde-figu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,13 +124,13 @@ void			export_only(void);
 void			unset_(char **cmd);
 void			exit_terminal(char **cmd, char	**n_env);
 
-void	cd_error_file(char **cmd);
-void	control_cd_minus_two(char **cmd, char *slash, char *home);
-void	control_cd_minus(char *tmp);
-char	*put_quotes(t_ht_item *new_env);
-char	**env_with_quotes(void);
-void	print_export_env(char **array, int fd);
-void	error_export(char **cmd, int i);
+void			cd_error_file(char **cmd);
+void			control_cd_minus_two(char **cmd, char *slash, char *home);
+void			control_cd_minus(char *tmp);
+char			*put_quotes(t_ht_item *new_env);
+char			**env_with_quotes(void);
+void			print_export_env(char **array, int fd);
+void			error_export(char **cmd, int i);
 
 
 /*
@@ -175,9 +175,16 @@ char			*expand_error(char *command, int i);
 void			free_joker_list(t_joker_m *lst);
 
 /*
+** PATH HANDLERS
+*/
+char			*get_path_str();
+char			**get_paths();
+char			*do_prompt(void);
+int				is_path(char **cmd, char **n_env);
+
+/*
 ** UTILS
 */
-int				is_path(char **cmd, char **n_env);
 int				ft_isvar(char **cmd);
 int				ft_strnstr_indie(const char *big, const char *small,
 					size_t len);

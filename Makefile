@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/11/20 20:39:17 by nbarreir         ###   ########.fr        #
+#    Updated: 2021/11/22 19:09:49 by mde-figu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC = $(SRC_PATH)main.c\
 			$(SRC_PATH)parser/split_command_2.c\
 			$(SRC_PATH)is_path.c\
 			$(SRC_PATH)signal.c\
+			$(SRC_PATH)paths_n_prompt.c\
 			$(SRC_PATH)parser/set_space_for_redir.c
 
 all: $(NAME)
