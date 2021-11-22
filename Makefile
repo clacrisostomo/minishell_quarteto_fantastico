@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/11/22 19:09:49 by mde-figu         ###   ########.fr        #
+#    Updated: 2021/11/22 19:47:00 by nbarreir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ SRC = $(SRC_PATH)main.c\
 			$(SRC_PATH)variable_env_local/hashtable.c\
 			$(SRC_PATH)variable_env_local/hash_by_key.c\
 			$(SRC_PATH)variable_env_local/hash_to_str_arr.c\
+			$(SRC_PATH)variable_env_local/variable.c\
+			$(SRC_PATH)variable_env_local/free_table.c\
 			$(SRC_PATH)builtins/changedir.c\
 			$(SRC_PATH)builtins/changedir_control.c\
 			$(SRC_PATH)builtins/echo_env_pwd.c\
@@ -29,10 +31,12 @@ SRC = $(SRC_PATH)main.c\
 			$(SRC_PATH)builtins/export_only.c\
 			$(SRC_PATH)builtins/export_utils.c\
 			$(SRC_PATH)builtins/unset.c\
-			$(SRC_PATH)variable_env_local/variable.c\
 			$(SRC_PATH)parser/split_command_0.c\
 			$(SRC_PATH)parser/split_command_1.c\
 			$(SRC_PATH)parser/split_command_2.c\
+			$(SRC_PATH)parser/split_control_0.c\
+			$(SRC_PATH)parser/split_control_1.c\
+			$(SRC_PATH)parser/split_control_2.c\
 			$(SRC_PATH)is_path.c\
 			$(SRC_PATH)signal.c\
 			$(SRC_PATH)paths_n_prompt.c\

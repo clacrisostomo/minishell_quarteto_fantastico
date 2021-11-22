@@ -12,11 +12,11 @@
 
 #include "../../includes/minishell.h"
 
-void sort_alpha(char **str)
+void	sort_alpha(char **str)
 {
-	int x;
-	int y;
-	char *aux;
+	int		x;
+	int		y;
+	char	*aux;
 
 	x = 0;
 	printf("entrou\n");
@@ -37,11 +37,11 @@ void sort_alpha(char **str)
 	}
 }
 
-char *put_quotes(t_ht_item *new_env)
+char	*put_quotes(t_ht_item *new_env)
 {
-	char *exp_env;
-	char *new_key;
-	char *new_val;
+	char	*exp_env;
+	char	*new_key;
+	char	*new_val;
 
 	if (new_env->value)
 	{
@@ -58,11 +58,11 @@ char *put_quotes(t_ht_item *new_env)
 	return (exp_env);
 }
 
-char **env_with_quotes(void)
+char	**env_with_quotes(void)
 {
-	int i;
-	char **env;
-	t_ht_item *temp;
+	int					i;
+	char				**env;
+	t_ht_item			*temp;
 
 	i = 0;
 	while (g_shell.env->item[i])
@@ -78,9 +78,9 @@ char **env_with_quotes(void)
 	return (env);
 }
 
-void print_export_env(char **array, int fd)
+void	print_export_env(char **array, int fd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array[i] != NULL)
@@ -90,11 +90,11 @@ void print_export_env(char **array, int fd)
 	}
 }
 
-void export_only(void)
+void	export_only(void)
 {
-	char **export_env;
-	char *temp;
-	int c;
+	char	**export_env;
+	char	*temp;
+	int		c;
 
 	c = 0;
 	export_env = env_with_quotes();

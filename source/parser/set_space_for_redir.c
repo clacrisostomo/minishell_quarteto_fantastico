@@ -12,10 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-char *put_space_before(char *cmd, int i)
+char	*put_space_before(char *cmd, int i)
 {
-	char *ret;
-	int j;
+	char	*ret;
+	int		j;
 
 	ret = ft_calloc(ft_strlen(cmd) + 1, sizeof(char *));
 	if (ret == NULL)
@@ -37,10 +37,10 @@ char *put_space_before(char *cmd, int i)
 	return (ret);
 }
 
-char *put_space_after(char *cmd, int i)
+char	*put_space_after(char *cmd, int i)
 {
-	char *ret;
-	int j;
+	char	*ret;
+	int		j;
 
 	ret = ft_calloc(ft_strlen(cmd) + 1, sizeof(char *));
 	if (ret == NULL)
@@ -62,9 +62,9 @@ char *put_space_after(char *cmd, int i)
 	return (ret);
 }
 
-char *set_space_for_redir(char *cmd, int *i)
+char	*set_space_for_redir(char *cmd, int *i)
 {
-	int j;
+	int	j;
 
 	if (*i != 0)
 	{

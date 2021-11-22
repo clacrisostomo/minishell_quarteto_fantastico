@@ -6,83 +6,14 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/20 20:39:37 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/21 01:37:44 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char *expand_error_control_two(char **str_var, char *command)
-{
-	if (str_var[4] == NULL)
-	{
-		perror("Error: ");
-		ft_free_split(str_var);
-		return (NULL);
-	}
-	command = ft_strjoin(str_var[3], str_var[4]);
-	if (command == NULL)
-	{
-		perror("Error: ");
-		ft_free_split(str_var);
-		return (NULL);
-	}
-	ft_free_split(str_var);
-	return (command);
-}
-
-static char **expand_error_control_one(char **str_var)
-{
-	if (str_var[1] == NULL)
-	{
-		perror("Error: ");
-		ft_free_split(str_var);
-		return (NULL);
-	}
-	str_var[2] = ft_itoa(errno);
-	if (str_var[2] == NULL)
-	{
-		perror("Error: ");
-		ft_free_split(str_var);
-		return (NULL);
-	}
-	str_var[3] = ft_strjoin(str_var[1], str_var[2]);
-	if (str_var[3] == NULL)
-	{
-		perror("Error: ");
-		ft_free_split(str_var);
-		return (NULL);
-	}
-	return (str_var);
-}
-
-char *expand_error(char *command, int i)
-{
-	char **str_var;
-	int j;
-
-	str_var = (char **)ft_calloc(6, sizeof(char *));
-	if (str_var == NULL)
-	{
-		perror("Error: ");
-		free(command);
-		return (NULL);
-	}
-	j = 0;
-	while (j < 6)
-		str_var[j++] = NULL;
-	str_var[0] = command;
-	str_var[1] = ft_substr(str_var[0], 0, i);
-	str_var = expand_error_control_one(str_var);
-	if (str_var == NULL)
-		return (NULL);
-	str_var[4] = ft_substr(str_var[0], i + 2, ft_strlen(str_var[0]) - (i + 2));
-	command = expand_error_control_two(str_var, command);
-	return (command);
-}
-
-static char **swap_spaces(char **splitted,
-													t_joker_m *lst, t_joker_m *tmp)
+static char	**swap_spaces(char **splitted,
+			t_joker_m *lst, t_joker_m *tmp)
 {
 	while (lst->next_jok != NULL)
 	{
@@ -106,9 +37,9 @@ static char **swap_spaces(char **splitted,
 	return (splitted);
 }
 
-static char **unchange_jok_c(char **splitted, t_joker_m *lst)
+static char	**unchange_jok_c(char **splitted, t_joker_m *lst)
 {
-	t_joker_m *tmp;
+	t_joker_m	*tmp;
 
 	tmp = NULL;
 	if (lst->next_jok != NULL)
@@ -120,7 +51,7 @@ static char **unchange_jok_c(char **splitted, t_joker_m *lst)
 	return (swap_spaces(splitted, lst, tmp));
 }
 
-static void split_command_control(char **split, t_joker_m *j_list, char *cmd)
+static void	split_command_control(char **split, t_joker_m *j_list, char *cmd)
 {
 	if (split == NULL)
 	{
@@ -131,10 +62,10 @@ static void split_command_control(char **split, t_joker_m *j_list, char *cmd)
 	}
 }
 
-char **split_command(char *command)
+char	**split_command(char *command)
 {
-	t_joker_m *joker_list;
-	char **splitted;
+	t_joker_m	*joker_list;
+	char		**splitted;
 
 	command = ft_strdup(command);
 	if (command == NULL)

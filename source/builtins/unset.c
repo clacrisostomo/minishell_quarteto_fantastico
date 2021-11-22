@@ -12,10 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-void delete_item(t_hash_table *table, char *key)
+void	delete_item(t_hash_table *table, char *key)
 {
-	int c;
-	char *value;
+	int		c;
+	char	*value;
 
 	c = 0;
 	while (table->item[c] && c <= table->size - 1)
@@ -35,15 +35,15 @@ void delete_item(t_hash_table *table, char *key)
 					table->item[c] = NULL;
 				c++;
 			}
-			return;
+			return ;
 		}
 		c++;
 	}
 }
 
-static void search_key_to_unset(char *key)
+static void	search_key_to_unset(char *key)
 {
-	int c;
+	int	c;
 
 	c = 0;
 	while (g_shell.env->item[c] && c <= g_shell.env->size - 1)
@@ -51,7 +51,7 @@ static void search_key_to_unset(char *key)
 		if (ft_strncmp(g_shell.env->item[c]->key, key, ft_strlen(key)) == 0)
 		{
 			delete_item(g_shell.env, key);
-			return;
+			return ;
 		}
 		c++;
 	}
@@ -60,23 +60,23 @@ static void search_key_to_unset(char *key)
 		if (ft_strncmp(g_shell.local->item[c]->key, key, ft_strlen(key)) == 0)
 		{
 			delete_item(g_shell.local, key);
-			return;
+			return ;
 		}
 		c++;
 	}
 }
 
-void unset_(char **cmd)
+void	unset_(char **cmd)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	while (cmd[i])
 	{
 		j = 0;
 		while (ft_isalpha(cmd[i][j]) || cmd[i][j] == '_' ||
-					 (ft_isdigit(cmd[i][j]) && (!ft_isdigit(cmd[i][0]))))
+					(ft_isdigit(cmd[i][j]) && (!ft_isdigit(cmd[i][0]))))
 			j++;
 		if (cmd[i][j] == '=')
 		{

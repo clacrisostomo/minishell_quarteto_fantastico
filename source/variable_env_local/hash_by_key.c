@@ -6,15 +6,15 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:18:04 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/20 20:39:37 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/21 02:15:05 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char *search_hash_by_key(char *key)
+char	*search_hash_by_key(char *key)
 {
-	int c;
+	int	c;
 
 	c = 0;
 	while (g_shell.env->item[c] && c <= g_shell.env->size - 1)
@@ -33,9 +33,9 @@ char *search_hash_by_key(char *key)
 	return (NULL);
 }
 
-void modify_hash_by_key(char *key, char *new_val)
+void	modify_hash_by_key(char *key, char *new_val)
 {
-	int c;
+	int	c;
 
 	c = 0;
 	while (g_shell.env->item[c] && c <= g_shell.env->size - 1)
@@ -44,7 +44,7 @@ void modify_hash_by_key(char *key, char *new_val)
 		{
 			free_item(g_shell.env->item[c]);
 			g_shell.env->item[c] = insert_table(key, new_val);
-			return;
+			return ;
 		}
 		c++;
 	}
@@ -55,7 +55,7 @@ void modify_hash_by_key(char *key, char *new_val)
 		{
 			free_item(g_shell.local->item[c]);
 			g_shell.local->item[c] = insert_table(key, new_val);
-			return;
+			return ;
 		}
 		c++;
 	}

@@ -12,10 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-int which_table_by_key(char *key)
+int	which_table_by_key(char *key)
 {
-	int c;
-	int i;
+	int	c;
+	int	i;
 
 	c = 0;
 	i = 0;
@@ -35,19 +35,19 @@ int which_table_by_key(char *key)
 	return (i);
 }
 
-void change_val_by_table(t_hash_table *table, char *key, char *value, int c)
+void	change_val_by_table(t_hash_table *table, char *key, char *value, int c)
 {
 	if (ft_strcmp(table->item[c]->key, key) == 0)
 	{
 		free_item(table->item[c]);
 		table->item[c] = insert_table(key, value);
-		return;
+		return ;
 	}
 }
 
-int modify_table_by_key(int table, char *key, char *value)
+int	modify_table_by_key(int table, char *key, char *value)
 {
-	int c;
+	int	c;
 
 	c = 0;
 	while (g_shell.env->item[c] && c <= g_shell.env->size - 1 && table == ENV)
@@ -56,7 +56,8 @@ int modify_table_by_key(int table, char *key, char *value)
 		c++;
 	}
 	c = 0;
-	while (g_shell.local->item[c] && c <= g_shell.local->size - 1 && table == LOCAL)
+	while (g_shell.local->item[c] && c <= g_shell.local->size - 1
+		&& table == LOCAL)
 	{
 		change_val_by_table(g_shell.local, key, value, c);
 		c++;
@@ -64,14 +65,15 @@ int modify_table_by_key(int table, char *key, char *value)
 	return (0);
 }
 
-int loop_table_n_insert(char *key, char *value, int table)
+int	loop_table_n_insert(char *key, char *value, int table)
 {
-	int c;
+	int	c;
 
 	c = 0;
 	if (table == ENV)
 	{
-		while (g_shell.env->item[c] && c <= g_shell.env->size - 1 && ft_strcmp(g_shell.env->item[c]->key, key) != 0)
+		while (g_shell.env->item[c] && c <= g_shell.env->size - 1
+			&& ft_strcmp(g_shell.env->item[c]->key, key) != 0)
 			c++;
 		if (c <= g_shell.env->size - 1)
 		{
@@ -92,7 +94,7 @@ int loop_table_n_insert(char *key, char *value, int table)
 	return (1);
 }
 
-void error_export(char **cmd, int i)
+void	error_export(char **cmd, int i)
 {
 	ft_putstr_fd("Minishell: export: '", 2);
 	ft_putstr_fd(cmd[i], 2);

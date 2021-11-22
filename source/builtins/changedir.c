@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-static int cd_args(char **cmd, int i)
+static int	cd_args(char **cmd, int i)
 {
 	while (cmd[i])
 		i++;
@@ -24,7 +24,7 @@ static int cd_args(char **cmd, int i)
 	return (i);
 }
 
-static void cd_home(t_cd *cd_list)
+static void	cd_home(t_cd *cd_list)
 {
 	if (cd_list->i == 1)
 	{
@@ -33,7 +33,7 @@ static void cd_home(t_cd *cd_list)
 	}
 }
 
-static void cd_init(t_cd *cd_list, char **cmd)
+static void	cd_init(t_cd *cd_list, char **cmd)
 {
 	cd_list->i = cd_args(cmd, 1);
 	cd_list->tmp = NULL;
@@ -42,9 +42,9 @@ static void cd_init(t_cd *cd_list, char **cmd)
 	errno = 0;
 }
 
-int cd(char **cmd)
+int	cd(char **cmd)
 {
-	t_cd cd_list;
+	t_cd	cd_list;
 
 	cd_init(&cd_list, cmd);
 	if (errno == EPERM)

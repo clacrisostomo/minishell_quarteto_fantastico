@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-static int word_len(const char *s, char c)
+static int	word_len(const char *s, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (*s != '\0')
@@ -26,9 +26,9 @@ static int word_len(const char *s, char c)
 	return (i);
 }
 
-static int letter_len(const char *s, char c)
+static int	letter_len(const char *s, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (*s != c && *s != '\0')
@@ -39,9 +39,9 @@ static int letter_len(const char *s, char c)
 	return (i);
 }
 
-static int **freeentry(char **str, size_t i)
+static int	**freeentry(char **str, size_t i)
 {
-	size_t j;
+	size_t	j;
 
 	j = 0;
 	while (j <= i)
@@ -50,11 +50,11 @@ static int **freeentry(char **str, size_t i)
 	return (0);
 }
 
-char **ft_strsplit(char const *s, char c)
+char	**ft_strsplit(char const *s, char c)
 {
-	char **str;
-	size_t i;
-	size_t ii;
+	char	**str;
+	size_t	i;
+	size_t	ii;
 
 	str = (char **)malloc(word_len(s, c));
 	if (!s || !str)
