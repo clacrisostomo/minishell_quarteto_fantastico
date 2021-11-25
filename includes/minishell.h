@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: telias-p <telias-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/22 19:54:02 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/24 22:07:26 by telias-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
+# ifndef MINISHELL_H
 # define MINISHELL_H
 
 # define INT_MAX 2147483647
@@ -99,7 +99,7 @@ t_shell	g_shell;
 */
 void			ft_free_split(char **str);
 void			free_n_env(char **n_env);
-void			execute(char **command, int i);
+void			execute(char **command, int i, char **old_cmd);
 void			quote_commander(char **cmd);
 void			delete_item(t_hash_table *table, char *key);
 void			parser(char **cmd, int i, int *old_fd);
@@ -122,7 +122,7 @@ int				echo(char **cmd);
 void			expt(char **cmd, int exp);
 void			export_only(void);
 void			unset_(char **cmd);
-void			exit_terminal(char **cmd, char	**n_env);
+void			exit_terminal(char **cmd, char	**n_env, char **old_cmd);
 
 void			cd_error_file(char **cmd);
 void			control_cd_minus_two(char **cmd, char *slash, char *home);

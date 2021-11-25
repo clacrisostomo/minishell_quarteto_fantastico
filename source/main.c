@@ -12,17 +12,32 @@
 
 #include "../includes/minishell.h"
 
-void execute(char **cmd, int i)
+static int	is_executable(char *new_path)
+{
+	struct stat	buffer;
+
+	if (stat(new_path, &buffer) != 0)	
+		return (0);
+	if ((buffer.st_mode & S_IXUSR))
+		return (1);
+	return (0);
+}
+
+void execute(char **cmd, int i, char **old_cmd)
 {
 	char **n_env;
 	int status;
 	char **paths;
 	pid_t pid;
+	//int	ret;
 	//int		fd[2];
 	int c;
 	char **new_cmd;
 	char *new_path;
+	//char *path;
+	//char cwd[2048];
 
+	//ret = 0;
 	c = 1;
 	paths = get_paths();
 	n_env = hash_to_str_arr(g_shell.env);
@@ -40,7 +55,7 @@ void execute(char **cmd, int i)
 	else if (!(ft_strcmp(cmd[i], "unset")))
 		unset_(cmd);
 	else if (!(ft_strcmp(cmd[i], "exit")))
-		exit_terminal(cmd, n_env);
+		exit_terminal(cmd, n_env, old_cmd);
 	else if (ft_isvar(cmd))
 		expt(cmd, i);
 	else if (is_path(cmd, n_env))
@@ -61,7 +76,7 @@ void execute(char **cmd, int i)
 		if (WIFEXITED(status))
 			errno = WIFEXITED(status);
 	}
-	else if (execve(paths[0], cmd, n_env) == -1) //<<<<<<<<<<EXECVE SEM PATH
+	else //if (execve(paths[0], cmd, n_env) == -1) //<<<<<<<<<<EXECVE SEM PATH
 	{
 		pid = fork();
 		if (pid == -1)
@@ -76,9 +91,21 @@ void execute(char **cmd, int i)
 			{
 				new_path = ft_strjoin(paths[c], "/");
 				new_cmd[0] = ft_strjoin(new_path, cmd[0]);
-				execve(new_cmd[i], cmd, n_env);
+				if (is_executable(new_cmd[0]))
+				{
+					//new_cmd[0] = ft_strjoin(new_path, cmd[0]);
+					printf("new_cmd= %s", new_cmd[0]);
+					execve(new_cmd[0], cmd, n_env);
+					break ;
+				}
+				//printf("path= %s\n",paths[c]);
+				//printf("new_path= %s\n", new_path);
+				free(new_path);
+				//free(new_cmd);
 				c++;
 			}
+			//path = ft_strjoin(getcwd(cwd, 2048), "/");
+			//execve(ft_strjoin(path, "minishell"), cmd, n_env);
 			ft_putstr_fd("Minishell: '", 2);
 			ft_putstr_fd(cmd[0], 2);
 			ft_putstr_fd("': ", 2);
@@ -92,7 +119,7 @@ void execute(char **cmd, int i)
 		ft_free_split(new_cmd);
 	}
 	else if (execve(cmd[i], cmd, n_env) == -1)
-		ft_printf("%s: command not found\n", cmd[i]);
+	//	ft_printf("%s: command not found\n", cmd[i]);
 	ft_free_split(n_env);
 	ft_free_split(paths);
 	if (new_cmd)
@@ -173,9 +200,28 @@ char **cmd_till_pipe(char **cmd, int begin, int end)
 	k = 0;
 	sub_cmd = (char **)calloc((end - begin + 1), sizeof(char *));
 	while (begin != end)
-		sub_cmd[k++] = cmd[begin++];
+		sub_cmd[k++] = ft_strdup(cmd[begin++]);
 	sub_cmd[k] = NULL;
 	return (sub_cmd);
+}
+
+char **cmd_after_pipe(char **cmd, int pos)
+{
+	char **aft_cmd;
+	int k;
+	int	size;
+	int	c;
+
+	k = 0;
+	size = pos;
+	c = pos;
+	while (cmd[size])
+		size++;
+	aft_cmd = (char **)calloc((size + 1), sizeof(char *));
+	while (cmd[c])
+		aft_cmd[k++] = cmd[c++];
+	aft_cmd[k] = NULL;
+	return (aft_cmd);
 }
 
 void parser(char **cmd, int i, int *old_fd)
@@ -198,7 +244,7 @@ void parser(char **cmd, int i, int *old_fd)
 	//ft_putstr_fd("\n", 2);
 	//ft_putstr_fd(sub_cmd[1], 2);
 	//ft_putstr_fd("\n", 2);
-	execute(sub_cmd, 0);
+	execute(sub_cmd, 0, cmd);
 	reset_fd(save_fd);
 	if (sub_cmd)
 		ft_free_split(sub_cmd);
@@ -246,7 +292,8 @@ static void loop(void)
 			//verifica se tem redirect, troca stdin e stdout
 			parser(cmd, 0, &old_fd);
 			//execute(cmd);
-			//ft_free_split(cmd);
+			if (cmd)
+				ft_free_split(cmd);
 			//volta o stdin e stdout originais
 		}
 	}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/11/22 19:47:00 by nbarreir         ###   ########.fr        #
+#    Updated: 2021/11/24 21:31:50 by mde-figu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,8 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 		make -C $(LIBFT)
-		gcc $(CFLAGS) -g -o $(NAME) $(SRC) -L $(LIBFT) -lft -lreadline -I includes -fsanitize=address
+		gcc $(CFLAGS) -g -o $(NAME) $(SRC) -L $(LIBFT) -lft -lreadline -I includes 
+#-fsanitize=address
 
 %.o: %.c
 		gcc -c $< -I includes
