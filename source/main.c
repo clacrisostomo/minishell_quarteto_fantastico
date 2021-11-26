@@ -6,7 +6,7 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/26 14:16:47 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/26 19:59:57 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	parser(char **cmd, int i, int *old_fd)
 	else
 		sub_cmd = cmd_till_pipe(cmd, c, i + 1);
 	miss_pipe(cmd, i, old_fd);
-	//sub_cmd = mister_redirect(sub_cmd);
+	sub_cmd = make_command_redirect(sub_cmd, 0);
 	execute(sub_cmd, 0, cmd);
 	reset_fd(save_fd);
 	if (sub_cmd)
