@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: telias-p <telias-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/24 22:07:26 by telias-p         ###   ########.fr       */
+/*   Updated: 2021/11/26 14:13:50 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libraries/libft/libft.h"
-
-// typedef struct s_pos
-// {
-// 	int	pos_echo;
-// 	int pos_cd;
-// 	int pos_pwd;
-// 	int	pos_exp;
-// 	int pos_uset;
-// 	int pos_env;
-// } t_pos;
 
 typedef struct s_cd
 {
@@ -103,7 +93,18 @@ void			execute(char **command, int i, char **old_cmd);
 void			quote_commander(char **cmd);
 void			delete_item(t_hash_table *table, char *key);
 void			parser(char **cmd, int i, int *old_fd);
-void			ms_pipe(char **cmd, int i, int *old_fd);
+
+/*
+** PIPE AND REDIRECT
+*/
+void			miss_pipe(char **cmd, int i, int *old_fd);
+char			**cmd_till_pipe(char **cmd, int begin, int end);
+
+/*
+** FD
+*/
+void			save_origin_fd(int *save_fd);
+void			reset_fd(int *save_fd);
 
 /*
 ** SET SPACE FOR REDIR

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/11/24 21:31:50 by mde-figu         ###   ########.fr        #
+#    Updated: 2021/11/26 14:14:20 by nbarreir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,16 +37,20 @@ SRC = $(SRC_PATH)main.c\
 			$(SRC_PATH)parser/split_control_0.c\
 			$(SRC_PATH)parser/split_control_1.c\
 			$(SRC_PATH)parser/split_control_2.c\
+			$(SRC_PATH)parser/set_space_for_redir.c\
+			$(SRC_PATH)pipe_redirect/logic_fd.c\
+			$(SRC_PATH)pipe_redirect/miss_pipe.c\
+			$(SRC_PATH)pipe_redirect/mister_redirect.c\
+			$(SRC_PATH)execute/execute.c\
 			$(SRC_PATH)is_path.c\
 			$(SRC_PATH)signal.c\
-			$(SRC_PATH)paths_n_prompt.c\
-			$(SRC_PATH)parser/set_space_for_redir.c
+			$(SRC_PATH)paths_n_prompt.c
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 		make -C $(LIBFT)
-		gcc $(CFLAGS) -g -o $(NAME) $(SRC) -L $(LIBFT) -lft -lreadline -I includes 
+		gcc $(CFLAGS) -g -o $(NAME) $(SRC) -L $(LIBFT) -lft -lreadline -I includes
 #-fsanitize=address
 
 %.o: %.c
