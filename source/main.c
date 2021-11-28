@@ -6,7 +6,7 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/26 19:59:57 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/28 01:28:20 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,14 @@ void	parser(char **cmd, int i, int *old_fd)
 	int		save_fd[2];
 	int		c;
 	char	**sub_cmd;
+	char	**red_cmd;
 
 	c = i;
+	if (!have_file_after_redirect(cmd))
+	{
+		printf("ERROOOOOOOOOR\n");
+		return ;
+	}
 	save_origin_fd(save_fd);
 	while (ft_strcmp(cmd[i], "|") && (cmd[i + 1]))
 		i++;
@@ -27,12 +33,14 @@ void	parser(char **cmd, int i, int *old_fd)
 	else
 		sub_cmd = cmd_till_pipe(cmd, c, i + 1);
 	miss_pipe(cmd, i, old_fd);
-	sub_cmd = make_command_redirect(sub_cmd, 0);
-	execute(sub_cmd, 0, cmd);
+	red_cmd = make_command_redirect(sub_cmd, 0);
+	execute(red_cmd, 0, cmd);
 	reset_fd(save_fd);
-	if (sub_cmd)
-		ft_free_split(sub_cmd);
-	if (!(ft_strcmp(cmd[i], "|")))
+	//if (sub_cmd)
+	//	ft_free_split(sub_cmd);
+	if(red_cmd)
+		ft_free_split(red_cmd);
+	if (!(ft_strcmp(cmd[i], "|")) && (cmd[i + 1]))
 		parser(cmd, i + 1, old_fd);
 }
 

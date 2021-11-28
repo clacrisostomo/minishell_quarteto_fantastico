@@ -6,7 +6,7 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/26 19:59:42 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/27 23:51:01 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void			miss_pipe(char **cmd, int i, int *old_fd);
 char			**cmd_till_pipe(char **cmd, int begin, int end);
 
 char			**make_command_redirect(char **cmd, int i);
+int				is_redirect(char *cmd);
+int				have_file_after_redirect(char **cmd);
 
 /*
 ** FD

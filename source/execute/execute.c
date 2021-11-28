@@ -6,7 +6,7 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:11:32 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/26 14:11:59 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/28 00:48:45 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ void execute(char **cmd, int i, char **old_cmd)
 	//char cwd[2048];
 
 	//ret = 0;
+	int	h = 0;
+	while (cmd[h])
+		printf("%s ", cmd[h++]);
+	printf("\n");
 	c = 1;
 	paths = get_paths();
 	n_env = hash_to_str_arr(g_shell.env);
@@ -90,10 +94,12 @@ void execute(char **cmd, int i, char **old_cmd)
 			while (paths[c])
 			{
 				new_path = ft_strjoin(paths[c], "/");
-				new_cmd[0] = ft_strjoin(new_path, cmd[0]);
-				if (is_executable(new_cmd[0]))
+				//new_cmd[0] = ft_strjoin(new_path, cmd[0]);
+				if (is_executable(cmd[0]))
+					execve(cmd[0], cmd, n_env);
+				else if (is_executable(new_cmd[0]))
 				{
-					//new_cmd[0] = ft_strjoin(new_path, cmd[0]);
+					new_cmd[0] = ft_strjoin(new_path, cmd[0]);
 					printf("new_cmd= %s", new_cmd[0]);
 					execve(new_cmd[0], cmd, n_env);
 					break ;
