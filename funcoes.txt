@@ -14,7 +14,7 @@ read > sabemos
 close > sabemos
 fork CIRO - fork o processo atual, retorna o pid do child para o parent, e 0 para o children
 wait, waitpid, wait3 e wait4 (include sys/wait.h) > esperam o processo mudar de estado. Mudança de estado = filho terminou, filho foi parado por um sinal ou filho foi retomado por um sinal.
-wait (int *wstatus) -> Suspende a execução da thread de chamada até que um dos filhos termine. 
+wait (int *wstatus) -> Suspende a execução da thread de chamada até que um dos filhos termine.
     wait(&status) = waitpid(-1, &wstatus, 0)
 waitpid (pid_t pid, int *wstatus, int options) -> suspende a execução da thread de chamada até que o filho especificado pelo pid tenha mudado de estado. A função pode ser modificada da seguinte forma:
     Se o valor do pid for:
@@ -48,7 +48,7 @@ dup - MARKUS >> Cria uma copia de um FD, recebe (int OLDFD), usa o menor numero 
 dup2 - MARKUS >> mesma coisa que o dup() soh que recebe um segundo argumento (int OLDFD, int NEWFD) que eh o numero especifico que deve ser aberto o FD
 pipe > CIRO >> trabalha em dois fds, o [0] é para leitura e o [1] é para escrever, que serão usados em um fork (depois do fork cada instância fecha o fd que não utilizará) https://tldp.org/LDP/lpg/node11.html
 opendir - NAT >> (include dirent.h) -> abre o diretorio especificado no argumento
-readdir - (include dirent.h) -> retorna um ponteiro para uma struct dirent representando a próxima entrada de diretório apontada por dirp. Retorna nulo se chegar no final da stream de diretórios ou se ocorrer um erro. 
+readdir - (include dirent.h) -> retorna um ponteiro para uma struct dirent representando a próxima entrada de diretório apontada por dirp. Retorna nulo se chegar no final da stream de diretórios ou se ocorrer um erro.
 closedir - NAT >> (include dirent.h) -> deve obrigatoriamente fechar o diretorio especificado no argumento.
 strerror - NAT >> Passa um numero errnum e retorna um ponteiro de string de erro; -> exemplo: (printf("Error: %s\n", strerror(errno));)
 perror - NAT >> Imprime uma mensagem de erro descritiva para stderr. exemplo: (if (!fd) {perror("Error: ");} -> resultado : (Error: : No such file or directory))
@@ -56,7 +56,7 @@ isatty - MARKUS >> Passa o inteiro referente a um FD e retorna 1 se for um termi
 ttyname - MARKUS >> Pega o PATH onde esta rodando um terminal definido no STDIN_FILENO
 ttyslot - MARKUS >> Opera a base de dados utmpx, da pra pegar o PID e passar pro wait()
 ioctl - MARKUS >> Controla dispositivos(terminais, sockets,streams) associados ao fildes(??lista de FDs?), recebe inteiro do FD, cmd e uma terceira opcao de tipo variavel
-getenv > sabemos 
+getenv > sabemos
 int tcsetattr(int fd, int optional_actions, const struct termios *termios_p) CIRO - configura os parâmetros associados ao objeto do fd e guardados na struct termios
 int tcgetattr(int fd, struct termios *termios_p) CIRO - pega os parâmetros associados ao objeto do fd e guarda nessa struc termios
 tgetent	- MARKUS >> Busca uma entrada de Termcap pelo nome
@@ -86,11 +86,11 @@ struct utmpx	{
 
 cmd 1 | cmd 2 | cmd 3 | cmd 4
 
-parent fork   		print_terminal	
+parent fork   		print_terminal
 child 1 fork  		cmd 4				cmd 1
 child 2 fork  		cmd 3				cmd 2
 child 3 fork  		cmd 2				cmd 3
-child 4 fork  		cmd 1				cmd 4 > print_terminal 	
+child 4 fork  		cmd 1				cmd 4 > print_terminal
 
 cmd 1 | cmd 2 | cmd 3 | cmd 4
 
@@ -98,7 +98,7 @@ cmd 1
 	parent fork
 		child 2 cmd 2 fork
 				child 3 cmd 3 fork
-						child 4 cmd 4 > print_terminal 
+						child 4 cmd 4 > print_terminal
 				child 3 SIGKILL child 4
 		child 2 SIGKILL child 3
 	Parent SIGKILL child 2
@@ -120,4 +120,4 @@ REDIRECT antes do PIPE
 -> Fazer saida/entrada pipe e colocar no lugar da saida/entrada padrão
 -> Fazer saida ou entrada redirect e colocar no lugar da saida ou entrada do pipe
 -> Fazer comando
--> voltar ao padrao
+-> voltar ao padraooi

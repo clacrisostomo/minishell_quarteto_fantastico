@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/18 23:17:45 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/11/27 23:51:01 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
+# ifndef MINISHELL_H
 # define MINISHELL_H
 
 # define INT_MAX 2147483647
@@ -46,16 +46,6 @@
 # include <readline/history.h>
 # include "../libraries/libft/libft.h"
 
-// typedef struct s_pos
-// {
-// 	int	pos_echo;
-// 	int pos_cd;
-// 	int pos_pwd;
-// 	int	pos_exp;
-// 	int pos_uset;
-// 	int pos_env;
-// } t_pos;
-
 typedef struct s_cd
 {
 	char			*tmp;
@@ -80,9 +70,9 @@ typedef struct s_ht_item
 
 typedef struct s_hash_table
 {
-	t_ht_item	**item;
-	int			size;
-	int			count; //o que que é count??
+	t_ht_item		**item;
+	int				size;
+	int				count; //o que que é count??
 }	t_hash_table;
 
 typedef struct s_shell
@@ -99,11 +89,26 @@ t_shell	g_shell;
 */
 void			ft_free_split(char **str);
 void			free_n_env(char **n_env);
-void			execute(char **command, int i);
+void			execute(char **command, int i, char **old_cmd);
 void			quote_commander(char **cmd);
 void			delete_item(t_hash_table *table, char *key);
 void			parser(char **cmd, int i, int *old_fd);
-void			ms_pipe(char **cmd, int i, int *old_fd);
+
+/*
+** PIPE AND REDIRECT
+*/
+void			miss_pipe(char **cmd, int i, int *old_fd);
+char			**cmd_till_pipe(char **cmd, int begin, int end);
+
+char			**make_command_redirect(char **cmd, int i);
+int				is_redirect(char *cmd);
+int				have_file_after_redirect(char **cmd);
+
+/*
+** FD
+*/
+void			save_origin_fd(int *save_fd);
+void			reset_fd(int *save_fd);
 
 /*
 ** SET SPACE FOR REDIR
@@ -122,16 +127,15 @@ int				echo(char **cmd);
 void			expt(char **cmd, int exp);
 void			export_only(void);
 void			unset_(char **cmd);
-void			exit_terminal(char **cmd, char	**n_env);
+void			exit_terminal(char **cmd, char	**n_env, char **old_cmd);
 
-void	cd_error_file(char **cmd);
-void	control_cd_minus_two(char **cmd, char *slash, char *home);
-void	control_cd_minus(char *tmp);
-char	*put_quotes(t_ht_item *new_env);
-char	**env_with_quotes(void);
-void	print_export_env(char **array, int fd);
-void	error_export(char **cmd, int i);
-
+void			cd_error_file(char **cmd);
+void			control_cd_minus_two(char **cmd, char *slash, char *home);
+void			control_cd_minus(char *tmp);
+char			*put_quotes(t_ht_item *new_env);
+char			**env_with_quotes(void);
+void			print_export_env(char **array, int fd);
+void			error_export(char **cmd, int i);
 
 /*
 ** HASH TABLE
@@ -151,7 +155,8 @@ void			free_item(t_ht_item *item);
 int				loop_table_n_insert(char *key, char *value, int table);
 int				modify_table_by_key(int table, char *key, char *value);
 int				which_table_by_key(char *key);
-void			change_val_by_table(t_hash_table *table, char *key, char *value, int c);
+void			change_val_by_table(t_hash_table *table, char *key,
+					char *value, int c);
 
 /*
 ** SIGNAL
@@ -175,9 +180,16 @@ char			*expand_error(char *command, int i);
 void			free_joker_list(t_joker_m *lst);
 
 /*
+** PATH HANDLERS
+*/
+char			*get_path_str(void);
+char			**get_paths(void);
+char			*do_prompt(void);
+int				is_path(char **cmd, char **n_env);
+
+/*
 ** UTILS
 */
-int				is_path(char **cmd, char **n_env);
 int				ft_isvar(char **cmd);
 int				ft_strnstr_indie(const char *big, const char *small,
 					size_t len);
