@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mister_redirect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 13:25:20 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/28 02:10:03 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/28 22:41:50 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,39 +90,42 @@ char	**new_cmd_for_redirect(char **cmd, int i, int j)
 char	**make_command_redirect(char **cmd, int i)
 {
 	char	**new_cmd;
+	char	**recursion;
 	int		j;
-	int h = 0;
+	//int h = 0;
 
 	j = 0;
 	while (cmd[j] != NULL)
 		j++;
 	while ((!is_redirect(cmd[i])) && (cmd[i + 1]))
 		i++;
-	ft_putstr_fd("i = ", 2);
+/* 	ft_putstr_fd("i = ", 2);
 	ft_putnbr_fd(i, 2);
 	ft_putstr_fd("\nj = ", 2);
 	ft_putnbr_fd(j, 2);
-	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("\n", 2); */
 	if (is_redirect(cmd[i]))
 	{
 		mister_redirect(cmd[i], cmd[i + 1]);
 		new_cmd = new_cmd_for_redirect(cmd, i, j);
-		while (new_cmd[h] != NULL)
+		/* while (new_cmd[h] != NULL)
 		{
 			ft_putstr_fd(new_cmd[h++], 2);
 			ft_putstr_fd(" ", 2);
 		}
-		ft_putstr_fd("|\n", 2);
+		ft_putstr_fd("|\n", 2); */
 		ft_free_split(cmd);
-		make_command_redirect(new_cmd, 0);
+		recursion = make_command_redirect(new_cmd, 0);
+		return (recursion);
 	}
-	while (cmd[h] != NULL)
+/* 	while (cmd[h] != NULL)
 	{
 		ft_putstr_fd("oxe", 2);
-		ft_putstr_fd(cmd[h++], 2);
+		ft_putstr_fd(cmd[h], 2);
 		ft_putstr_fd(" ", 2);
+		h++;
 	}
 	ft_putstr_fd("|\n", 2);
-	ft_putstr_fd("oxo", 2);
+	ft_putstr_fd("oxo", 2); */
 	return (cmd);
 }

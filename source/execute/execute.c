@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:11:32 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/28 00:48:45 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/11/28 22:34:51 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void execute(char **cmd, int i, char **old_cmd)
 	//char cwd[2048];
 
 	//ret = 0;
-	int	h = 0;
-	while (cmd[h])
+	//int	h = 0;
+	/* while (cmd[h])
 		printf("%s ", cmd[h++]);
-	printf("\n");
+	printf("\n"); */
 	c = 1;
 	paths = get_paths();
 	n_env = hash_to_str_arr(g_shell.env);
