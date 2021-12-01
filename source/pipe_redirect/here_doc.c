@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 22:53:24 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/27 22:53:41 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/01 00:29:59 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,16 @@ void	interrupt_here_document(int signal)
 void	dr_here(char *eof, int *save_fd)
 {
 	int file_tmp;
+	int file_def;
 	char *tmp;
 	int	status;
 	int save_out;
 	int pid;
 
-	file_tmp = create_mr_temporary_file();
 	save_out = dup(STDOUT);
-	dup2(save_fd[1], STDOUT);
+	//dup2(save_fd[1], STDOUT);
 	dup2(save_fd[0], STDIN);
+	file_tmp = create_mr_temporary_file();
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
@@ -58,26 +59,27 @@ void	dr_here(char *eof, int *save_fd)
 			}
 			if(tmp)
 			{
-				//if (ft_strcmp(tmp, eof))
-					//ft_putendl_fd(tmp, file_tmp);
+				if (ft_strcmp(tmp, eof))
+					ft_putendl_fd(tmp, file_tmp);
 				if(!ft_strcmp(tmp, eof))
 				{
 					free(tmp);
-					//dup2(file_tmp, save_fd[1]);
+					//dup2(file_tmp, save_fd[0]);
 					close(file_tmp);
 					break;
 				}
 			}
 			free(tmp);
 		}
+		exit(errno);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
 			errno = WIFEXITED(status);
-	file_tmp = open(FILE_TMP, O_RDONLY);
-	unlink(FILE_TMP);
-	dup2(file_tmp, STDIN);
-	close(file_tmp);
+	//unlink(FILE_TMP);
+	file_def = open(FILE_TMP, O_RDONLY);
+	dup2(file_def, STDIN);
+	//close(file_def);
 	dup2(save_out, STDOUT);
 	close(save_out);
 }
