@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:11:32 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/28 22:34:51 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/01 00:02:41 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void execute(char **cmd, int i, char **old_cmd)
 			while (paths[c])
 			{
 				new_path = ft_strjoin(paths[c], "/");
-				//new_cmd[0] = ft_strjoin(new_path, cmd[0]);
+				new_cmd[0] = ft_strjoin(new_path, cmd[0]);
 				if (is_executable(cmd[0]))
 					execve(cmd[0], cmd, n_env);
 				else if (is_executable(new_cmd[0]))
