@@ -33,7 +33,7 @@ void	parser(char **cmd, int i, int *old_fd)
 		sub_cmd = cmd_till_pipe(cmd, c, i + 1);
 	miss_pipe(cmd, i, old_fd);
 	sub_cmd = make_command_redirect(sub_cmd, 0, save_fd);
-	execute(sub_cmd, 0, cmd);
+	execute(sub_cmd, cmd);
 	reset_fd(save_fd);
 	if (sub_cmd)
 		ft_free_split(sub_cmd);
