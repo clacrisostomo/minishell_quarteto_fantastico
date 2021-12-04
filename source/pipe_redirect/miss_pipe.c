@@ -16,9 +16,11 @@ void	miss_pipe(char **cmd, int i, int *old_fd)
 {
 	int	fd[2];
 
-	dup2(*old_fd, STDIN);
-	if (old_fd != 0)
+	if (*old_fd > 0)
+	{
+		dup2(*old_fd, STDIN);
 		close(*old_fd);
+	}
 	if (!(ft_strcmp(cmd[i], "|")))
 	{
 		pipe(fd);

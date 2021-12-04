@@ -107,4 +107,5 @@ void	export_only(void)
 		c++;
 	}
 	print_export_env(export_env, STDOUT_FILENO);
+	ft_free_split(export_env);
 }

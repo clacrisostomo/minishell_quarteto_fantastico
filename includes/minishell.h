@@ -33,6 +33,8 @@
 # define STDOUT 1
 # define STDERR 2
 
+# define FILE_TMP "/tmp/mr_temporary_file"
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -89,7 +91,7 @@ t_shell	g_shell;
 */
 void			ft_free_split(char **str);
 void			free_n_env(char **n_env);
-void			execute(char **command, int i, char **old_cmd);
+void			execute(char **command, char **old_cmd);
 void			quote_commander(char **cmd);
 void			delete_item(t_hash_table *table, char *key);
 void			parser(char **cmd, int i, int *old_fd);
@@ -100,9 +102,11 @@ void			parser(char **cmd, int i, int *old_fd);
 void			miss_pipe(char **cmd, int i, int *old_fd);
 char			**cmd_till_pipe(char **cmd, int begin, int end);
 
-char			**make_command_redirect(char **cmd, int i);
+char			**make_command_redirect(char **cmd, int i, int *save_fd);
 int				is_redirect(char *cmd);
 int				have_file_after_redirect(char **cmd);
+void			dr_here(char *eof, int *save_fd);
+void			interrupt(int signal);
 
 /*
 ** FD
