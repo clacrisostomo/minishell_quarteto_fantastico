@@ -46,7 +46,7 @@ static void	command_execute(char *command)
 	char	**cmd;
 	int		old_fd;
 
-	old_fd = STDIN;
+	old_fd = 0;
 	add_history(command);
 	cmd = split_command(command);
 	free(command);
