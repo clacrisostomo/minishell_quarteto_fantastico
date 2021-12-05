@@ -23,7 +23,7 @@ t_ht_item	*insert_table(char *key, char *value)
 t_hash_table	*create_hash_table(int size)
 {
 	t_hash_table	*hashtable;
-	int						i;
+	int				i;
 
 	i = 0;
 	hashtable = (t_hash_table *)malloc(sizeof(t_hash_table));
@@ -71,10 +71,10 @@ t_ht_item	*create_hash_item(char *key, char *value)
 t_hash_table	*envp_to_hash(char **envp)
 {
 	t_hash_table	*table;
-	char					*key;
-	char					*value;
-	int						i;
-	int						j;
+	char			*key;
+	char			*value;
+	int				i;
+	int				j;
 
 	i = 0;
 	j = 0;
