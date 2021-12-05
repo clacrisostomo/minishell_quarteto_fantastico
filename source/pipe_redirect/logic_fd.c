@@ -6,7 +6,7 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 13:26:21 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/28 00:16:08 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/05 18:09:07 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	is_file(char *file)
 		return (FALSE);
 	while (file[i])
 	{
-		if (file[i] == '/' || file[i] == '(' || file[i] == ')' ||
-			file[i] == '&' || file[i] == '|' || file[i] == '~' ||
-			file[i] == '*')
+		if (file[i] == '/' || file[i] == '(' || file[i] == ')'
+			|| file[i] == '&' || file[i] == '|' || file[i] == '~'
+			|| file[i] == '*')
 			return (FALSE);
 		i++;
 	}
@@ -46,7 +46,7 @@ int	is_file(char *file)
 
 int	have_file_after_redirect(char **cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (cmd[i])
@@ -56,10 +56,10 @@ int	have_file_after_redirect(char **cmd)
 			if (cmd[i + 1] != NULL)
 			{
 				if (!is_file(cmd[i + 1]))
-					return(FALSE);
+					return (FALSE);
 			}
 			else if (cmd[i + 1] == NULL)
-				return(FALSE);
+				return (FALSE);
 		}
 		i++;
 	}

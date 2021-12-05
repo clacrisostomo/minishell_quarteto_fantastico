@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:11:32 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/01 00:02:41 by csantos-         ###   ########.fr       */
+/*   Updated: 2021/12/05 18:57:57 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	is_builtins(char **cmd)
 		return (TRUE);
 	return (FALSE);
 }
-
 
 static int	is_executable(char *new_path)
 {
@@ -65,165 +64,69 @@ void	builtins(char **cmd, char **old_cmd, char **n_env)
 		expt(cmd, 0);
 }
 
-/* void	error_free_exit(char *str)
+char	**create_command_for_exec(char **cmd, char **paths)
 {
-	perror(str);
-	free_n_exit();
-}
+	char	*new_path;
+	char	**new_cmd;
+	int		c;
 
-void	exec_error_exit(char **cmd, char **n_env, int i)
-{
-	execve(*cmd, cmd, n_env);
-	errno = i;
-	exit(errno);
-}
-
-void	exec_w_path(char **cmd, char **n_env)
-{
-	pid_t pid;
-	int status;
-
-	pid = fork();
-	if (pid == -1)
-		error_free_exit("Error: ");
-	else if (pid == 0)
-		exec_error_exit(cmd, n_env, 2);
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		errno = WIFEXITED(status);
-}
-
-void	exec_w_o_path(char **cmd, char **n_env, int i)
-{
-	int status;
-	pid_t pid;
-	char **path;
-	char **new_cmd;
-	char **new_paths;
-	
+	c = 0;
 	new_cmd = (char **)malloc(sizeof(char **));
-	while (1)
+	if (is_executable(cmd[0]))
+		new_cmd[0] = ft_strdup(cmd[0]);
+	else
 	{
-		path = ft_strjoin(get_paths(i), "/");
-		new_cmd[0] = ft_strjoin(path, cmd[0]);
-		if (is_executable(cmd[0]))
+		while (paths[c])
 		{
-			execve(cmd[0], cmd, n_env);
-			break;
+			new_path = ft_strjoin(paths[c], "/");
+			new_cmd[0] = ft_strjoin(new_path, cmd[0]);
+			free(new_path);
+			if (is_executable(new_cmd[0]))
+				break ;
+			free(new_cmd[0]);
+			c++;
 		}
-		else if (is_executable)
-		{
-			execve(new_cmd[0], cmd, n_env);
-			break;
-		}
-		i++;
 	}
+	return (new_cmd);
 }
 
 void	do_exec(char **cmd, char **n_env)
 {
-	int	i;
+	int			status;
+	char		**paths;
+	pid_t		pid;
+	char		**new_cmd;
 
-	i = 0;
-	if (is_path(cmd, n_env))
-		exec_w_path(cmd, n_env);
-	else
-		exec_w_o_path(cmd, n_env, i);
-} */
-
-void do_exec(char **cmd, char **n_env)
-{
-	int status;
-	char **paths;
-	pid_t pid;
-	//int	ret;
-	//int		fd[2];
-	int c;
-	char **new_cmd;
-	char *new_path;
-	//char *path;
-	//char cwd[2048];
-
-	//ret = 0;
-	//int	h = 0;
-	/* while (cmd[h])
-		printf("%s ", cmd[h++]);
-	printf("\n"); */
-	c = 1;
 	paths = get_paths();
 	new_cmd = NULL;
-	if (is_path(cmd, n_env))
+	pid = fork();
+	if (pid == -1)
 	{
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("Error: ");
-			free_n_exit();
-		}
-		else if (pid == 0)
-		{
-			execve(*cmd, cmd, n_env);
-			errno = 2;
-			exit(errno);
-		}
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			errno = WIFEXITED(status);
+		perror("Error: ");
+		free_n_exit();
 	}
-	else //if (execve(paths[0], cmd, n_env) == -1) //<<<<<<<<<<EXECVE SEM PATH
+	else if (pid == 0)
 	{
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("Error: ");
-			free_n_exit();
-		}
-		else if (pid == 0)
-		{
-			new_cmd = (char **)malloc(sizeof(char **));
-			while (paths[c])
-			{
-				new_path = ft_strjoin(paths[c], "/");
-				new_cmd[0] = ft_strjoin(new_path, cmd[0]);
-				if (is_executable(cmd[0]))
-					execve(cmd[0], cmd, n_env);
-				else if (is_executable(new_cmd[0]))
-				{
-					new_cmd[0] = ft_strjoin(new_path, cmd[0]);
-					printf("new_cmd= %s", new_cmd[0]);
-					execve(new_cmd[0], cmd, n_env);
-					break ;
-				}
-				//printf("path= %s\n",paths[c]);
-				//printf("new_path= %s\n", new_path);
-				free(new_path);
-				//free(new_cmd);
-				c++;
-			}
-			//path = ft_strjoin(getcwd(cwd, 2048), "/");
-			//execve(ft_strjoin(path, "minishell"), cmd, n_env);
-			ft_putstr_fd("Minishell: '", 2);
-			ft_putstr_fd(cmd[0], 2);
-			ft_putstr_fd("': ", 2);
-			ft_putstr_fd(strerror(errno), 2);
-			ft_putstr_fd("\n", 2);
-			exit(errno);
-		}
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			errno = WIFEXITED(status);
-		ft_free_split(new_cmd);
+		new_cmd = create_command_for_exec(cmd, paths);
+		execve(new_cmd[0], cmd, n_env);
+		ft_putstr_fd("Minishell: '", 2);
+		ft_putstr_fd(cmd[0], 2);
+		ft_putstr_fd("': ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n", 2);
+		exit(errno);
 	}
-//	else if (execve(cmd[i], cmd, n_env) == -1)
-	//	ft_printf("%s: command not found\n", cmd[i]);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		errno = WIFEXITED(status);
 	ft_free_split(paths);
 	if (new_cmd)
 		ft_free_split(new_cmd);
 }
 
-void free_n_env(char **n_env)
+void	free_n_env(char **n_env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (n_env)
@@ -235,16 +138,16 @@ void free_n_env(char **n_env)
 		}
 		free(n_env);
 	}
-	return;
+	return ;
 }
 
-void ft_free_split(char **str)
+void	ft_free_split(char **str)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (!(str))
-		return;
+		return ;
 	while (*(str + ++i) != NULL)
 	{
 		free(*(str + i));
@@ -256,9 +159,9 @@ void ft_free_split(char **str)
 
 void	execute(char **cmd, char **old_cmd)
 {
-	char **n_env;
+	char	**n_env;
 
-	if(cmd[0] != NULL)
+	if (cmd[0] != NULL)
 	{
 		n_env = hash_to_str_arr(g_shell.env);
 		if (is_builtins(cmd))
