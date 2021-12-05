@@ -44,6 +44,7 @@ SRC = $(SRC_PATH)main.c\
 			$(SRC_PATH)pipe_redirect/mister_redirect.c\
 			$(SRC_PATH)pipe_redirect/here_doc.c\
 			$(SRC_PATH)execute/execute.c\
+			$(SRC_PATH)execute/execve.c\
 			$(SRC_PATH)is_path.c\
 			$(SRC_PATH)signal.c\
 			$(SRC_PATH)paths_n_prompt.c
