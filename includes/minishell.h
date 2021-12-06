@@ -184,6 +184,7 @@ int				count_string(char *command, int *idx, int *i, int q_id);
 char			*expand_quote_var(char *command, int *idx, int q_id);
 char			*expand_error(char *command, int i);
 void			free_joker_list(t_joker_m *lst);
+char			*swap_var(char *command, int i, int idx);
 
 /*
 ** PATH HANDLERS

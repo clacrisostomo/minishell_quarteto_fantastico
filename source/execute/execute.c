@@ -6,7 +6,7 @@
 /*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:11:32 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/05 22:03:52 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/05 23:43:43 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ void	execute(char **cmd, char **old_cmd)
 			builtins(cmd, old_cmd, n_env);
 		else
 		{
-			if(ft_isdigit(ft_atoi(cmd[0])))
-				printf("Error/n");
+			if (ft_isdigit(ft_atoi(cmd[0])))
+				ft_putendl_fd("Command not found", 2);
 			else
 				do_exec(cmd, n_env);
 		}

@@ -6,7 +6,7 @@
 /*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 13:25:20 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/28 22:41:50 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/05 23:42:53 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	mr_redirect_out(char *file, int flag)
 	file_fd = open(file, flag, 0777);
 	if (file_fd == -1)
 	{
-		printf("ERROR REDIRECT\n");
+		ft_putendl_fd("Error: bad file decriptor", 2);
 	}
 	else
 	{
@@ -35,7 +35,7 @@ static void	mr_redirect_in(char *file, int flag)
 	file_fd = open(file, flag);
 	if (file_fd == -1)
 	{
-		printf("ERROR REDIRECT\n");
+		ft_putendl_fd("Error: bad file decriptor", 2);
 	}
 	else
 		dup2(file_fd, STDIN);

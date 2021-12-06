@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_only.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 01:18:15 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/20 20:39:38 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/05 23:23:29 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	sort_alpha(char **str)
 	char	*aux;
 
 	x = 0;
-	printf("entrou\n");
 	while (str[x])
 	{
 		y = 0;

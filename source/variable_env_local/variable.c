@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   variable.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 23:00:43 by csantos-          #+#    #+#             */
-/*   Updated: 2021/11/21 02:26:08 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/05 23:31:07 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static char	**new_cmd_if_not_var(char **cmd, int i)
+{
+	if (cmd[i])
+	{
+		free(cmd[0]);
+		cmd[0] = ft_strdup(cmd[i]);
+	}
+	else
+		perror("Error: ");
+	return (cmd);
+}
 
 int	ft_isvar(char **cmd)
 {
@@ -27,15 +39,7 @@ int	ft_isvar(char **cmd)
 		if (cmd[i][j] != '=' || j == 0)
 		{
 			if (i > 0)
-			{
-				if(cmd[i])
-				{
-					free(cmd[0]);
-					cmd[0] = ft_strdup(cmd[i]);
-				}
-				else
-					printf("erro\n");
-			}
+				cmd = new_cmd_if_not_var(cmd, i);
 			return (FALSE);
 		}
 		i++;

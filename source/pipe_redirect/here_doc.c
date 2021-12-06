@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 22:53:24 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/05 18:40:26 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/05 23:23:57 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	create_mr_temporary_file(void)
 
 	file_fd = open(FILE_TMP, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (file_fd == -1)
-		printf("ERROR REDIRECT\n");
+		ft_putendl_fd("Redirect error.", 2);
 	return (file_fd);
 }
 
@@ -31,7 +31,7 @@ void	here_doc_loop(int file_tmp, char *eof)
 		tmp = readline("> ");
 		if (!tmp)
 		{
-			printf("ERROOOOOOOOR\n");
+			ft_putendl_fd("Temporary file error.", 2);
 			close(file_tmp);
 			exit(0);
 		}

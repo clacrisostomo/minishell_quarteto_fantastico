@@ -6,7 +6,7 @@
 /*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 01:41:27 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/05 23:18:02 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/05 23:43:08 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,46 +70,45 @@ static char	*delete_variable(char *command, int i, int idx)
 	return (str_ret);
 }
 
-static char	*swap_var(char *command, int i, int idx)
+char	**create_str_str(int size)
 {
-	char	*val;
-	char	**str_var;
+	char	**str_str;
 	int		j;
 
-	str_var = (char **)ft_calloc(6, sizeof(char *));
-	if (str_var == NULL)
+	str_str = (char **)ft_calloc(size, sizeof(char *));
+	if (str_str == NULL)
 	{
 		perror("Error: ");
-		free(command);
 		return (NULL);
 	}
 	j = 0;
-	while (j < 6)
-		str_var[j++] = NULL;
+	while (j < size)
+		str_str[j++] = NULL;
+	return (str_str);
+}
+
+char	*swap_var(char *command, int i, int idx)
+{
+	char	*val;
+	char	**str_var;
+
+	str_var = create_str_str(6);
+	if (str_var == NULL)
+	{
+		free(command);
+		return (NULL);
+	}
 	str_var = swap_var_ctrl_one(str_var, command, idx, i);
 	if (str_var == NULL)
 		return (NULL);
 	val = search_hash_by_key(str_var[1]);
 	if (val == NULL)
-	{
 		command = delete_variable(command, i, idx);
-		ft_free_split(str_var);
-		return (command);
+	else
+	{
+		str_var = swap_var_ctrl_two(str_var, val, i, idx);
+		command = ft_strjoin(str_var[4], str_var[3]);
 	}
-	str_var = swap_var_ctrl_two(str_var, val, i, idx);
-	command = ft_strjoin(str_var[4], str_var[3]);
 	ft_free_split(str_var);
-	return (command);
-}
-
-char	*expand_var(char *command, int idx)
-{
-	int	i;
-
-	i = idx + 1;
-	while (command[i] != ' ' && command[i] != D_QUOTE && command[i] != S_QUOTE
-		&& command[i] != '=' && (command[i]))
-		i++;
-	command = swap_var(command, i, idx);
 	return (command);
 }
