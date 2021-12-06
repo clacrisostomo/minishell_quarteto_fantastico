@@ -6,7 +6,7 @@
 /*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/05 22:02:34 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/05 23:19:11 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	parser(char **cmd, int i, int *old_fd)
 	c = i;
 	if (!have_file_after_redirect(cmd))
 	{
-		printf("ERROOOOOOOOOR\n");
+		printf("ERROOOOOOOOOR\n"); //consertar
 		return ;
 	}
 	save_origin_fd(save_fd);
@@ -50,7 +50,8 @@ static void	command_execute(char *command)
 	add_history(command);
 	cmd = split_command(command);
 	free(command);
-	parser(cmd, 0, &old_fd);
+	if (cmd[0])
+		parser(cmd, 0, &old_fd);
 	if (cmd)
 		ft_free_split(cmd);
 }

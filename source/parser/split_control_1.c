@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_control_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 01:41:27 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/21 01:53:29 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/05 23:18:02 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,22 @@ static char	**swap_var_ctrl_two(char **str_var, char *val, int i, int idx)
 	return (str_var);
 }
 
+static char	*delete_variable(char *command, int i, int idx)
+{
+	char	*str_start;
+	char	*str_end;
+	char	*str_ret;
+	int		str_size;
+
+	str_start = ft_substr(command, 0, idx);
+	str_size = ft_strlen(command);
+	str_end = ft_substr(command, i, str_size - i + 1);
+	str_ret = ft_strjoin(str_start, str_end);
+	free(str_start);
+	free(str_end);
+	return (str_ret);
+}
+
 static char	*swap_var(char *command, int i, int idx)
 {
 	char	*val;
@@ -75,7 +91,11 @@ static char	*swap_var(char *command, int i, int idx)
 		return (NULL);
 	val = search_hash_by_key(str_var[1]);
 	if (val == NULL)
-		val = ft_strdup(" ");
+	{
+		command = delete_variable(command, i, idx);
+		ft_free_split(str_var);
+		return (command);
+	}
 	str_var = swap_var_ctrl_two(str_var, val, i, idx);
 	command = ft_strjoin(str_var[4], str_var[3]);
 	ft_free_split(str_var);
