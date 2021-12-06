@@ -6,7 +6,7 @@
 /*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/11/28 22:16:42 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/05 22:02:34 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	loop_command(char *command)
 		errno = 0;
 		free_n_exit();
 	}
-	while (ft_isalpha(command[i]) == 0 && command[i] != '\0')
+	while (ft_isprint(command[i]) == 0 && command[i] != '\0')
 		i++;
 	if (command[i] == '\0')
 	{

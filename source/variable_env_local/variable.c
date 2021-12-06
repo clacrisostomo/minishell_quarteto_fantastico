@@ -28,8 +28,13 @@ int	ft_isvar(char **cmd)
 		{
 			if (i > 0)
 			{
-				free(cmd[0]);
-				cmd[0] = ft_strdup(cmd[i]);
+				if(cmd[i])
+				{
+					free(cmd[0]);
+					cmd[0] = ft_strdup(cmd[i]);
+				}
+				else
+					printf("erro\n");
 			}
 			return (FALSE);
 		}

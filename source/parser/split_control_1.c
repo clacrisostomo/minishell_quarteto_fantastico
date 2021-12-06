@@ -74,6 +74,8 @@ static char	*swap_var(char *command, int i, int idx)
 	if (str_var == NULL)
 		return (NULL);
 	val = search_hash_by_key(str_var[1]);
+	if (val == NULL)
+		val = ft_strdup(" ");
 	str_var = swap_var_ctrl_two(str_var, val, i, idx);
 	command = ft_strjoin(str_var[4], str_var[3]);
 	ft_free_split(str_var);

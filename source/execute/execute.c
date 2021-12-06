@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:11:32 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/05 18:57:57 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/05 22:03:52 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,12 @@ void	execute(char **cmd, char **old_cmd)
 		if (is_builtins(cmd))
 			builtins(cmd, old_cmd, n_env);
 		else
-			do_exec(cmd, n_env);
+		{
+			if(ft_isdigit(ft_atoi(cmd[0])))
+				printf("Error/n");
+			else
+				do_exec(cmd, n_env);
+		}
 		ft_free_split(n_env);
 	}
 }
