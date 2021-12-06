@@ -33,7 +33,6 @@ t_hash_table	*create_hash_table(int size)
 		free_n_exit();
 	}
 	hashtable->size = size;
-	hashtable->count = 0;
 	hashtable->item = (t_ht_item **)ft_calloc(hashtable->size,
 			sizeof(t_ht_item *));
 	if (!hashtable->item)

@@ -26,14 +26,14 @@ char	*get_path_str(void)
 	return ("");
 }
 
-char    **get_paths(void)
+char	**get_paths(void)
 {
-    char    *paths;
-    char    **ret;
+	char	*paths;
+	char	**ret;
 
-    paths = get_path_str();
-    ret = ft_split(paths, ':');
-    return (ret);
+	paths = get_path_str();
+	ret = ft_split(paths, ':');
+	return (ret);
 }
 
 char	*do_prompt(void)

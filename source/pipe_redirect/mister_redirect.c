@@ -6,7 +6,7 @@
 /*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 13:25:20 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/28 22:41:50 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/05 23:42:53 by mirkios          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	mr_redirect_out(char *file, int flag)
 	file_fd = open(file, flag, 0777);
 	if (file_fd == -1)
 	{
-		printf("ERROR REDIRECT\n");
+		ft_putendl_fd("Error: bad file decriptor", 2);
 	}
 	else
 	{
@@ -35,7 +35,7 @@ static void	mr_redirect_in(char *file, int flag)
 	file_fd = open(file, flag);
 	if (file_fd == -1)
 	{
-		printf("ERROR REDIRECT\n");
+		ft_putendl_fd("Error: bad file decriptor", 2);
 	}
 	else
 		dup2(file_fd, STDIN);
@@ -64,77 +64,4 @@ int	is_redirect(char *cmd)
 	else if (!(ft_strcmp(cmd, "<<")))
 		return (TRUE);
 	return (FALSE);
-}
-
-char	**new_cmd_for_redirect(char **cmd, int i, int j)
-{
-	char	**sub_cmd;
-	int		k;
-	int		c;
-
-	(void)i;
-	k = 0;
-	c = 0;
-	sub_cmd = (char **)calloc((j - 1), sizeof(char *));
-	while (k != j)
-	{
-		if (k != i && k != (i + 1))
-		{
-			sub_cmd[c] = ft_strdup(cmd[k]);
-			c++;
-		}
-		k++;
-	}
-	sub_cmd[c] = NULL;
-	return (sub_cmd);
-}
-
-// char	**make_command_redirect(char **cmd, int i, int *save_fd)
-// {
-// 	char	**new_cmd;
-// 	char	**recursion;
-// 	int		j;
-
-// 	j = 0;
-// 	while (cmd[j] != NULL)
-// 		j++;
-// 	while ((!is_redirect(cmd[i])) && (cmd[i + 1]))
-// 		i++;
-// 	if (is_redirect(cmd[i]))
-// 	{
-// 		mister_redirect(cmd[i], cmd[i + 1], save_fd);
-// 		if (j > 1)
-// 			new_cmd = new_cmd_for_redirect(cmd, i, j);
-// 		ft_free_split(cmd);
-// 		if (j <= 1)
-// 			return (cmd);
-// 		recursion = make_command_redirect(new_cmd, 0, save_fd);
-// 		return (recursion);
-// 	}
-// 	return (cmd);
-// }
-
-char	**make_command_redirect(char **cmd, int i, int *save_fd)
-{
-	char	**new_cmd;
-	char	**recursion;
-	int		j;
-
-	j = 0;
-	if (cmd[0] != NULL)
-	{
-		while (cmd[j] != NULL)
-			j++;
-		while ((!is_redirect(cmd[i])) && (cmd[i + 1]))
-			i++;
-		if (is_redirect(cmd[i]))
-		{
-			mister_redirect(cmd[i], cmd[i + 1], save_fd);
-			new_cmd = new_cmd_for_redirect(cmd, i, j);
-			ft_free_split(cmd);
-			recursion = make_command_redirect(new_cmd, 0, save_fd);
-			return (recursion);
-		}
-	}
-	return (cmd);
 }

@@ -6,11 +6,11 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/27 23:51:01 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/05 18:39:00 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINISHELL_H
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # define INT_MAX 2147483647
@@ -74,7 +74,6 @@ typedef struct s_hash_table
 {
 	t_ht_item		**item;
 	int				size;
-	int				count; //o que que é count??
 }	t_hash_table;
 
 typedef struct s_shell
@@ -103,6 +102,7 @@ void			miss_pipe(char **cmd, int i, int *old_fd);
 char			**cmd_till_pipe(char **cmd, int begin, int end);
 
 char			**make_command_redirect(char **cmd, int i, int *save_fd);
+void			mister_redirect(char *redirect, char *file, int *save_fd);
 int				is_redirect(char *cmd);
 int				have_file_after_redirect(char **cmd);
 void			dr_here(char *eof, int *save_fd);
@@ -140,6 +140,8 @@ char			*put_quotes(t_ht_item *new_env);
 char			**env_with_quotes(void);
 void			print_export_env(char **array, int fd);
 void			error_export(char **cmd, int i);
+int				is_builtins(char **cmd);
+void			builtins(char **cmd, char **old_cmd, char **n_env);
 
 /*
 ** HASH TABLE
@@ -182,6 +184,7 @@ int				count_string(char *command, int *idx, int *i, int q_id);
 char			*expand_quote_var(char *command, int *idx, int q_id);
 char			*expand_error(char *command, int i);
 void			free_joker_list(t_joker_m *lst);
+char			*swap_var(char *command, int i, int idx);
 
 /*
 ** PATH HANDLERS
@@ -190,6 +193,8 @@ char			*get_path_str(void);
 char			**get_paths(void);
 char			*do_prompt(void);
 int				is_path(char **cmd, char **n_env);
+char			**create_command_for_exec(char **cmd, char **paths);
+void			do_exec(char **cmd, char **n_env);
 
 /*
 ** UTILS

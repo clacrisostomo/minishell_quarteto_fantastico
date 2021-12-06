@@ -6,7 +6,7 @@
 #    By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/11/28 01:58:01 by nbarreir         ###   ########.fr        #
+#    Updated: 2021/12/05 18:00:19 by nbarreir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,11 +38,13 @@ SRC = $(SRC_PATH)main.c\
 			$(SRC_PATH)parser/split_control_1.c\
 			$(SRC_PATH)parser/split_control_2.c\
 			$(SRC_PATH)parser/set_space_for_redir.c\
+			$(SRC_PATH)pipe_redirect/cmd_for_redirect.c\
 			$(SRC_PATH)pipe_redirect/logic_fd.c\
 			$(SRC_PATH)pipe_redirect/miss_pipe.c\
 			$(SRC_PATH)pipe_redirect/mister_redirect.c\
 			$(SRC_PATH)pipe_redirect/here_doc.c\
 			$(SRC_PATH)execute/execute.c\
+			$(SRC_PATH)execute/execve.c\
 			$(SRC_PATH)is_path.c\
 			$(SRC_PATH)signal.c\
 			$(SRC_PATH)paths_n_prompt.c

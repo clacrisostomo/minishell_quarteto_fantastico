@@ -115,3 +115,15 @@ char	*subs_quote(char *command, int idx, char q_id)
 	command = subs_quote_ctrl_two(command, idx, str_var);
 	return (command);
 }
+
+char	*expand_var(char *command, int idx)
+{
+	int	i;
+
+	i = idx + 1;
+	while (command[i] != ' ' && command[i] != D_QUOTE && command[i] != S_QUOTE
+		&& command[i] != '=' && (command[i]))
+		i++;
+	command = swap_var(command, i, idx);
+	return (command);
+}
