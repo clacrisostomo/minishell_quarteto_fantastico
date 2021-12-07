@@ -20,11 +20,14 @@ void	interrupt(int signal)
 
 void	prompt_handler(int signal)
 {
-	errno = 128 + signal;
-	ft_printf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	if (isatty(STDIN))
+	{
+		errno = 128 + signal;
+		ft_printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
 void	define_signals(void)
