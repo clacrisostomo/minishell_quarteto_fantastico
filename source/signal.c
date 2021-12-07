@@ -35,10 +35,3 @@ void	define_signals(void)
 	signal(SIGINT, prompt_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
-
-/*
-g_shell.status_error:
-126 -> Permission Denied
-127 -> Command not found
-128 + signal -> Kill signal status
-*/
