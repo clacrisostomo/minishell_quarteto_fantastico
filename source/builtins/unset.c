@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	delete_item(t_hash_table *table, char *key)
+void	delete_item(t_array_table *table, char *key)
 {
 	int		c;
 	char	*value;

@@ -103,8 +103,8 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_putstr_fd("Error: Too many arguments\n", 2);
 		return (EXIT_FAILURE);
 	}
-	g_shell.env = envp_to_hash(envp);
-	g_shell.local = create_hash_table(50);
+	g_shell.env = envp_to_array(envp);
+	g_shell.local = create_array_table(50);
 	loop();
 	return (1);
 }

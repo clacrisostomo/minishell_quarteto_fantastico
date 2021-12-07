@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash_to_str_arr.c                                  :+:      :+:    :+:   */
+/*   array_to_str_arr.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-char	**hash_to_str_arr(t_hash_table *n_env)
+char	**array_to_str_arr(t_array_table *n_env)
 {
 	int		i;
 	int		j;

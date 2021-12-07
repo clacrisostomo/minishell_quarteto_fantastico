@@ -16,7 +16,7 @@ void	control_cd_minus(char *tmp)
 {
 	char	*old;
 
-	old = search_hash_by_key("OLDPWD");
+	old = search_array_by_key("OLDPWD");
 	if (old)
 	{
 		ft_printf("%s\n", old);
@@ -34,7 +34,7 @@ void	control_cd_minus(char *tmp)
 void	control_cd_minus_two(char **cmd, char *slash, char *home)
 {
 	if (ft_strncmp(cmd[1], "~-", 5) == 0)
-		chdir(search_hash_by_key("OLDPWD"));
+		chdir(search_array_by_key("OLDPWD"));
 	else if (ft_strncmp(cmd[1], "~", 4) == 0 \
 		|| ft_strncmp(cmd[1], "--", 4) == 0)
 		chdir(home);

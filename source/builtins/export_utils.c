@@ -35,7 +35,7 @@ int	which_table_by_key(char *key)
 	return (i);
 }
 
-void	change_val_by_table(t_hash_table *table, char *key, char *value, int c)
+void	change_val_by_table(t_array_table *table, char *key, char *value, int c)
 {
 	if (ft_strcmp(table->item[c]->key, key) == 0)
 	{

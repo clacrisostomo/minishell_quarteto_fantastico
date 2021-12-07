@@ -101,7 +101,7 @@ char	*swap_var(char *command, int i, int idx)
 	str_var = swap_var_ctrl_one(str_var, command, idx, i);
 	if (str_var == NULL)
 		return (NULL);
-	val = search_hash_by_key(str_var[1]);
+	val = search_array_by_key(str_var[1]);
 	if (val == NULL)
 		command = delete_variable(command, i, idx);
 	else

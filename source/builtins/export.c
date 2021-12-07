@@ -73,7 +73,7 @@ void	if_have_only_value(char **cmd, int i)
 	char	*value;
 
 	t = which_table_by_key(cmd[i]);
-	value = search_hash_by_key(cmd[i]);
+	value = search_array_by_key(cmd[i]);
 	if (value != NULL && t == LOCAL)
 	{
 		loop_table_n_insert(cmd[i], value, ENV);

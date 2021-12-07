@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # define INT_MAX 2147483647
-# define HASH_SIZE 256 //ver se vai precisar depois
 
 # define NONE 0
 # define ENV 1
@@ -70,16 +69,16 @@ typedef struct s_ht_item
 	char	*value;
 }	t_ht_item;
 
-typedef struct s_hash_table
+typedef struct s_array_table
 {
 	t_ht_item		**item;
 	int				size;
-}	t_hash_table;
+}	t_array_table;
 
 typedef struct s_shell
 {
-	t_hash_table	*env;
-	t_hash_table	*local;
+	t_array_table	*env;
+	t_array_table	*local;
 	int				status_error;
 }	t_shell;
 
@@ -92,7 +91,7 @@ void			ft_free_split(char **str);
 void			free_n_env(char **n_env);
 void			execute(char **command, char **old_cmd);
 void			quote_commander(char **cmd);
-void			delete_item(t_hash_table *table, char *key);
+void			delete_item(t_array_table *table, char *key);
 void			parser(char **cmd, int i, int *old_fd);
 
 /*
@@ -144,24 +143,24 @@ int				is_builtins(char **cmd);
 void			builtins(char **cmd, char **old_cmd, char **n_env);
 
 /*
-** HASH TABLE
+** ARRAY TABLE
 */
-char			*search_hash_by_key(char *key);
-void			modify_hash_by_key(char *key, char *new_val);
+char			*search_array_by_key(char *key);
+void			modify_array_by_key(char *key, char *new_val);
 char			*find_key(char *line);
 char			*find_value(char *line);
-t_hash_table	*create_hash_table(int size);
-t_ht_item		*create_hash_item(char *key, char*value);
+t_array_table	*create_array_table(int size);
+t_ht_item		*create_array_item(char *key, char*value);
 t_ht_item		*insert_table(char *key, char *value);
-t_hash_table	*envp_to_hash(char **envp);
+t_array_table	*envp_to_array(char **envp);
 void			free_item(t_ht_item *item);
-void			free_table(t_hash_table *table);
+void			free_table(t_array_table *table);
 void			free_n_exit(void);
 void			free_item(t_ht_item *item);
 int				loop_table_n_insert(char *key, char *value, int table);
 int				modify_table_by_key(int table, char *key, char *value);
 int				which_table_by_key(char *key);
-void			change_val_by_table(t_hash_table *table, char *key,
+void			change_val_by_table(t_array_table *table, char *key,
 					char *value, int c);
 
 /*
@@ -202,6 +201,6 @@ void			do_exec(char **cmd, char **n_env);
 int				ft_isvar(char **cmd);
 int				ft_strnstr_indie(const char *big, const char *small,
 					size_t len);
-char			**hash_to_str_arr(t_hash_table *n_env);
+char			**array_to_str_arr(t_array_table *n_env);
 
 #endif

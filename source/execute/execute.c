@@ -92,7 +92,7 @@ void	execute(char **cmd, char **old_cmd)
 
 	if (cmd[0] != NULL)
 	{
-		n_env = hash_to_str_arr(g_shell.env);
+		n_env = array_to_str_arr(g_shell.env);
 		if (is_builtins(cmd))
 			builtins(cmd, old_cmd, n_env);
 		else

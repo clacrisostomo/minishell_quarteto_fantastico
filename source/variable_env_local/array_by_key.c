@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash_by_key.c                                      :+:      :+:    :+:   */
+/*   array_by_key.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-char	*search_hash_by_key(char *key)
+char	*search_array_by_key(char *key)
 {
 	int	c;
 
@@ -33,7 +33,7 @@ char	*search_hash_by_key(char *key)
 	return (NULL);
 }
 
-void	modify_hash_by_key(char *key, char *new_val)
+void	modify_array_by_key(char *key, char *new_val)
 {
 	int	c;
 

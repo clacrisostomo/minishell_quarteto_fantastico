@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hashtable.c                                        :+:      :+:    :+:   */
+/*   arraytable.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -16,38 +16,38 @@ t_ht_item	*insert_table(char *key, char *value)
 {
 	t_ht_item	*new_item;
 
-	new_item = create_hash_item(key, value);
+	new_item = create_array_item(key, value);
 	return (new_item);
 }
 
-t_hash_table	*create_hash_table(int size)
+t_array_table	*create_array_table(int size)
 {
-	t_hash_table	*hashtable;
+	t_array_table	*arraytable;
 	int				i;
 
 	i = 0;
-	hashtable = (t_hash_table *)malloc(sizeof(t_hash_table));
-	if (!hashtable)
+	arraytable = (t_array_table *)malloc(sizeof(t_array_table));
+	if (!arraytable)
 	{
 		perror("Error: ");
 		free_n_exit();
 	}
-	hashtable->size = size;
-	hashtable->item = (t_ht_item **)ft_calloc(hashtable->size,
+	arraytable->size = size;
+	arraytable->item = (t_ht_item **)ft_calloc(arraytable->size,
 			sizeof(t_ht_item *));
-	if (!hashtable->item)
+	if (!arraytable->item)
 	{
 		perror("Error: ");
 		free_n_exit();
 	}
-	while (i++ < hashtable->size - 1)
+	while (i++ < arraytable->size - 1)
 	{
-		hashtable->item[i] = NULL;
+		arraytable->item[i] = NULL;
 	}
-	return (hashtable);
+	return (arraytable);
 }
 
-t_ht_item	*create_hash_item(char *key, char *value)
+t_ht_item	*create_array_item(char *key, char *value)
 {
 	t_ht_item	*new;
 
@@ -67,9 +67,9 @@ t_ht_item	*create_hash_item(char *key, char *value)
 	return (new);
 }
 
-t_hash_table	*envp_to_hash(char **envp)
+t_array_table	*envp_to_array(char **envp)
 {
-	t_hash_table	*table;
+	t_array_table	*table;
 	char			*key;
 	char			*value;
 	int				i;
@@ -79,7 +79,7 @@ t_hash_table	*envp_to_hash(char **envp)
 	j = 0;
 	while (envp[i])
 		i++;
-	table = create_hash_table(i + 60);
+	table = create_array_table(i + 60);
 	while (j < i)
 	{
 		key = find_key(envp[j]);

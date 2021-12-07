@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	free_all(t_hash_table *table)
+void	free_all(t_array_table *table)
 {
 	int				i;
 	t_ht_item		*item;

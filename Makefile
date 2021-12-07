@@ -19,9 +19,9 @@ SRC_PATH = ./source/
 
 
 SRC = $(SRC_PATH)main.c\
-			$(SRC_PATH)variable_env_local/hashtable.c\
-			$(SRC_PATH)variable_env_local/hash_by_key.c\
-			$(SRC_PATH)variable_env_local/hash_to_str_arr.c\
+			$(SRC_PATH)variable_env_local/arraytable.c\
+			$(SRC_PATH)variable_env_local/array_by_key.c\
+			$(SRC_PATH)variable_env_local/array_to_str_arr.c\
 			$(SRC_PATH)variable_env_local/variable.c\
 			$(SRC_PATH)variable_env_local/free_table.c\
 			$(SRC_PATH)builtins/changedir.c\
