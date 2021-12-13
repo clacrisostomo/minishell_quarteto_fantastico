@@ -6,7 +6,7 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 13:11:02 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/20 20:39:23 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/10 04:37:39 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,24 @@ void	define_signals(void)
 {
 	signal(SIGINT, prompt_handler);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+static void	exec_handler(int signal)
+{
+	if (signal == SIGINT)
+	{
+		errno = 130;
+		ft_printf("\n");
+	}
+	if (signal == SIGQUIT)
+	{
+		errno = 131;
+		ft_putendl_fd("Quit (core dumped)", 2);
+	}
+}
+
+void	define_signals_exec(void)
+{
+	signal(SIGINT, exec_handler);
+	signal(SIGQUIT, exec_handler);
 }

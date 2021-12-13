@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/27 22:53:24 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/05 23:23:57 by mirkios          ###   ########.fr       */
+/*   Created: 2021/12/07 18:45:16 by nbarreir          #+#    #+#             */
+/*   Updated: 2021/12/10 04:36:55 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,14 @@ void	interrupt_here_document(int signal)
 
 void	dr_here(char *eof, int *save_fd)
 {
-	int		file_tmp;
-	int		status;
-	int		save_out;
-	int		pid;
+	int	file_tmp;
+	int	status;
+	int	save_out;
+	int	pid;
 
 	save_out = dup(STDOUT);
 	dup2(save_fd[0], STDIN);
+	dup2(save_fd[1], STDOUT);
 	file_tmp = create_mr_temporary_file();
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
@@ -78,7 +79,7 @@ void	dr_here(char *eof, int *save_fd)
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
-			errno = WIFEXITED(status);
+		errno = WIFEXITED(status);
 	file_tmp = open(FILE_TMP, O_RDONLY);
 	dup2(file_tmp, STDIN);
 	dup2(save_out, STDOUT);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/05 23:19:35 by mirkios          ###   ########.fr       */
+/*   Created: 2021/12/07 18:45:52 by nbarreir          #+#    #+#             */
+/*   Updated: 2021/12/10 04:35:34 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ char	*treat_command(char *command, t_joker_m *joker_list)
 	i = 0;
 	while (command[i])
 	{
-		if (command[i] == '$')
+		if (command[i] == '$' && command[i + 1] != '\0'
+			&& command[i + 1] != ' ')
 			command = treat_command_ctrl(command, joker_list, i--);
 		else if (command[i] == D_QUOTE)
 			command = check_second_quote(command, &i, D_QUOTE, joker_list);

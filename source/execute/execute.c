@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/26 14:11:32 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/05 23:43:43 by mirkios          ###   ########.fr       */
+/*   Created: 2021/12/07 18:46:26 by nbarreir          #+#    #+#             */
+/*   Updated: 2021/12/10 18:13:08 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,23 @@ int	is_builtins(char **cmd)
 	return (FALSE);
 }
 
-void	builtins(char **cmd, char **old_cmd, char **n_env)
+void	builtins(char **cmd, char **old_cmd, char **n_env, int has_pipe)
 {
 	if (!(ft_strcmp(cmd[0], "echo")))
 		echo(cmd);
-	else if (!(ft_strcmp(cmd[0], "cd")))
+	else if ((!(ft_strcmp(cmd[0], "cd"))) && has_pipe == 0)
 		cd(cmd);
 	else if (!(ft_strcmp(cmd[0], "pwd")))
 		pwd();
 	else if (!(ft_strcmp(cmd[0], "env")))
 		env();
-	else if (!(ft_strcmp(cmd[0], "export")))
+	else if ((!(ft_strcmp(cmd[0], "export"))) && has_pipe == 0)
 		expt(cmd, 1);
-	else if (!(ft_strcmp(cmd[0], "unset")))
+	else if ((!(ft_strcmp(cmd[0], "unset"))) && has_pipe == 0)
 		unset_(cmd);
 	else if (!(ft_strcmp(cmd[0], "exit")))
 		exit_terminal(cmd, n_env, old_cmd);
-	else if (ft_isvar(cmd))
+	else if (ft_isvar(cmd) && has_pipe == 0)
 		expt(cmd, 0);
 }
 
@@ -86,7 +86,7 @@ void	ft_free_split(char **str)
 	str = NULL;
 }
 
-void	execute(char **cmd, char **old_cmd)
+void	execute(char **cmd, char **old_cmd, int has_pipe)
 {
 	char	**n_env;
 
@@ -94,7 +94,7 @@ void	execute(char **cmd, char **old_cmd)
 	{
 		n_env = array_to_str_arr(g_shell.env);
 		if (is_builtins(cmd))
-			builtins(cmd, old_cmd, n_env);
+			builtins(cmd, old_cmd, n_env, has_pipe);
 		else
 		{
 			if (ft_isdigit(ft_atoi(cmd[0])))

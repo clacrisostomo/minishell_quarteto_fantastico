@@ -6,7 +6,7 @@
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:17:46 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/20 20:39:37 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/08 02:47:57 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	cd_home(t_cd *cd_list)
 {
 	if (cd_list->i == 1)
 	{
-		modify_array_by_key("OLDPWD", cd_list->tmp);
+		insert_or_modify_by_key("OLDPWD", cd_list->tmp);
 		chdir(cd_list->home);
 	}
 }
@@ -61,7 +61,7 @@ int	cd(char **cmd)
 		}
 		else
 			control_cd_minus_two(cmd, cd_list.slash, cd_list.home);
-		modify_array_by_key("OLDPWD", cd_list.tmp);
+		insert_or_modify_by_key("OLDPWD", cd_list.tmp);
 		if (errno == ENOENT)
 			cd_error_file(cmd);
 	}

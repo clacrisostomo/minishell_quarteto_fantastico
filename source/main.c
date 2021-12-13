@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/05 23:38:11 by mirkios          ###   ########.fr       */
+/*   Created: 2021/12/07 18:44:16 by nbarreir          #+#    #+#             */
+/*   Updated: 2021/12/10 18:17:30 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	parser(char **cmd, int i, int *old_fd)
+void	parser(char **cmd, int i, int *old_fd, int has_pipe)
 {
 	int		save_fd[2];
 	int		c;
@@ -31,27 +31,29 @@ void	parser(char **cmd, int i, int *old_fd)
 		sub_cmd = cmd_till_pipe(cmd, c, i);
 	else
 		sub_cmd = cmd_till_pipe(cmd, c, i + 1);
-	miss_pipe(cmd, i, old_fd);
+	has_pipe = miss_pipe(cmd, i, old_fd, has_pipe);
 	sub_cmd = make_command_redirect(sub_cmd, 0, save_fd);
-	execute(sub_cmd, cmd);
+	execute(sub_cmd, cmd, has_pipe);
 	reset_fd(save_fd);
 	if (sub_cmd)
 		ft_free_split(sub_cmd);
 	if (!(ft_strcmp(cmd[i], "|")) && (cmd[i + 1]))
-		parser(cmd, i + 1, old_fd);
+		parser(cmd, i + 1, old_fd, has_pipe);
 }
 
 static void	command_execute(char *command)
 {
 	char	**cmd;
 	int		old_fd;
+	int		has_pipe;
 
 	old_fd = 0;
+	has_pipe = 0;
 	add_history(command);
 	cmd = split_command(command);
 	free(command);
 	if (cmd[0])
-		parser(cmd, 0, &old_fd);
+		parser(cmd, 0, &old_fd, has_pipe);
 	if (cmd)
 		ft_free_split(cmd);
 }

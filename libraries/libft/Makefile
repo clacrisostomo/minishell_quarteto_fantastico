@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/01/20 12:07:51 by gkenzo-s          #+#    #+#              #
-#    Updated: 2021/10/17 00:05:17 by csantos-         ###   ########.fr        #
+#    Created: 2021/12/07 19:05:34 by nbarreir          #+#    #+#              #
+#    Updated: 2021/12/07 19:05:36 by nbarreir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

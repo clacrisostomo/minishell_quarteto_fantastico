@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/12/05 18:39:00 by nbarreir         ###   ########.fr       */
+/*   Created: 2021/12/07 18:47:15 by nbarreir          #+#    #+#             */
+/*   Updated: 2021/12/10 18:18:40 by nbarreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,15 @@ t_shell	g_shell;
 */
 void			ft_free_split(char **str);
 void			free_n_env(char **n_env);
-void			execute(char **command, char **old_cmd);
+void			execute(char **command, char **old_cmd, int has_pipe);
 void			quote_commander(char **cmd);
 void			delete_item(t_array_table *table, char *key);
-void			parser(char **cmd, int i, int *old_fd);
+void			parser(char **cmd, int i, int *old_fd, int has_pipe);
 
 /*
 ** PIPE AND REDIRECT
 */
-void			miss_pipe(char **cmd, int i, int *old_fd);
+int				miss_pipe(char **cmd, int i, int *old_fd, int has_pipe);
 char			**cmd_till_pipe(char **cmd, int begin, int end);
 
 char			**make_command_redirect(char **cmd, int i, int *save_fd);
@@ -106,6 +106,7 @@ int				is_redirect(char *cmd);
 int				have_file_after_redirect(char **cmd);
 void			dr_here(char *eof, int *save_fd);
 void			interrupt(int signal);
+void			define_signals_exec(void);
 
 /*
 ** FD
@@ -140,7 +141,8 @@ char			**env_with_quotes(void);
 void			print_export_env(char **array, int fd);
 void			error_export(char **cmd, int i);
 int				is_builtins(char **cmd);
-void			builtins(char **cmd, char **old_cmd, char **n_env);
+void			builtins(char **cmd, char **old_cmd, char **n_env,
+					int has_pipe);
 
 /*
 ** ARRAY TABLE
@@ -160,6 +162,7 @@ void			free_item(t_ht_item *item);
 int				loop_table_n_insert(char *key, char *value, int table);
 int				modify_table_by_key(int table, char *key, char *value);
 int				which_table_by_key(char *key);
+void			insert_or_modify_by_key(char *key, char *new_val);
 void			change_val_by_table(t_array_table *table, char *key,
 					char *value, int c);
 
