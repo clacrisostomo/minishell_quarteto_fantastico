@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 20:22:59 by csantos-          #+#    #+#             */
-/*   Updated: 2021/11/20 20:39:37 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/13 18:46:48 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ void	delete_item(t_array_table *table, char *key)
 static void	search_key_to_unset(char *key)
 {
 	int	c;
+	int	i;
 
+	i = 0;
 	c = 0;
 	while (g_shell.env->item[c] && c <= g_shell.env->size - 1)
 	{
@@ -55,14 +57,14 @@ static void	search_key_to_unset(char *key)
 		}
 		c++;
 	}
-	while (g_shell.local->item[c] && c <= g_shell.local->size - 1)
+	while (g_shell.local->item[i] && i <= g_shell.local->size - 1)
 	{
-		if (ft_strncmp(g_shell.local->item[c]->key, key, ft_strlen(key)) == 0)
+		if (ft_strncmp(g_shell.local->item[i]->key, key, ft_strlen(key)) == 0)
 		{
 			delete_item(g_shell.local, key);
 			return ;
 		}
-		c++;
+		i++;
 	}
 }
 

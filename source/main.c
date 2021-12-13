@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/05 23:38:11 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/13 17:34:25 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	parser(char **cmd, int i, int *old_fd)
 	miss_pipe(cmd, i, old_fd);
 	sub_cmd = make_command_redirect(sub_cmd, 0, save_fd);
 	execute(sub_cmd, cmd);
+	printf("oi parser\n");
 	reset_fd(save_fd);
 	if (sub_cmd)
 		ft_free_split(sub_cmd);

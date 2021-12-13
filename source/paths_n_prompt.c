@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paths_n_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mde-figu <mde-figu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 19:08:19 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/11/22 19:16:34 by mde-figu         ###   ########.fr       */
+/*   Updated: 2021/12/13 18:47:55 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ char	*get_path_str(void)
 	{
 		if (!ft_strcmp(g_shell.env->item[c]->key, "PATH"))
 			return (g_shell.env->item[c]->value);
+		c++;
+	}
+	c = 0;
+	while (g_shell.local->item[c] && c <= g_shell.local->size - 1)
+	{
+		if (!ft_strcmp(g_shell.local->item[c]->key, "PATH"))
+			return (g_shell.local->item[c]->value);
 		c++;
 	}
 	return ("");
