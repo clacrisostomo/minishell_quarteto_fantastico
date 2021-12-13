@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:11:32 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/05 22:04:23 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/13 15:24:31 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ char	**create_command_for_exec(char **cmd, char **paths)
 	c = 0;
 	new_cmd = (char **)malloc(sizeof(char **));
 	if (is_executable(cmd[0]))
+	{
 		new_cmd[0] = ft_strdup(cmd[0]);
+		return (new_cmd);
+	}
 	else
 	{
 		while (paths[c])
@@ -41,11 +44,12 @@ char	**create_command_for_exec(char **cmd, char **paths)
 			new_cmd[0] = ft_strjoin(new_path, cmd[0]);
 			free(new_path);
 			if (is_executable(new_cmd[0]))
-				break ;
+				return (new_cmd);
 			free(new_cmd[0]);
 			c++;
 		}
 	}
+	new_cmd[0] = ft_strdup(cmd[0]);
 	return (new_cmd);
 }
 
