@@ -31,6 +31,8 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+# define ESC_S 0
+# define ESC 1
 
 # define FILE_TMP "/tmp/mr_temporary_file"
 
@@ -80,6 +82,7 @@ typedef struct s_shell
 	t_array_table	*env;
 	t_array_table	*local;
 	int				status_error;
+	int				*escape[2];
 }	t_shell;
 
 t_shell	g_shell;
@@ -156,6 +159,7 @@ t_array_table	*envp_to_array(char **envp);
 void			free_item(t_ht_item *item);
 void			free_table(t_array_table *table);
 void			free_n_exit(void);
+void			free_escapes(void);
 void			free_item(t_ht_item *item);
 int				loop_table_n_insert(char *key, char *value, int table);
 int				modify_table_by_key(int table, char *key, char *value);
@@ -176,7 +180,7 @@ void			interrupt_process(int signal);
 char			**split_command(char *command);
 char			*expand_var(char *command, int idx);
 char			*treat_command(char *command, t_joker_m *joker_list);
-void			put_jokers_c(char *command, t_joker_m *joker_list, int *i,
+void			put_jokers_fill_jkrlist(char *command, t_joker_m *joker_list, int *i,
 					int q_id);
 char			*subs_quote(char *command, int idx, char q_id);
 int				count_string(char *command, int *idx, int *i, int q_id);

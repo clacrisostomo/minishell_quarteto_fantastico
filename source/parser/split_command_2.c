@@ -48,7 +48,7 @@ static void	put_jokers_c_ctrl(char *cmd, t_joker_m *new_joker, int *i, int q_id)
 	}
 }
 
-void	put_jokers_c(char *command, t_joker_m *joker_list, int *i, int q_id)
+void	put_jokers_fill_jkrlist(char *command, t_joker_m *joker_list, int *i, int q_id)
 {
 	t_joker_m	*new_joker;
 
@@ -59,16 +59,19 @@ void	put_jokers_c(char *command, t_joker_m *joker_list, int *i, int q_id)
 		free_joker_list(joker_list);
 		free_n_exit();
 	}
-	new_joker->id = ft_calloc(i[4], sizeof(int));
-	if (new_joker->id == NULL)
-	{
-		perror("Error: ");
-		free_joker_list(joker_list);
-		free_n_exit();
-	}
-	new_joker->id_size = i[4] - 1;
 	new_joker->split_c = i[3];
-	put_jokers_c_ctrl(command, new_joker, i, q_id);
+	new_joker->id_size = i[4] - 1;
+	if (i[4] > 0)
+	{
+		new_joker->id = ft_calloc(i[4], sizeof(int));
+		if (new_joker->id == NULL)
+		{
+			perror("Error: ");
+			free_joker_list(joker_list);
+			free_n_exit();
+		}
+		put_jokers_c_ctrl(command, new_joker, i, q_id);
+	}
 }
 
 void	free_joker_list(t_joker_m *lst)

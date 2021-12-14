@@ -37,6 +37,34 @@ static char	**swap_spaces(char **splitted,
 	return (splitted);
 }
 
+static void	position_escapes(t_joker_m *lst)
+{
+	t_joker_m	*tmp;
+	int			i;
+	
+	g_shell.escape[ESC_S] = (int *)ft_calloc(1, sizeof(int));
+	if (lst != NULL)
+	{
+		tmp = lst;
+		while(tmp->next_jok)
+		{
+			g_shell.escape[ESC_S][0]++;
+			tmp = tmp->next_jok;
+		}
+		g_shell.escape[ESC_S][0]++;
+		g_shell.escape[ESC] = (int *)ft_calloc(g_shell.escape[ESC_S][0],
+								 sizeof(int));
+		tmp = lst;
+		i = 0;
+		while(tmp->next_jok)
+		{
+			g_shell.escape[ESC][i++] = tmp->split_c;
+			tmp = tmp->next_jok;
+		}
+		g_shell.escape[ESC][i] = tmp->split_c;	
+	}
+}
+
 static char	**unchange_jok_c(char **splitted, t_joker_m *lst)
 {
 	t_joker_m	*tmp;
@@ -46,6 +74,7 @@ static char	**unchange_jok_c(char **splitted, t_joker_m *lst)
 		tmp = lst->next_jok;
 	free(lst);
 	lst = tmp;
+	position_escapes(lst);
 	if (lst == NULL)
 		return (splitted);
 	return (swap_spaces(splitted, lst, tmp));

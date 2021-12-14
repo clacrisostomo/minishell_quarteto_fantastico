@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 void	parser(char **cmd, int i, int *old_fd)
 {
 	int		save_fd[2];
@@ -55,7 +54,10 @@ static void	command_execute(char *command)
 	if (cmd[0])
 		parser(cmd, 0, &old_fd);
 	if (cmd)
+	{
 		ft_free_split(cmd);
+		free_escapes();
+	}
 }
 
 static void	loop_command(char *command)
@@ -89,6 +91,8 @@ static void	loop(void)
 	while (1)
 	{
 		old_errno = errno;
+		g_shell.escape[ESC] = NULL;
+		g_shell.escape[ESC_S] = NULL;
 		define_signals();
 		prompt = do_prompt();
 		command = readline(prompt);

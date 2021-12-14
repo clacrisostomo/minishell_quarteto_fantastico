@@ -35,10 +35,19 @@ void	free_all(t_array_table *table)
 	}
 }
 
+void	free_escapes(void)
+{
+	if (g_shell.escape[ESC] != NULL)
+		free(g_shell.escape[ESC]);
+	if (g_shell.escape[ESC_S] != NULL)
+		free(g_shell.escape[ESC_S]);
+}
+
 void	free_n_exit(void)
 {
 	free_all(g_shell.env);
 	free_all(g_shell.local);
+	free_escapes();
 	exit(errno);
 }
 

@@ -14,8 +14,7 @@
 
 static char	*treat_quotes_ctrl(char *cmd, int *i, int q_id, t_joker_m *j_list)
 {
-	if (i[4] > 0)
-		put_jokers_c(cmd, j_list, i, q_id);
+	put_jokers_fill_jkrlist(cmd, j_list, i, q_id);
 	cmd = subs_quote(cmd, i[2], q_id);
 	if (cmd == NULL)
 	{
