@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/13 17:34:25 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/14 01:10:32 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
+
 
 void	parser(char **cmd, int i, int *old_fd)
 {
@@ -34,7 +35,7 @@ void	parser(char **cmd, int i, int *old_fd)
 	miss_pipe(cmd, i, old_fd);
 	sub_cmd = make_command_redirect(sub_cmd, 0, save_fd);
 	execute(sub_cmd, cmd);
-	printf("oi parser\n");
+	//printf("oi parser\n");
 	reset_fd(save_fd);
 	if (sub_cmd)
 		ft_free_split(sub_cmd);

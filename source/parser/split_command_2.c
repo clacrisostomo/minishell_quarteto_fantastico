@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/13 22:12:54 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static t_joker_m	*add_joker_list(t_joker_m *space, t_joker_m *new_joker)
 {
@@ -101,14 +101,17 @@ char	*expand_quote_var(char *command, int *idx, int q_id)
 	int	i;
 
 	i = *idx;
-	//printf("%c    %s\n", q_id, command);
+	////printf("%c    %s\n", q_id, command);
 	while (command[++i] != q_id)
 	{
-		printf("i antes do expand var = %c\n", command[i]);
+		//printf("i antes do expand var = %c\n", command[i]);
 		if (command[i] == '$' && command[i + 1] != S_QUOTE && command[i + 1] != D_QUOTE) //ó
 			command = expand_var(command, i--);
-		printf("i depois do expand var = %c\n", command[i]);
+		//printf("i depois do expand var = %c\n", command[i]);
 		//printf("loopando\n");
+		//write(1,"oi\n",3);
+
 	}
+	//write(1,"isso\n",5);
 	return (command);
 }

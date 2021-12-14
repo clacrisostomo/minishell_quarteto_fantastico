@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_control_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 01:54:43 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/13 22:35:34 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	count_string(char *command, int *idx, int *i, int q_id)
 {
@@ -123,13 +123,11 @@ char	*expand_var(char *command, int idx)
 	i = idx + 1;
 	while ((command[i] != ' ' && command[i] != D_QUOTE && command[i] != S_QUOTE
 		&& command[i] != '=') && (command[i]))
-		{
-		//printf("%c, %d\n", command[i], i);
-		if (i == 20)
-			exit(0);
+	{
+		//write(1,"tchau\n",6);
 		i++;
-		}
+	}
 	command = swap_var(command, i, idx);
-	printf("%s\n", command);
+	//printf("-------------------------------\n");
 	return (command);
 }

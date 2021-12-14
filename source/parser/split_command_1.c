@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/13 21:30:02 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static char	*treat_quotes_ctrl(char *cmd, int *i, int q_id, t_joker_m *j_list)
 {
@@ -101,7 +101,7 @@ char	*treat_command(char *command, t_joker_m *joker_list)
 	i = 0;
 	while (command[i])
 	{
-if(command[i] == '$' && (command[i + 1] == ' ' || command[i + 1] == '\0'))
+		if(command[i] == '$' && (command[i + 1] == ' ' || command[i + 1] == '\0'))
 			break;
 		if (command[i] == '$')
 			command = treat_command_ctrl(command, joker_list, i);

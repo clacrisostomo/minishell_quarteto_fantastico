@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_control_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 01:41:27 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/13 22:30:32 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static char	**swap_var_ctrl_one(char **str_var, char *command, int idx, int i)
 {
@@ -92,7 +92,8 @@ char	*swap_var(char *command, int i, int idx)
 	char	*val;
 	char	**str_var;
 
-	i = 0;
+	//i = 0; essa porra aqui ta doida
+	// printf("--%s\n",command);
 	str_var = create_str_str(6);
 	if (str_var == NULL)
 	{
@@ -103,7 +104,6 @@ char	*swap_var(char *command, int i, int idx)
 	if (str_var == NULL)
 		return (NULL);
 	val = search_array_by_key(str_var[1]);
-	//printf("val=%s\n", val);
 	if (val == NULL)
 		command = delete_variable(command, i, idx);
 	else
@@ -112,5 +112,7 @@ char	*swap_var(char *command, int i, int idx)
 		command = ft_strjoin(str_var[4], str_var[3]);
 	}
 	ft_free_split(str_var);
+	// printf("--%s\n",command);
+	// exit(0);
 	return (command);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:11:32 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/13 18:17:17 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 static int	is_executable(char *new_path)
 {
@@ -33,11 +33,11 @@ char	**create_command_for_exec(char **cmd, char **paths)
 	c = 0;
 	new_cmd = (char **)malloc(sizeof(char **));
 	//ret = ft_strcmp(cmd[0], "./");
-	//printf("RET>>>%i", ret);
+	////printf("RET>>>%i", ret);
 	if (is_executable(cmd[0]) && (cmd[0][0] == '.') && (cmd[0][1] == '/'))
 	{
-		//printf(" TRINTA E SEIS CMD:%s, RET= %d\n", cmd[0], ret);
-		//printf(" TRINTA E SEIS CMD:%s\n", cmd[0]);
+		////printf(" TRINTA E SEIS CMD:%s, RET= %d\n", cmd[0], ret);
+		////printf(" TRINTA E SEIS CMD:%s\n", cmd[0]);
 		new_cmd[0] = ft_strdup(cmd[0]);
 		return (new_cmd);
 	}
@@ -45,8 +45,8 @@ char	**create_command_for_exec(char **cmd, char **paths)
 	{
 		while (paths[c])
 		{
-			//printf("CMD:%s, RET= %d, PATH=%s\n", cmd[0], ret, paths[c]);
-			//printf("  CMD:%s, \n", cmd[0]);
+			////printf("CMD:%s, RET= %d, PATH=%s\n", cmd[0], ret, paths[c]);
+			////printf("  CMD:%s, \n", cmd[0]);
 			new_path = ft_strjoin(paths[c], "/");
 			new_cmd[0] = ft_strjoin(new_path, cmd[0]);
 			free(new_path);
@@ -97,7 +97,7 @@ void	do_exec(char **cmd, char **n_env)
 		execve_error(cmd, n_env, paths);
 	}
 	waitpid(pid, &status, 0);
-	printf("oi pai\n");
+	//printf("oi pai\n");
 	if (WIFEXITED(status))
 		errno = WIFEXITED(status);
 	ft_free_split(paths);
