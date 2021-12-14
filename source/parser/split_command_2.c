@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/05 23:18:26 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/13 22:12:54 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,14 @@ char	*expand_quote_var(char *command, int *idx, int q_id)
 	int	i;
 
 	i = *idx;
+	//printf("%c    %s\n", q_id, command);
 	while (command[++i] != q_id)
 	{
-		if (command[i] == '$' && command[i + 1] != S_QUOTE)
+		printf("i antes do expand var = %c\n", command[i]);
+		if (command[i] == '$' && command[i + 1] != S_QUOTE && command[i + 1] != D_QUOTE) //ó
 			command = expand_var(command, i--);
+		printf("i depois do expand var = %c\n", command[i]);
+		//printf("loopando\n");
 	}
 	return (command);
 }

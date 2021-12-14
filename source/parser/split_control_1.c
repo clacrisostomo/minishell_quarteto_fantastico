@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_control_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 01:41:27 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/05 23:43:08 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/13 22:30:32 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ char	*swap_var(char *command, int i, int idx)
 	char	*val;
 	char	**str_var;
 
+	i = 0;
 	str_var = create_str_str(6);
 	if (str_var == NULL)
 	{
@@ -102,6 +103,7 @@ char	*swap_var(char *command, int i, int idx)
 	if (str_var == NULL)
 		return (NULL);
 	val = search_array_by_key(str_var[1]);
+	//printf("val=%s\n", val);
 	if (val == NULL)
 		command = delete_variable(command, i, idx);
 	else
