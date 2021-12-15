@@ -93,8 +93,13 @@ void	do_exec(char **cmd, char **n_env)
 	{
 		new_cmd = create_command_for_exec(cmd, paths);
 		if (new_cmd)
-			execve(new_cmd[0], cmd, n_env);
-		execve_error(cmd, n_env, paths);
+		{
+			if(execve(new_cmd[0], cmd, n_env) == -1)
+			{
+				execve_error(cmd, n_env, paths);
+				exit(1);
+			}
+		}
 	}
 	waitpid(pid, &status, 0);
 	//printf("oi pai\n");

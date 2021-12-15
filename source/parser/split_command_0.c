@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_0.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/12/14 23:43:32 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,49 @@ static char	**swap_spaces(char **splitted,
 	return (splitted);
 }
 
-static void	position_escapes(t_joker_m *lst)
+static void	position_escapes(char ** splitted)
 {
-	t_joker_m	*tmp;
+	//t_joker_m	*tmp;
 	int			i;
+	int			j;
+	int			k;
+
+	k = 0;
+	while(splitted[k])
+		k++;
+	i = 0;
+	g_shell.escape = (int *)ft_calloc(k, sizeof(int ));
 	
-	g_shell.escape[ESC_S] = (int *)ft_calloc(1, sizeof(int));
+	while (splitted[i])
+	{
+		j = 0;
+		while (splitted[i][j])
+		{
+			if (((splitted[i][j] ==  '>' && splitted[i][j + 1] == '>') ||
+			(splitted[i][j] ==  '>' && splitted[i][j + 1] == '>')) &&
+			((splitted[i][j - 1] == '\'' || splitted[i][j + 2] == '\'') ||
+			(splitted[i][j - 1] == '\'' || splitted[i][j + 2] == '\'')))
+				g_shell.escape[i] = 1;
+			else if ((splitted[i][j] == '>' || splitted[i][j] == '<') &&
+			((splitted[i][j - 1] == '\'' || splitted[i][j + 2] == '\'') ||
+			(splitted[i][j - 1] == '\'' || splitted[i][j + 2] == '\'')))
+				g_shell.escape[i] = 1;
+			else
+				g_shell.escape[i] = 0;
+			printf("c:%c\t", splitted[i][j]);
+			printf("i:%i\n", g_shell.escape[i]);
+			j++;
+		}
+		i++;
+	}
+}
+/* 	g_shell.escape[ESC_S] = (int *)ft_calloc(1, sizeof(int));
 	if (lst != NULL)
 	{
 		tmp = lst;
 		while(tmp->next_jok)
 		{
+			printf("split_c:%i\n", tmp->split_c);
 			g_shell.escape[ESC_S][0]++;
 			tmp = tmp->next_jok;
 		}
@@ -55,6 +87,7 @@ static void	position_escapes(t_joker_m *lst)
 		g_shell.escape[ESC] = (int *)ft_calloc(g_shell.escape[ESC_S][0],
 								 sizeof(int));
 		tmp = lst;
+		printf("split_c pos loop:%i\n", tmp->split_c);
 		i = 0;
 		while(tmp->next_jok)
 		{
@@ -63,7 +96,7 @@ static void	position_escapes(t_joker_m *lst)
 		}
 		g_shell.escape[ESC][i] = tmp->split_c;	
 	}
-}
+} */
 
 static char	**unchange_jok_c(char **splitted, t_joker_m *lst)
 {
@@ -74,7 +107,7 @@ static char	**unchange_jok_c(char **splitted, t_joker_m *lst)
 		tmp = lst->next_jok;
 	free(lst);
 	lst = tmp;
-	position_escapes(lst);
+	position_escapes(splitted);
 	if (lst == NULL)
 		return (splitted);
 	return (swap_spaces(splitted, lst, tmp));

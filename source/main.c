@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/14 01:10:32 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/12/14 23:15:16 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@ void	parser(char **cmd, int i, int *old_fd)
 	else
 		sub_cmd = cmd_till_pipe(cmd, c, i + 1);
 	miss_pipe(cmd, i, old_fd);
+	printf("%i",g_shell.escape[i]);
 	sub_cmd = make_command_redirect(sub_cmd, 0, save_fd);
 	execute(sub_cmd, cmd);
-	//printf("oi parser\n");
 	reset_fd(save_fd);
 	if (sub_cmd)
 		ft_free_split(sub_cmd);
 	if (!(ft_strcmp(cmd[i], "|")) && (cmd[i + 1]))
 		parser(cmd, i + 1, old_fd);
+	//free_escapes();
 }
 
 static void	command_execute(char *command)
@@ -56,7 +57,7 @@ static void	command_execute(char *command)
 	if (cmd)
 	{
 		ft_free_split(cmd);
-		free_escapes();
+		//free_escapes();
 	}
 }
 
@@ -91,8 +92,8 @@ static void	loop(void)
 	while (1)
 	{
 		old_errno = errno;
-		g_shell.escape[ESC] = NULL;
-		g_shell.escape[ESC_S] = NULL;
+/* 		g_shell.escape[ESC] = NULL;
+		g_shell.escape[ESC_S] = NULL; */
 		define_signals();
 		prompt = do_prompt();
 		command = readline(prompt);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: csantos- <csantos-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/12/05 18:39:00 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/14 23:00:46 by csantos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_shell
 	t_array_table	*env;
 	t_array_table	*local;
 	int				status_error;
-	int				*escape[2];
+	int				*escape;
 }	t_shell;
 
 t_shell	g_shell;
