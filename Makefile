@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/12/14 01:18:19 by mmoreira         ###   ########.fr        #
+#    Updated: 2021/12/22 16:37:19 by cfico-vi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,11 +63,11 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 		make -C $(LIBFT)
-		gcc $(CFLAGS) -g -o $(NAME) $(OBJ) -L $(LIBFT) -lft -lreadline -I includes
+		gcc $(CFLAGS) -g3 -o $(NAME) $(OBJ) -L $(LIBFT) -lft -lreadline -I includes
 
 $(OBJ_DIR)/%.o:	%.c ./includes/minishell.h
 	mkdir -p $(OBJ_DIR)
-	gcc -c -o $@ $(CFLAGS) -I includes $<
+	gcc -c -o $@ $(CFLAGS) -I includes -g3 $<
 
 git:
 	@git add .

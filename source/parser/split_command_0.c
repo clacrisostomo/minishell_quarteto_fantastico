@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_0.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/12/22 21:12:44 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,47 +37,56 @@ static char	**swap_spaces(char **splitted,
 	return (splitted);
 }
 
-static void	position_escapes(t_joker_m *lst)
+int 	arr_arr_size(char **splitted)
+{
+	int		i;
+
+	i = 0;
+	while(splitted[i] != NULL)
+		i++;
+	return(i);
+}
+
+static void	position_escapes(t_joker_m *lst, char **split)
 {
 	t_joker_m	*tmp;
-	int			i;
-	
-	g_shell.escape[ESC_S] = (int *)ft_calloc(1, sizeof(int));
-	if (lst != NULL)
+	int			arr_size;
+
+	g_shell.esc_idx = (int *)ft_calloc(arr_arr_size(split) + 1, sizeof(int));
+	tmp = lst;
+	while (tmp->next_jok)
 	{
-		tmp = lst;
-		while(tmp->next_jok)
-		{
-			g_shell.escape[ESC_S][0]++;
-			tmp = tmp->next_jok;
-		}
-		g_shell.escape[ESC_S][0]++;
-		g_shell.escape[ESC] = (int *)ft_calloc(g_shell.escape[ESC_S][0],
-								 sizeof(int));
-		tmp = lst;
-		i = 0;
-		while(tmp->next_jok)
-		{
-			g_shell.escape[ESC][i++] = tmp->split_c;
-			tmp = tmp->next_jok;
-		}
-		g_shell.escape[ESC][i] = tmp->split_c;	
+		g_shell.esc_idx[tmp->split_c] = TRUE;
+		tmp = tmp->next_jok;
 	}
+	g_shell.esc_idx[tmp->split_c] = TRUE;
 }
 
 static char	**unchange_jok_c(char **splitted, t_joker_m *lst)
 {
 	t_joker_m	*tmp;
+	int			i;
 
 	tmp = NULL;
 	if (lst->next_jok != NULL)
 		tmp = lst->next_jok;
 	free(lst);
 	lst = tmp;
-	position_escapes(lst);
 	if (lst == NULL)
 		return (splitted);
-	return (swap_spaces(splitted, lst, tmp));
+	else
+	{
+		position_escapes(lst, splitted);
+		splitted = swap_spaces(splitted, lst, tmp);
+	}
+/* 	i = 0;
+	while (i < g_shell.esc_s)
+	{
+		printf("splited{esc_idx} ~%s~\t idx ~%d~\n", splitted[g_shell.esc_idx[i]], g_shell.esc_idx[i]);
+		i++;
+	} */
+ 	printf("splited{esc_idx} ~%s~\t idx ~%d~\n", splitted[g_shell.esc_idx[i]], g_shell.esc_idx[i]);
+	return (splitted);
 }
 
 static void	split_command_control(char **split, t_joker_m *j_list, char *cmd)

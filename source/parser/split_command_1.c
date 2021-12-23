@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/12/22 18:11:08 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	*treat_command(char *command, t_joker_m *joker_list)
 		else if (command[i] == INPUT || command[i] == PIPE
 			|| command[i] == OUTPUT)
 		{
-			command = set_space_for_redir(command, &i);
+			command = set_space_for_redir(command, &i, joker_list);
 			if (command == NULL)
 			{
 				free_joker_list(joker_list);

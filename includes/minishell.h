@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/12/05 18:39:00 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/22 21:11:10 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
-# define ESC_S 0
-# define ESC 1
 
 # define FILE_TMP "/tmp/mr_temporary_file"
 
@@ -82,7 +80,7 @@ typedef struct s_shell
 	t_array_table	*env;
 	t_array_table	*local;
 	int				status_error;
-	int				*escape[2];
+	int				*esc_idx;
 }	t_shell;
 
 t_shell	g_shell;
@@ -121,7 +119,7 @@ void			reset_fd(int *save_fd);
 */
 char			*put_space_before(char *cmd, int i);
 char			*put_space_after(char *cmd, int i);
-char			*set_space_for_redir(char *cmd, int *i);
+char			*set_space_for_redir(char *cmd, int *i, t_joker_m *joker_list);
 
 /*
 ** BUILT-INS

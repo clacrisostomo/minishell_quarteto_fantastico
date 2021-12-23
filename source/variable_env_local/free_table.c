@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_table.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 02:23:42 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/12/22 17:49:33 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ void	free_all(t_array_table *table)
 
 void	free_escapes(void)
 {
-	if (g_shell.escape[ESC] != NULL)
-		free(g_shell.escape[ESC]);
-	if (g_shell.escape[ESC_S] != NULL)
-		free(g_shell.escape[ESC_S]);
+	if (g_shell.esc_idx != NULL)
+		free(g_shell.esc_idx);
 }
 
 void	free_n_exit(void)
