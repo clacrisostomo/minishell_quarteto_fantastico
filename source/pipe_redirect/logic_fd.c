@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   logic_fd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 13:26:21 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/12/23 09:38:11 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	have_file_after_redirect(char **cmd)
 	i = 0;
 	while (cmd[i])
 	{
-		if (is_redirect(cmd[i]))
+		if (is_redirect(cmd[i]) && !g_shell.esc_idx[i])
 		{
 			if (cmd[i + 1] != NULL)
 			{

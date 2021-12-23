@@ -6,7 +6,7 @@
 #    By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/12/22 16:37:19 by cfico-vi         ###   ########.fr        #
+#    Updated: 2021/12/23 11:17:19 by cfico-vi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRC =		main.c\
 			logic_fd.c\
 			miss_pipe.c\
 			mister_redirect.c\
+			token_from_quotes.c\
 			here_doc.c\
 			execute.c\
 			execve.c\

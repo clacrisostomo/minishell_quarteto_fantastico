@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/12/22 21:11:10 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/23 11:24:29 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,11 @@ char			**cmd_till_pipe(char **cmd, int begin, int end);
 char			**make_command_redirect(char **cmd, int i, int *save_fd);
 void			mister_redirect(char *redirect, char *file, int *save_fd);
 int				is_redirect(char *cmd);
+int				is_redirect_without_quotes(char *cmd, int i);
 int				have_file_after_redirect(char **cmd);
 void			dr_here(char *eof, int *save_fd);
 void			interrupt(int signal);
+int				is_token_from_quotes(char *special_char, char *token, int idx);
 
 /*
 ** FD

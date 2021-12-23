@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miss_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 13:25:17 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/12/23 11:18:09 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	miss_pipe(char **cmd, int i, int *old_fd)
 		dup2(*old_fd, STDIN);
 		close(*old_fd);
 	}
-	if (!(ft_strcmp(cmd[i], "|")))
+	if (is_token_from_quotes("|", cmd[i], i))
 	{
 		pipe(fd);
 		dup2(fd[1], STDOUT);

@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/22 20:48:02 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/23 11:31:03 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,19 @@ void	parser(char **cmd, int i, int *old_fd)
 		return ;
 	}
 	save_origin_fd(save_fd);
-	while (ft_strcmp(cmd[i], "|") && (cmd[i + 1]))
+	while (!is_token_from_quotes("|", cmd[i], i) && cmd[i + 1])
 		i++;
 	if (!(ft_strcmp(cmd[i], "|")))
 		sub_cmd = cmd_till_pipe(cmd, c, i);
 	else
 		sub_cmd = cmd_till_pipe(cmd, c, i + 1);
 	miss_pipe(cmd, i, old_fd);
-	//if (!g_shell.esc_idx[i])
 	sub_cmd = make_command_redirect(sub_cmd, 0, save_fd);
 	execute(sub_cmd, cmd);
 	reset_fd(save_fd);
 	if (sub_cmd)
 		ft_free_split(sub_cmd);
-	if (!(ft_strcmp(cmd[i], "|")) && (cmd[i + 1]))
+	if (!(ft_strcmp(cmd[i],"|")) && (cmd[i + 1]))
 		parser(cmd, i + 1, old_fd);
 }
 
@@ -91,7 +90,6 @@ static void	loop(void)
 	while (1)
 	{
 		old_errno = errno;
-		g_shell.esc_s = 0;
 		g_shell.esc_idx = NULL;
 		define_signals();
 		prompt = do_prompt();
