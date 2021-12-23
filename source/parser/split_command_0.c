@@ -6,14 +6,13 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/23 09:32:22 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/23 13:08:14 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**swap_spaces(char **splitted,
-			t_joker_m *lst, t_joker_m *tmp)
+static char	**swap_spaces(char **splitted, t_joker_m *lst, t_joker_m *tmp)
 {
 	while (lst->next_jok != NULL)
 	{
@@ -37,14 +36,14 @@ static char	**swap_spaces(char **splitted,
 	return (splitted);
 }
 
-int 	arr_arr_size(char **splitted)
+int	arr_arr_size(char **splitted)
 {
 	int		i;
 
 	i = 0;
-	while(splitted[i] != NULL)
+	while (splitted[i] != NULL)
 		i++;
-	return(i);
+	return (i);
 }
 
 static void	position_escapes(t_joker_m *lst, char **split)
@@ -67,7 +66,6 @@ static void	position_escapes(t_joker_m *lst, char **split)
 static char	**unchange_jok_c(char **splitted, t_joker_m *lst)
 {
 	t_joker_m	*tmp;
-	//int			i;
 
 	tmp = NULL;
 	if (lst->next_jok != NULL)

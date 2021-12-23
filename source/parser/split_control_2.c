@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_control_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 01:54:43 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/12/23 13:10:29 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,8 @@ char	*expand_var(char *command, int idx)
 
 	i = idx + 1;
 	while ((command[i] != ' ' && command[i] != D_QUOTE && command[i] != S_QUOTE
-		&& command[i] != '=') && (command[i]))
-	{
-		//write(1,"tchau\n",6);
+			&& command[i] != '=') && (command[i]))
 		i++;
-	}
 	command = swap_var(command, i, idx);
-	//printf("-------------------------------\n");
 	return (command);
 }

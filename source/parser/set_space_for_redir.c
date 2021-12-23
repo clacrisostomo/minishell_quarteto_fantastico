@@ -6,63 +6,13 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 21:52:11 by mirkios           #+#    #+#             */
-/*   Updated: 2021/12/22 20:32:16 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/23 13:25:10 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*put_space_before(char *cmd, int i)
-{
-	char	*ret;
-	int		j;
-
-	ret = ft_calloc(ft_strlen(cmd) + 1, sizeof(char *));
-	if (ret == NULL)
-	{
-		perror("Error: ");
-		free(cmd);
-		return (NULL);
-	}
-	j = 0;
-	while (j < i)
-	{
-		ret[j] = cmd[j];
-		j++;
-	}
-	ret[j++] = ' ';
-	while (cmd[i] != '\0')
-		ret[j++] = cmd[i++];
-	free(cmd);
-	return (ret);
-}
-
-char	*put_space_after(char *cmd, int i)
-{
-	char	*ret;
-	int		j;
-
-	ret = ft_calloc(ft_strlen(cmd) + 1, sizeof(char *));
-	if (ret == NULL)
-	{
-		perror("Error: ");
-		free(cmd);
-		return (NULL);
-	}
-	j = 0;
-	while (j <= i)
-	{
-		ret[j] = cmd[j];
-		j++;
-	}
-	ret[j++] = ' ';
-	while (cmd[i] != '\0')
-		ret[j++] = cmd[++i];
-	free(cmd);
-	return (ret);
-}
-
-int		count_tokens_till_idx(char *string, int idx)
+int	count_tokens_till_idx(char *string, int idx)
 {
 	int		counter;
 	int		i;
@@ -74,10 +24,10 @@ int		count_tokens_till_idx(char *string, int idx)
 		if (string[i] == ' ')
 			counter++;
 	}
-	return(counter);
+	return (counter);
 }
 
-int		check_joke_list(char *string, int j_idx, t_joker_m *tmp)
+int	check_joke_list(char *string, int j_idx, t_joker_m *tmp)
 {
 	int		string_counter;
 	int		i;
@@ -92,16 +42,16 @@ int		check_joke_list(char *string, int j_idx, t_joker_m *tmp)
 		i++;
 	}
 	id_count = 0;
-	while(id_count <= tmp->id_size)
+	while (id_count <= tmp->id_size)
 	{
-		if(i + tmp->id[id_count] == j_idx)
+		if (i + tmp->id[id_count] == j_idx)
 			return (TRUE);
 		id_count++;
 	}
 	return (FALSE);
 }
 
-int		check_jok_before_idx(char *string, int i, t_joker_m *list)
+int	check_jok_before_idx(char *string, int i, t_joker_m *list)
 {
 	int			is_jok;
 	t_joker_m	*tmp;
@@ -121,6 +71,18 @@ int		check_jok_before_idx(char *string, int i, t_joker_m *list)
 			return (TRUE);
 	}
 	return (FALSE);
+}
+
+char	*ctrl_space_after(char *cmd, int *i, int j)
+{
+	if (cmd[*i + 1] != '\0' && cmd[*i + 1] != ' ')
+	{
+		j = *i;
+		cmd = put_space_after(cmd, j);
+		if (cmd == NULL)
+			return (NULL);
+	}
+	return (cmd);
 }
 
 char	*set_space_for_redir(char *cmd, int *i, t_joker_m *joker_list)

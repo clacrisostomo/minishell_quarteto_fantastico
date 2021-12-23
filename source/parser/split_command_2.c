@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/22 17:18:59 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/23 13:13:40 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static void	put_jokers_c_ctrl(char *cmd, t_joker_m *new_joker, int *i, int q_id)
 	}
 }
 
-void	put_jokers_fill_jkrlist(char *command, t_joker_m *joker_list, int *i, int q_id)
+void	put_jokers_fill_jkrlist(char *command, t_joker_m *joker_list,
+			int *i, int q_id)
 {
 	t_joker_m	*new_joker;
 
@@ -104,17 +105,11 @@ char	*expand_quote_var(char *command, int *idx, int q_id)
 	int	i;
 
 	i = *idx;
-	////printf("%c    %s\n", q_id, command);
 	while (command[++i] != q_id)
 	{
-		//printf("i antes do expand var = %c\n", command[i]);
-		if (command[i] == '$' && command[i + 1] != S_QUOTE && command[i + 1] != D_QUOTE) //ó
+		if (command[i] == '$' && command[i + 1] != S_QUOTE
+			&& command[i + 1] != D_QUOTE)
 			command = expand_var(command, i--);
-		//printf("i depois do expand var = %c\n", command[i]);
-		//printf("loopando\n");
-		//write(1,"oi\n",3);
-
 	}
-	//write(1,"isso\n",5);
 	return (command);
 }

@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/12/23 11:24:29 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/23 13:20:16 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,14 +180,16 @@ void			interrupt_process(int signal);
 char			**split_command(char *command);
 char			*expand_var(char *command, int idx);
 char			*treat_command(char *command, t_joker_m *joker_list);
-void			put_jokers_fill_jkrlist(char *command, t_joker_m *joker_list, int *i,
-					int q_id);
+void			put_jokers_fill_jkrlist(char *command, t_joker_m *joker_list,
+					int *i, int q_id);
 char			*subs_quote(char *command, int idx, char q_id);
 int				count_string(char *command, int *idx, int *i, int q_id);
 char			*expand_quote_var(char *command, int *idx, int q_id);
 char			*expand_error(char *command, int i);
 void			free_joker_list(t_joker_m *lst);
 char			*swap_var(char *command, int i, int idx);
+char			*put_space_special_char(char *command, int *i,
+					t_joker_m *joker_list);
 
 /*
 ** PATH HANDLERS

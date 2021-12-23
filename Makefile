@@ -6,7 +6,7 @@
 #    By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/12/23 11:17:19 by cfico-vi         ###   ########.fr        #
+#    Updated: 2021/12/23 13:16:22 by cfico-vi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRC =		main.c\
 			split_control_1.c\
 			split_control_2.c\
 			set_space_for_redir.c\
+			put_space.c\
 			cmd_for_redirect.c\
 			logic_fd.c\
 			miss_pipe.c\
