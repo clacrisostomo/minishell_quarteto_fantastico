@@ -3,32 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   array_by_key.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:18:04 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/21 02:15:05 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 char	*search_array_by_key(char *key)
 {
 	int	c;
 
 	c = 0;
-	while (g_shell.env->item[c] && c <= g_shell.env->size - 1)
+	if (key[0] != '\0')
 	{
-		if (ft_strncmp(g_shell.env->item[c]->key, key, ft_strlen(key)) == 0)
-			return (g_shell.env->item[c]->value);
-		c++;
-	}
-	c = 0;
-	while (g_shell.local->item[c] && c <= g_shell.local->size - 1)
-	{
-		if (ft_strncmp(g_shell.local->item[c]->key, key, ft_strlen(key)) == 0)
-			return (g_shell.local->item[c]->value);
-		c++;
+		while (g_shell.env->item[c] && c <= g_shell.env->size - 1)
+		{
+			if (ft_strncmp(g_shell.env->item[c]->key, key, ft_strlen(key)) == 0)
+				return (g_shell.env->item[c]->value);
+			c++;
+		}
+		c = 0;
+		while (g_shell.local->item[c] && c <= g_shell.local->size - 1)
+		{
+			if (ft_strncmp(g_shell.local->item[c]->key, key, ft_strlen(key)) == 0)
+				return (g_shell.local->item[c]->value);
+			c++;
+		}
 	}
 	return (NULL);
 }

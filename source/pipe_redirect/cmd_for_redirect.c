@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_for_redirect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 17:58:49 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/05 17:58:51 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/23 11:25:48 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 char	**new_cmd_for_redirect(char **cmd, int i, int j)
 {
@@ -46,9 +46,9 @@ char	**make_command_redirect(char **cmd, int i, int *save_fd)
 	{
 		while (cmd[j] != NULL)
 			j++;
-		while ((!is_redirect(cmd[i])) && (cmd[i + 1]))
+		while (!is_redirect_without_quotes(cmd[i], i) && (cmd[i + 1]))
 			i++;
-		if (is_redirect(cmd[i]))
+		if (is_redirect_without_quotes(cmd[i], i))
 		{
 			mister_redirect(cmd[i], cmd[i + 1], save_fd);
 			new_cmd = new_cmd_for_redirect(cmd, i, j);

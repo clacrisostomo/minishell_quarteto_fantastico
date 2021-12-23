@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_path.c                                          :+:      :+:    :+:   */
+/*   token_from_quotes.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 21:51:19 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
+/*   Created: 2021/12/23 11:16:34 by cfico-vi          #+#    #+#             */
+/*   Updated: 2021/12/23 11:16:53 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_path(char **cmd, char **n_env)
+int		is_token_from_quotes(char *special_char, char *token, int idx)
 {
-	int	c;
-
-	c = 0;
-	if (cmd[0][0] == '/')
+	if (!ft_strcmp(token, special_char))
 	{
-		return (1);
+		if (!g_shell.esc_idx[idx])
+			return (TRUE);
 	}
-	while (cmd[0][c])
-	{
-		if (cmd[0][c] == '/')
-		{
-			if (cmd[0][c] + 1 == '\0')
-				execve(cmd[0], cmd, n_env);
-		}
-		c++;
-	}
-	return (0);
+	return (FALSE);
 }

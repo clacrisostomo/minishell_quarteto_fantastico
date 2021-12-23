@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/05 23:18:26 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/22 17:18:59 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static t_joker_m	*add_joker_list(t_joker_m *space, t_joker_m *new_joker)
 {
@@ -48,7 +48,7 @@ static void	put_jokers_c_ctrl(char *cmd, t_joker_m *new_joker, int *i, int q_id)
 	}
 }
 
-void	put_jokers_c(char *command, t_joker_m *joker_list, int *i, int q_id)
+void	put_jokers_fill_jkrlist(char *command, t_joker_m *joker_list, int *i, int q_id)
 {
 	t_joker_m	*new_joker;
 
@@ -59,16 +59,19 @@ void	put_jokers_c(char *command, t_joker_m *joker_list, int *i, int q_id)
 		free_joker_list(joker_list);
 		free_n_exit();
 	}
-	new_joker->id = ft_calloc(i[4], sizeof(int));
-	if (new_joker->id == NULL)
-	{
-		perror("Error: ");
-		free_joker_list(joker_list);
-		free_n_exit();
-	}
-	new_joker->id_size = i[4] - 1;
 	new_joker->split_c = i[3];
-	put_jokers_c_ctrl(command, new_joker, i, q_id);
+	new_joker->id_size = i[4] - 1;
+	if (i[4] > 0)
+	{
+		new_joker->id = ft_calloc(i[4], sizeof(int));
+		if (new_joker->id == NULL)
+		{
+			perror("Error: ");
+			free_joker_list(joker_list);
+			free_n_exit();
+		}
+		put_jokers_c_ctrl(command, new_joker, i, q_id);
+	}
 }
 
 void	free_joker_list(t_joker_m *lst)
@@ -101,10 +104,17 @@ char	*expand_quote_var(char *command, int *idx, int q_id)
 	int	i;
 
 	i = *idx;
+	////printf("%c    %s\n", q_id, command);
 	while (command[++i] != q_id)
 	{
-		if (command[i] == '$' && command[i + 1] != S_QUOTE)
+		//printf("i antes do expand var = %c\n", command[i]);
+		if (command[i] == '$' && command[i + 1] != S_QUOTE && command[i + 1] != D_QUOTE) //ó
 			command = expand_var(command, i--);
+		//printf("i depois do expand var = %c\n", command[i]);
+		//printf("loopando\n");
+		//write(1,"oi\n",3);
+
 	}
+	//write(1,"isso\n",5);
 	return (command);
 }

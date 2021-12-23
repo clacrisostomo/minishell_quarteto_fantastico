@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   changedir_control.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:07:08 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/20 20:39:38 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	control_cd_minus(char *tmp)
 {

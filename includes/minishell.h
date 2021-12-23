@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/12/05 18:39:00 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/23 11:24:29 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_shell
 	t_array_table	*env;
 	t_array_table	*local;
 	int				status_error;
+	int				*esc_idx;
 }	t_shell;
 
 t_shell	g_shell;
@@ -103,9 +104,11 @@ char			**cmd_till_pipe(char **cmd, int begin, int end);
 char			**make_command_redirect(char **cmd, int i, int *save_fd);
 void			mister_redirect(char *redirect, char *file, int *save_fd);
 int				is_redirect(char *cmd);
+int				is_redirect_without_quotes(char *cmd, int i);
 int				have_file_after_redirect(char **cmd);
 void			dr_here(char *eof, int *save_fd);
 void			interrupt(int signal);
+int				is_token_from_quotes(char *special_char, char *token, int idx);
 
 /*
 ** FD
@@ -118,7 +121,7 @@ void			reset_fd(int *save_fd);
 */
 char			*put_space_before(char *cmd, int i);
 char			*put_space_after(char *cmd, int i);
-char			*set_space_for_redir(char *cmd, int *i);
+char			*set_space_for_redir(char *cmd, int *i, t_joker_m *joker_list);
 
 /*
 ** BUILT-INS
@@ -156,6 +159,7 @@ t_array_table	*envp_to_array(char **envp);
 void			free_item(t_ht_item *item);
 void			free_table(t_array_table *table);
 void			free_n_exit(void);
+void			free_escapes(void);
 void			free_item(t_ht_item *item);
 int				loop_table_n_insert(char *key, char *value, int table);
 int				modify_table_by_key(int table, char *key, char *value);
@@ -176,7 +180,7 @@ void			interrupt_process(int signal);
 char			**split_command(char *command);
 char			*expand_var(char *command, int idx);
 char			*treat_command(char *command, t_joker_m *joker_list);
-void			put_jokers_c(char *command, t_joker_m *joker_list, int *i,
+void			put_jokers_fill_jkrlist(char *command, t_joker_m *joker_list, int *i,
 					int q_id);
 char			*subs_quote(char *command, int idx, char q_id);
 int				count_string(char *command, int *idx, int *i, int q_id);

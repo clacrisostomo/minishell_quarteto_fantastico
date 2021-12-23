@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_table.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 02:23:42 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/11/21 02:26:00 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/22 17:49:33 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	free_all(t_array_table *table)
 {
@@ -35,10 +35,17 @@ void	free_all(t_array_table *table)
 	}
 }
 
+void	free_escapes(void)
+{
+	if (g_shell.esc_idx != NULL)
+		free(g_shell.esc_idx);
+}
+
 void	free_n_exit(void)
 {
 	free_all(g_shell.env);
 	free_all(g_shell.local);
+	free_escapes();
 	exit(errno);
 }
 

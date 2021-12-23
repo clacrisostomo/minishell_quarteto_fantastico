@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   logic_fd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbarreir <nbarreir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 13:26:21 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/05 18:09:07 by nbarreir         ###   ########.fr       */
+/*   Updated: 2021/12/23 09:38:11 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	save_origin_fd(int *save_fd)
 {
@@ -51,7 +51,7 @@ int	have_file_after_redirect(char **cmd)
 	i = 0;
 	while (cmd[i])
 	{
-		if (is_redirect(cmd[i]))
+		if (is_redirect(cmd[i]) && !g_shell.esc_idx[i])
 		{
 			if (cmd[i + 1] != NULL)
 			{

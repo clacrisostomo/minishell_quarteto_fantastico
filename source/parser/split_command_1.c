@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/05 23:19:35 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/22 18:11:08 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static char	*treat_quotes_ctrl(char *cmd, int *i, int q_id, t_joker_m *j_list)
 {
-	if (i[4] > 0)
-		put_jokers_c(cmd, j_list, i, q_id);
+	put_jokers_fill_jkrlist(cmd, j_list, i, q_id);
 	cmd = subs_quote(cmd, i[2], q_id);
 	if (cmd == NULL)
 	{
@@ -101,8 +100,10 @@ char	*treat_command(char *command, t_joker_m *joker_list)
 	i = 0;
 	while (command[i])
 	{
+		if(command[i] == '$' && (command[i + 1] == ' ' || command[i + 1] == '\0'))
+			break;
 		if (command[i] == '$')
-			command = treat_command_ctrl(command, joker_list, i--);
+			command = treat_command_ctrl(command, joker_list, i);
 		else if (command[i] == D_QUOTE)
 			command = check_second_quote(command, &i, D_QUOTE, joker_list);
 		else if (command[i] == S_QUOTE)
@@ -110,7 +111,7 @@ char	*treat_command(char *command, t_joker_m *joker_list)
 		else if (command[i] == INPUT || command[i] == PIPE
 			|| command[i] == OUTPUT)
 		{
-			command = set_space_for_redir(command, &i);
+			command = set_space_for_redir(command, &i, joker_list);
 			if (command == NULL)
 			{
 				free_joker_list(joker_list);

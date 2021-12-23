@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_only.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirkios <mirkios@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 01:18:15 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/05 23:23:29 by mirkios          ###   ########.fr       */
+/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	sort_alpha(char **str)
 {
