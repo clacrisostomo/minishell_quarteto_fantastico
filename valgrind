@@ -1,0 +1,45 @@
+/* 	if (WIFSIGNALED(status))
+	{
+		g_shell.status_error = WIFSIGNALED(status);
+		errno = WIFSIGNALED(status);
+	}
+	else if (WEXITSTATUS(status))
+	{
+		g_shell.status_error = WEXITSTATUS(status);
+		errno = WEXITSTATUS(status);
+	}
+	else if (WIFSTOPPED(status))
+	{
+		g_shell.status_error = WIFSTOPPED(status);
+		errno = WIFSTOPPED(status);
+	}
+	else if (__WIFEXITED(status))
+	{
+		g_shell.status_error = __WIFEXITED(status);
+		errno = __WIFEXITED(status);
+	}
+	else if (__WIFSIGNALED(status))
+	{
+		g_shell.status_error = __WIFSIGNALED(status);
+		errno = __WIFSIGNALED(status);
+	}
+	if (__WCOREDUMP(status))
+	{
+		g_shell.status_error = __WCOREDUMP(status);
+		errno = __WCOREDUMP(status);
+	}
+	else if (__W_EXITCODE(0, status))
+	{
+		g_shell.status_error = __W_EXITCODE(0, status);
+		errno = __W_EXITCODE(0, status);
+	}
+	else if (__W_STOPCODE(status))
+	{
+		g_shell.status_error = __W_STOPCODE(status);
+		errno = __W_STOPCODE(status);
+	} */
+/* 	if (WIFEXITED(status))
+	{
+		g_shell.status_error = WIFEXITED(status);
+		errno = WIFEXITED(status);
+	} */

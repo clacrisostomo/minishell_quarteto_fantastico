@@ -20,8 +20,10 @@ void	interrupt(int signal)
 
 void	sigint_handler(int signal)
 {
+	ft_printf("ctrl+c\n");
 	if (isatty(STDIN))
 	{
+		ft_printf("no atty\n");
 		errno = 128 + signal;
 		ft_printf("\n");
 		rl_replace_line("", 0);
@@ -30,25 +32,41 @@ void	sigint_handler(int signal)
 	}
 	else
 	{
-		g_shell.status_error = 130;
+		ft_printf("sem atty\n");
+		errno = 130;
 		ft_putchar_fd('\n', STDOUT);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
+	printf("passou no sigint\n");
 }
 
 void	sigquit_handler(int signal)
 {
+	ft_printf("ctrl+\\ \n");
 	(void) signal;
 	if (!isatty(STDIN))
 	{
-		g_shell.status_error = 131;
+		ft_printf("not atty \n");
+		errno = 131;
 		ft_putendl_fd("Quit (core dumped)", 2);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
+}
+
+void	sigkill_handler(int signal)
+{
+	ft_printf("morri\n");
 }
 
 void	define_signals(void)
 {
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
+	signal(SIGKILL, sigkill_handler);
 }
 
 void	sighandler_in_heredoc(int sig)

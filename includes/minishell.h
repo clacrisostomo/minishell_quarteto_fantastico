@@ -79,7 +79,6 @@ typedef struct s_shell
 {
 	t_array_table	*env;
 	t_array_table	*local;
-	int				status_error;
 	int				*esc_idx;
 }	t_shell;
 

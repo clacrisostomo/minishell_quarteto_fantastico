@@ -72,17 +72,19 @@ char	**create_command_for_exec(char **cmd, char **paths)
 	return (NULL);
 }
 
-static void	execve_error(char **cmd, char **n_env, char **paths)
+static void	execve_error(char **cmd)
 {
+
+
 	ft_putstr_fd("Minishell: '", 2);
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd("': ", 2);
 	ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);
-	ft_free_split(cmd);
-	ft_free_split(n_env);
-	ft_free_split(paths);
-	free_n_exit();
+	//ft_free_split(cmd);
+	//ft_free_split(n_env);
+	errno = 127;
+	//free_n_exit();
 }
 
 void	do_exec(char **cmd, char **n_env)
@@ -92,32 +94,30 @@ void	do_exec(char **cmd, char **n_env)
 	pid_t		pid;
 	char		**new_cmd;
 
+	status = 0;
 	paths = get_paths();
 	new_cmd = NULL;
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("Error: ");
-		free_n_exit();
+	new_cmd = create_command_for_exec(cmd, paths);
+	if (new_cmd)
+	{	
+		pid = fork();
+		if (pid == -1)
+		{
+			perror("Error: ");
+			free_n_exit();
+		}
+		else if (pid == 0)
+		{
+			if (new_cmd)
+				execve(new_cmd[0], cmd, n_env);
+		}
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			errno = WEXITSTATUS(status);
 	}
-	else if (pid == 0)
-	{
-		new_cmd = create_command_for_exec(cmd, paths);
-		if (new_cmd)
-			execve(new_cmd[0], cmd, n_env);
-		execve_error(cmd, n_env, paths);
-	}
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-	{
-		g_shell.status_error = WEXITSTATUS(status);
-		errno = WEXITSTATUS(status);
-	}
-	printf("errno = %d, status = %d, WTERMSIG = %d\n", errno, status, WEXITSTATUS(status));
+	else
+		execve_error(cmd);
 	ft_free_split(paths);
 	if (new_cmd)
-	{
-		printf("entrou\n");
 		ft_free_split(new_cmd);
-	}
 }
