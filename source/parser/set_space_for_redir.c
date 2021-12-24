@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 21:52:11 by mirkios           #+#    #+#             */
-/*   Updated: 2021/12/23 13:25:10 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/24 16:10:39 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ char	*set_space_for_redir(char *cmd, int *i, t_joker_m *joker_list)
 	{
 		j = *i;
 		cmd = put_space_after(cmd, j);
-		if (cmd == NULL)
-			return (NULL);
 	}
 	return (cmd);
 }

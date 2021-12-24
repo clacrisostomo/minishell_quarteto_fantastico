@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:11:32 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/23 14:21:57 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/24 16:55:44 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,6 @@ static int	is_executable(char *new_path)
 	if ((buffer.st_mode & S_IXUSR))
 		return (1);
 	return (0);
-}
-
-int	has_second_bar(char *cmd)
-{
-	int	i;
-	int	ctn_slash;
-
-	i = 0;
-	ctn_slash = 0;
-	if (cmd[0] == '.' && cmd[1] == '/')
-		return (TRUE);
-	while (cmd[i])
-	{
-		if (cmd[i] == '/')
-		{
-			ctn_slash++;
-			if (ctn_slash >= 2)
-				return (TRUE);
-		}
-		i++;
-	}
-	return (FALSE);
 }
 
 char	**create_command_for_exec(char **cmd, char **paths)
@@ -74,47 +52,47 @@ char	**create_command_for_exec(char **cmd, char **paths)
 
 static void	execve_error(char **cmd)
 {
-
-
 	ft_putstr_fd("Minishell: '", 2);
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd("': ", 2);
 	ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);
-	//ft_free_split(cmd);
-	//ft_free_split(n_env);
 	errno = 127;
-	//free_n_exit();
+}
+
+static void	execute_execve(char **new_cmd, char **cmd, char **n_env)
+{
+	int			status;
+	pid_t		pid;
+
+	status = 0;
+	define_child_signals();
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("Error: ");
+		free_n_exit();
+	}
+	else if (pid == 0)
+	{
+		if (new_cmd)
+			execve(new_cmd[0], cmd, n_env);
+	}
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		errno = WEXITSTATUS(status);
 }
 
 void	do_exec(char **cmd, char **n_env)
 {
-	int			status;
 	char		**paths;
-	pid_t		pid;
 	char		**new_cmd;
 
-	status = 0;
 	paths = get_paths();
 	new_cmd = NULL;
 	new_cmd = create_command_for_exec(cmd, paths);
 	if (new_cmd)
-	{	
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("Error: ");
-			free_n_exit();
-		}
-		else if (pid == 0)
-		{
-			if (new_cmd)
-				execve(new_cmd[0], cmd, n_env);
-		}
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			errno = WEXITSTATUS(status);
-	}
+		execute_execve(new_cmd, cmd, n_env);
 	else
 		execve_error(cmd);
 	ft_free_split(paths);

@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_from_quotes.c                                :+:      :+:    :+:   */
+/*   signal_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/23 11:16:34 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/24 16:34:12 by cfico-vi         ###   ########.fr       */
+/*   Created: 2021/12/23 13:31:46 by cfico-vi          #+#    #+#             */
+/*   Updated: 2021/12/24 15:51:42 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_token_from_quotes(char *special_char, char *token, int idx)
+void	sighandler_in_heredoc(int sig)
 {
-	if (ft_strcmp(token, special_char) == 0)
+	if (sig == SIGINT)
 	{
-		if (g_shell.esc_idx[idx] == FALSE)
-			return (TRUE);
+		ft_putchar_fd('\n', 1);
+		exit(130);
 	}
-	return (FALSE);
 }

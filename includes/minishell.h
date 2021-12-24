@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/12/23 13:20:16 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/24 16:58:09 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,20 +93,20 @@ void			execute(char **command, char **old_cmd);
 void			quote_commander(char **cmd);
 void			delete_item(t_array_table *table, char *key);
 void			parser(char **cmd, int i, int *old_fd);
+int				arr_arr_size(char **splitted);
+int				has_second_bar(char *cmd);
 
 /*
 ** PIPE AND REDIRECT
 */
 void			miss_pipe(char **cmd, int i, int *old_fd);
 char			**cmd_till_pipe(char **cmd, int begin, int end);
-
 char			**make_command_redirect(char **cmd, int i, int *save_fd);
 void			mister_redirect(char *redirect, char *file, int *save_fd);
 int				is_redirect(char *cmd);
 int				is_redirect_without_quotes(char *cmd, int i);
 int				have_file_after_redirect(char **cmd);
 void			dr_here(char *eof, int *save_fd);
-void			interrupt(int signal);
 int				is_token_from_quotes(char *special_char, char *token, int idx);
 
 /*
@@ -133,7 +133,6 @@ void			expt(char **cmd, int exp);
 void			export_only(void);
 void			unset_(char **cmd);
 void			exit_terminal(char **cmd, char	**n_env, char **old_cmd);
-
 void			cd_error_file(char **cmd);
 void			control_cd_minus_two(char **cmd, char *slash, char *home);
 void			control_cd_minus(char *tmp);
@@ -169,9 +168,9 @@ void			change_val_by_table(t_array_table *table, char *key,
 /*
 ** SIGNAL
 */
-void			define_signals(void);
-void			prompt_handler(int signal);
-void			interrupt_process(int signal);
+void			define_interactive_signals(void);
+void			define_child_signals(void);
+void			sighandler_in_heredoc(int sig);
 
 /*
 ** SPLIT COMMAND

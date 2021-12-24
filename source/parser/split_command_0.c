@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/23 13:08:14 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/24 16:11:53 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,6 @@ static char	**swap_spaces(char **splitted, t_joker_m *lst, t_joker_m *tmp)
 	free(lst->id);
 	free(lst);
 	return (splitted);
-}
-
-int	arr_arr_size(char **splitted)
-{
-	int		i;
-
-	i = 0;
-	while (splitted[i] != NULL)
-		i++;
-	return (i);
 }
 
 static void	position_escapes(t_joker_m *lst, char **split)
