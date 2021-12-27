@@ -78,7 +78,7 @@ void	dr_here(char *eof, int *save_fd)
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
-			errno = WIFEXITED(status);
+		errno = WIFEXITED(status);
 	file_tmp = open(FILE_TMP, O_RDONLY);
 	dup2(file_tmp, STDIN);
 	dup2(save_out, STDOUT);

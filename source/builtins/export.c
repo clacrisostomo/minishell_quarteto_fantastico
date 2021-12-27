@@ -79,6 +79,8 @@ void	if_have_only_value(char **cmd, int i)
 		loop_table_n_insert(cmd[i], value, ENV);
 		delete_item(g_shell.local, cmd[i]);
 	}
+	else if (value == NULL && t == 0)
+		loop_table_n_insert(cmd[i], "", ENV);
 }
 
 void	expt(char **cmd, int exp)
@@ -99,9 +101,9 @@ void	expt(char **cmd, int exp)
 				j++;
 			if (cmd[i][j] == '=')
 				if_have_key(cmd, i, exp);
-			else if (cmd[i][j] == '\0')
+			else if (cmd[i][j] == '\0' && i != 0)
 				if_have_only_value(cmd, i);
-			else
+			else if (i != 0)
 				error_export(cmd, i);
 			i++;
 		}

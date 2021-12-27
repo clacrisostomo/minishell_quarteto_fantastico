@@ -71,9 +71,14 @@ void	env(void)
 	c = 0;
 	while (g_shell.env->item[c] && c <= g_shell.env->size - 1)
 	{
-		ft_printf("%s=%s\n", g_shell.env->item[c]->key,
-			g_shell.env->item[c]->value);
-		c++;
+		if (ft_strcmp("", g_shell.env->item[c]->value))
+		{
+			ft_printf("%s=%s\n", g_shell.env->item[c]->key,
+				g_shell.env->item[c]->value);
+			c++;
+		}
+		else
+			c++;
 	}
 	errno = 0;
 }
