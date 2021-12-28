@@ -6,7 +6,7 @@
 #    By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 10:42:53 by mde-figu          #+#    #+#              #
-#    Updated: 2021/12/23 11:17:19 by cfico-vi         ###   ########.fr        #
+#    Updated: 2021/12/24 17:00:03 by cfico-vi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC_PATH =	./source \
 			./source/builtins/ \
 			./source/parser/ \
 			./source/pipe_redirect/ \
+			./source/signals/ \
 			./source/execute/
 
 SRC =		main.c\
@@ -43,16 +44,19 @@ SRC =		main.c\
 			split_control_1.c\
 			split_control_2.c\
 			set_space_for_redir.c\
+			put_space.c\
 			cmd_for_redirect.c\
 			logic_fd.c\
 			miss_pipe.c\
 			mister_redirect.c\
 			token_from_quotes.c\
 			here_doc.c\
+			execute_utils.c\
 			execute.c\
 			execve.c\
 			is_path.c\
-			signal.c\
+			signal_0.c\
+			signal_1.c\
 			paths_n_prompt.c
 
 OBJ_DIR	=	./builds

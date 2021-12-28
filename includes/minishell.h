@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/12/23 11:24:29 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/24 16:58:09 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ typedef struct s_shell
 {
 	t_array_table	*env;
 	t_array_table	*local;
-	int				status_error;
 	int				*esc_idx;
 }	t_shell;
 
@@ -94,20 +93,20 @@ void			execute(char **command, char **old_cmd);
 void			quote_commander(char **cmd);
 void			delete_item(t_array_table *table, char *key);
 void			parser(char **cmd, int i, int *old_fd);
+int				arr_arr_size(char **splitted);
+int				has_second_bar(char *cmd);
 
 /*
 ** PIPE AND REDIRECT
 */
 void			miss_pipe(char **cmd, int i, int *old_fd);
 char			**cmd_till_pipe(char **cmd, int begin, int end);
-
 char			**make_command_redirect(char **cmd, int i, int *save_fd);
 void			mister_redirect(char *redirect, char *file, int *save_fd);
 int				is_redirect(char *cmd);
 int				is_redirect_without_quotes(char *cmd, int i);
 int				have_file_after_redirect(char **cmd);
 void			dr_here(char *eof, int *save_fd);
-void			interrupt(int signal);
 int				is_token_from_quotes(char *special_char, char *token, int idx);
 
 /*
@@ -134,7 +133,6 @@ void			expt(char **cmd, int exp);
 void			export_only(void);
 void			unset_(char **cmd);
 void			exit_terminal(char **cmd, char	**n_env, char **old_cmd);
-
 void			cd_error_file(char **cmd);
 void			control_cd_minus_two(char **cmd, char *slash, char *home);
 void			control_cd_minus(char *tmp);
@@ -170,9 +168,9 @@ void			change_val_by_table(t_array_table *table, char *key,
 /*
 ** SIGNAL
 */
-void			define_signals(void);
-void			prompt_handler(int signal);
-void			interrupt_process(int signal);
+void			define_interactive_signals(void);
+void			define_child_signals(void);
+void			sighandler_in_heredoc(int sig);
 
 /*
 ** SPLIT COMMAND
@@ -180,14 +178,16 @@ void			interrupt_process(int signal);
 char			**split_command(char *command);
 char			*expand_var(char *command, int idx);
 char			*treat_command(char *command, t_joker_m *joker_list);
-void			put_jokers_fill_jkrlist(char *command, t_joker_m *joker_list, int *i,
-					int q_id);
+void			put_jokers_fill_jkrlist(char *command, t_joker_m *joker_list,
+					int *i, int q_id);
 char			*subs_quote(char *command, int idx, char q_id);
 int				count_string(char *command, int *idx, int *i, int q_id);
 char			*expand_quote_var(char *command, int *idx, int q_id);
 char			*expand_error(char *command, int i);
 void			free_joker_list(t_joker_m *lst);
 char			*swap_var(char *command, int i, int idx);
+char			*put_space_special_char(char *command, int *i,
+					t_joker_m *joker_list);
 
 /*
 ** PATH HANDLERS

@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:20:42 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/22 18:11:08 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/23 13:19:27 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,9 @@ char	*treat_command(char *command, t_joker_m *joker_list)
 	i = 0;
 	while (command[i])
 	{
-		if(command[i] == '$' && (command[i + 1] == ' ' || command[i + 1] == '\0'))
-			break;
+		if (command[i] == '$' && (command[i + 1] == ' '
+				|| command[i + 1] == '\0'))
+			break ;
 		if (command[i] == '$')
 			command = treat_command_ctrl(command, joker_list, i);
 		else if (command[i] == D_QUOTE)
@@ -110,14 +111,7 @@ char	*treat_command(char *command, t_joker_m *joker_list)
 			command = check_second_quote(command, &i, S_QUOTE, joker_list);
 		else if (command[i] == INPUT || command[i] == PIPE
 			|| command[i] == OUTPUT)
-		{
-			command = set_space_for_redir(command, &i, joker_list);
-			if (command == NULL)
-			{
-				free_joker_list(joker_list);
-				free_n_exit();
-			}
-		}
+			command = put_space_special_char(command, &i, joker_list);
 		i++;
 	}
 	return (command);

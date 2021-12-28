@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array_by_key.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:18:04 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/12/23 13:04:29 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*search_array_by_key(char *key)
 		c = 0;
 		while (g_shell.local->item[c] && c <= g_shell.local->size - 1)
 		{
-			if (ft_strncmp(g_shell.local->item[c]->key, key, ft_strlen(key)) == 0)
+			if (!ft_strncmp(g_shell.local->item[c]->key, key, ft_strlen(key)))
 				return (g_shell.local->item[c]->value);
 			c++;
 		}

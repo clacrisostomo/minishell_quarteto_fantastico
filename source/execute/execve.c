@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:11:32 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/14 00:46:21 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/12/27 19:12:15 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,61 +28,46 @@ char	**create_command_for_exec(char **cmd, char **paths)
 	char	*new_path;
 	char	**new_cmd;
 	int		c;
-	//int		ret;
 
 	c = 0;
-	new_cmd = (char **)malloc(sizeof(char **));
-	//ret = ft_strcmp(cmd[0], "./");
-	////printf("RET>>>%i", ret);
-	if (is_executable(cmd[0]) && (cmd[0][0] == '.') && (cmd[0][1] == '/'))
+	new_cmd = (char **)malloc(2 * sizeof(char *));
+	new_cmd[1] = NULL;
+	if (is_executable(cmd[0]) && has_second_bar(cmd[0]))
 	{
-		////printf(" TRINTA E SEIS CMD:%s, RET= %d\n", cmd[0], ret);
-		////printf(" TRINTA E SEIS CMD:%s\n", cmd[0]);
 		new_cmd[0] = ft_strdup(cmd[0]);
 		return (new_cmd);
 	}
-	else
+	while (paths[c])
 	{
-		while (paths[c])
-		{
-			////printf("CMD:%s, RET= %d, PATH=%s\n", cmd[0], ret, paths[c]);
-			////printf("  CMD:%s, \n", cmd[0]);
-			new_path = ft_strjoin(paths[c], "/");
-			new_cmd[0] = ft_strjoin(new_path, cmd[0]);
-			free(new_path);
-			if (is_executable(new_cmd[0]))
-				return (new_cmd);
-			free(new_cmd[0]);
-			c++;
-		}
+		new_path = ft_strjoin(paths[c], "/");
+		new_cmd[0] = ft_strjoin(new_path, cmd[0]);
+		free(new_path);
+		if (is_executable(new_cmd[0]))
+			return (new_cmd);
+		free(new_cmd[0]);
+		c++;
 	}
 	free (new_cmd);
 	return (NULL);
 }
 
-static void	execve_error(char **cmd, char **n_env, char **paths)
+static void	execve_error(char **cmd)
 {
 	ft_putstr_fd("Minishell: '", 2);
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd("': ", 2);
 	ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);
-	ft_free_split(cmd);
-	ft_free_split(n_env);
-	ft_free_split(paths);
-	free_n_exit();
+	errno = 127;
 }
 
-void	do_exec(char **cmd, char **n_env)
+static void	execute_execve(char **new_cmd, char **cmd, char **n_env)
 {
 	int			status;
-	char		**paths;
 	pid_t		pid;
-	char		**new_cmd;
 
-
-	paths = get_paths();
-	new_cmd = NULL;
+	status = 0;
+	define_child_signals();
 	pid = fork();
 	if (pid == -1)
 	{
@@ -91,15 +76,26 @@ void	do_exec(char **cmd, char **n_env)
 	}
 	else if (pid == 0)
 	{
-		new_cmd = create_command_for_exec(cmd, paths);
 		if (new_cmd)
 			execve(new_cmd[0], cmd, n_env);
-		execve_error(cmd, n_env, paths);
 	}
 	waitpid(pid, &status, 0);
-	//printf("oi pai\n");
 	if (WIFEXITED(status))
-		errno = WIFEXITED(status);
+		errno = WEXITSTATUS(status);
+}
+
+void	do_exec(char **cmd, char **n_env)
+{
+	char		**paths;
+	char		**new_cmd;
+
+	paths = get_paths();
+	new_cmd = NULL;
+	new_cmd = create_command_for_exec(cmd, paths);
+	if (new_cmd)
+		execute_execve(new_cmd, cmd, n_env);
+	else
+		execve_error(cmd);
 	ft_free_split(paths);
 	if (new_cmd)
 		ft_free_split(new_cmd);
