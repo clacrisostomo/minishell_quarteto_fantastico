@@ -24,7 +24,6 @@ static int	create_mr_temporary_file(void)
 
 static void	hr_doc_child_exit(char **cmd, char **old_cmd)
 {
-	
 	ft_free_split(cmd);
 	ft_free_split(old_cmd);
 	free_n_exit();

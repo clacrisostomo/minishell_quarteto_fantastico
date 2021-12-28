@@ -165,6 +165,7 @@ void			free_n_exit(void);
 void			free_escapes(void);
 void			free_item(t_ht_item *item);
 int				loop_table_n_insert(char *key, char *value, int table);
+void			insert_if_export(char *key, char *value);
 int				modify_table_by_key(int table, char *key, char *value);
 int				which_table_by_key(char *key);
 void			change_val_by_table(t_array_table *table, char *key,

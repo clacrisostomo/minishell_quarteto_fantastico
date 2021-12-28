@@ -28,7 +28,7 @@ static void	mr_redirect_out(char *file, int flag)
 	}
 }
 
-static void	mr_redirect_in(char *file, int flag)
+static void	mr_redirect_in(char *file, int flag, char **cmd, char **old_cmd)
 {
 	int	file_fd;
 
@@ -36,6 +36,9 @@ static void	mr_redirect_in(char *file, int flag)
 	if (file_fd == -1)
 	{
 		ft_putendl_fd("Error: bad file decriptor", 2);
+		free_s
+		SETAR ERRNO
+		IR PRO LOOP()
 	}
 	else
 		dup2(file_fd, STDIN);
@@ -48,7 +51,7 @@ void	mister_redirect(char **cmd, int i, int *save_fd, char **old_cmd)
 	else if (!(ft_strcmp(cmd[i], ">>")))
 		mr_redirect_out(cmd[i + 1], O_WRONLY | O_CREAT | O_APPEND);
 	else if (!(ft_strcmp(cmd[i], "<")))
-		mr_redirect_in(cmd[i + 1], O_RDONLY);
+		mr_redirect_in(cmd[i + 1], O_RDONLY, cmd, old_cmd);
 	else if (!(ft_strcmp(cmd[i], "<<")))
 		dr_here(cmd, i, save_fd, old_cmd);
 }

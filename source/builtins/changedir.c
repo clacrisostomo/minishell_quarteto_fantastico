@@ -28,7 +28,7 @@ static void	cd_home(t_cd *cd_list)
 {
 	if (cd_list->i == 1)
 	{
-		modify_array_by_key("OLDPWD", cd_list->tmp);
+		insert_if_export("OLDPWD", cd_list->tmp);
 		chdir(cd_list->home);
 	}
 }
@@ -61,7 +61,7 @@ int	cd(char **cmd)
 		}
 		else
 			control_cd_minus_two(cmd, cd_list.slash, cd_list.home);
-		modify_array_by_key("OLDPWD", cd_list.tmp);
+		insert_if_export("OLDPWD", cd_list.tmp);
 		if (errno == ENOENT)
 			cd_error_file(cmd);
 	}
