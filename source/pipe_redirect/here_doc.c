@@ -24,6 +24,7 @@ static int	create_mr_temporary_file(void)
 
 static void	hr_doc_child_exit(char **cmd, char **old_cmd)
 {
+	
 	ft_free_split(cmd);
 	ft_free_split(old_cmd);
 	free_n_exit();
@@ -62,6 +63,7 @@ void	interrupt_here_document(int signal)
 	(void)signal;
 	errno = 130;
 	write(1, "\n", 1);
+	hr_doc_child_exit(g_shell.forked_sub_cmd, g_shell.forked_cmd);
 	free_n_exit();
 }
 
@@ -79,6 +81,8 @@ void	dr_here(char **cmd, int i, int *save_fd, char **old_cmd)
 	pid = fork();
 	if (pid == 0)
 	{
+		g_shell.forked_sub_cmd = cmd;
+		g_shell.forked_cmd = old_cmd;
 		signal(SIGINT, interrupt_here_document);
 		here_doc_loop(file_tmp, cmd, i, old_cmd);
 		hr_doc_child_exit(cmd, old_cmd);
