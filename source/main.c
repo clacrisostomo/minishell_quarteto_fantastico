@@ -85,7 +85,6 @@ static void	loop(void)
 {
 	char	*command;
 	char	*prompt;
-	//int		old_g_shell->ms_errno;
 
 	while (TRUE)
 	{
