@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:11:32 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/24 16:55:44 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/27 19:12:15 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ char	**create_command_for_exec(char **cmd, char **paths)
 	int		c;
 
 	c = 0;
-	new_cmd = (char **)malloc(sizeof(char **));
+	new_cmd = (char **)malloc(2 * sizeof(char *));
+	new_cmd[1] = NULL;
 	if (is_executable(cmd[0]) && has_second_bar(cmd[0]))
 	{
 		new_cmd[0] = ft_strdup(cmd[0]);
