@@ -57,18 +57,21 @@ int	check_jok_before_idx(char *string, int i, t_joker_m *list)
 	t_joker_m	*tmp;
 
 	tmp = list->next_jok;
-	if (string[i - 1] == JOK_C)
+	if (i > 0)
 	{
-		while (tmp->next_jok != NULL)
+		if (string[i - 1] == JOK_C)
 		{
+			while (tmp->next_jok != NULL)
+			{
+				is_jok = check_joke_list(string, i - 1, tmp);
+				if (is_jok == TRUE)
+					return (TRUE);
+				tmp = tmp->next_jok;
+			}
 			is_jok = check_joke_list(string, i - 1, tmp);
 			if (is_jok == TRUE)
 				return (TRUE);
-			tmp = tmp->next_jok;
 		}
-		is_jok = check_joke_list(string, i - 1, tmp);
-		if (is_jok == TRUE)
-			return (TRUE);
 	}
 	return (FALSE);
 }

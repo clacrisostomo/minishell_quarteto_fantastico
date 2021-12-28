@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:23:41 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/12/24 16:55:08 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/28 11:56:25 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	parser(char **cmd, int i, int *old_fd)
 	else
 		sub_cmd = cmd_till_pipe(cmd, c, i + 1);
 	miss_pipe(cmd, i, old_fd);
-	sub_cmd = make_command_redirect(sub_cmd, 0, save_fd);
+	sub_cmd = make_command_redirect(sub_cmd, 0, save_fd, cmd);
 	execute(sub_cmd, cmd);
 	reset_fd(save_fd);
 	if (sub_cmd)
@@ -85,17 +85,16 @@ static void	loop(void)
 {
 	char	*command;
 	char	*prompt;
-	int		old_errno;
 
 	while (TRUE)
 	{
-		old_errno = errno;
+		g_shell.ms_errno = errno;
 		g_shell.esc_idx = NULL;
 		define_interactive_signals();
 		prompt = do_prompt();
 		command = readline(prompt);
 		free(prompt);
-		errno = old_errno;
+		errno = g_shell.ms_errno;
 		loop_command(command);
 	}
 }

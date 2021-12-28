@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:05:02 by mde-figu          #+#    #+#             */
-/*   Updated: 2021/12/24 16:58:09 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/28 12:15:46 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ typedef struct s_shell
 {
 	t_array_table	*env;
 	t_array_table	*local;
+	char			**forked_cmd;
+	char			**forked_sub_cmd;
 	int				*esc_idx;
+	int				ms_errno;
 }	t_shell;
 
 t_shell	g_shell;
@@ -101,12 +104,14 @@ int				has_second_bar(char *cmd);
 */
 void			miss_pipe(char **cmd, int i, int *old_fd);
 char			**cmd_till_pipe(char **cmd, int begin, int end);
-char			**make_command_redirect(char **cmd, int i, int *save_fd);
-void			mister_redirect(char *redirect, char *file, int *save_fd);
+char			**make_command_redirect(char **cmd, int i, int *save_fd,
+					char **old_cmd);
+void			mister_redirect(char **cmd, int i, int *save_fd,
+					char **old_cmd);
 int				is_redirect(char *cmd);
 int				is_redirect_without_quotes(char *cmd, int i);
 int				have_file_after_redirect(char **cmd);
-void			dr_here(char *eof, int *save_fd);
+void			dr_here(char **cmd, int i, int *save_fd, char **old_cmd);
 int				is_token_from_quotes(char *special_char, char *token, int idx);
 
 /*
@@ -160,6 +165,7 @@ void			free_n_exit(void);
 void			free_escapes(void);
 void			free_item(t_ht_item *item);
 int				loop_table_n_insert(char *key, char *value, int table);
+void			insert_if_export(char *key, char *value);
 int				modify_table_by_key(int table, char *key, char *value);
 int				which_table_by_key(char *key);
 void			change_val_by_table(t_array_table *table, char *key,

@@ -78,6 +78,7 @@ static void	execute_execve(char **new_cmd, char **cmd, char **n_env)
 	{
 		if (new_cmd)
 			execve(new_cmd[0], cmd, n_env);
+		ft_free_split(new_cmd);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
