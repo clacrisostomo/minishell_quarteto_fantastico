@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 17:58:49 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/23 11:25:48 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/28 12:07:19 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**new_cmd_for_redirect(char **cmd, int i, int j)
 	return (sub_cmd);
 }
 
-char	**make_command_redirect(char **cmd, int i, int *save_fd)
+char	**make_command_redirect(char **cmd, int i, int *save_fd, char **old_cmd)
 {
 	char	**new_cmd;
 	char	**recursion;
@@ -50,10 +50,10 @@ char	**make_command_redirect(char **cmd, int i, int *save_fd)
 			i++;
 		if (is_redirect_without_quotes(cmd[i], i))
 		{
-			mister_redirect(cmd[i], cmd[i + 1], save_fd);
+			mister_redirect(cmd, i, save_fd, old_cmd);
 			new_cmd = new_cmd_for_redirect(cmd, i, j);
 			ft_free_split(cmd);
-			recursion = make_command_redirect(new_cmd, 0, save_fd);
+			recursion = make_command_redirect(new_cmd, 0, save_fd, old_cmd);
 			return (recursion);
 		}
 	}

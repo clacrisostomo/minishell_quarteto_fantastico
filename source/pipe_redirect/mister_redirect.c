@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 13:25:20 by nbarreir          #+#    #+#             */
-/*   Updated: 2021/12/23 11:26:56 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/12/28 12:15:17 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ static void	mr_redirect_in(char *file, int flag)
 		dup2(file_fd, STDIN);
 }
 
-void	mister_redirect(char *redirect, char *file, int *save_fd)
+void	mister_redirect(char **cmd, int i, int *save_fd, char **old_cmd)
 {
-	if (!(ft_strcmp(redirect, ">")))
-		mr_redirect_out(file, O_WRONLY | O_CREAT | O_TRUNC);
-	else if (!(ft_strcmp(redirect, ">>")))
-		mr_redirect_out(file, O_WRONLY | O_CREAT | O_APPEND);
-	else if (!(ft_strcmp(redirect, "<")))
-		mr_redirect_in(file, O_RDONLY | O_CREAT);
-	else if (!(ft_strcmp(redirect, "<<")))
-		dr_here(file, save_fd);
+	if (!(ft_strcmp(cmd[i], ">")))
+		mr_redirect_out(cmd[i + 1], O_WRONLY | O_CREAT | O_TRUNC);
+	else if (!(ft_strcmp(cmd[i], ">>")))
+		mr_redirect_out(cmd[i + 1], O_WRONLY | O_CREAT | O_APPEND);
+	else if (!(ft_strcmp(cmd[i], "<")))
+		mr_redirect_in(cmd[i + 1], O_RDONLY);
+	else if (!(ft_strcmp(cmd[i], "<<")))
+		dr_here(cmd, i, save_fd, old_cmd);
 }
 
 int	is_redirect(char *cmd)
