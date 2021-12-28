@@ -85,17 +85,17 @@ static void	loop(void)
 {
 	char	*command;
 	char	*prompt;
-	int		old_errno;
+	//int		old_g_shell->ms_errno;
 
 	while (TRUE)
 	{
-		old_errno = errno;
+		g_shell.ms_errno = errno;
 		g_shell.esc_idx = NULL;
 		define_interactive_signals();
 		prompt = do_prompt();
 		command = readline(prompt);
 		free(prompt);
-		errno = old_errno;
+		errno = g_shell.ms_errno;
 		loop_command(command);
 	}
 }

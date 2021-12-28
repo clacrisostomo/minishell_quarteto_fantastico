@@ -30,7 +30,8 @@ char	**create_command_for_exec(char **cmd, char **paths)
 	int		c;
 
 	c = 0;
-	new_cmd = (char **)malloc(sizeof(char **));
+	new_cmd = (char **)malloc(2 * sizeof(char *));
+	new_cmd[1] = NULL;
 	if (is_executable(cmd[0]) && has_second_bar(cmd[0]))
 	{
 		new_cmd[0] = ft_strdup(cmd[0]);
@@ -77,6 +78,7 @@ static void	execute_execve(char **new_cmd, char **cmd, char **n_env)
 	{
 		if (new_cmd)
 			execve(new_cmd[0], cmd, n_env);
+		ft_free_split(new_cmd);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))

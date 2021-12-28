@@ -80,6 +80,7 @@ typedef struct s_shell
 	t_array_table	*env;
 	t_array_table	*local;
 	int				*esc_idx;
+	int				ms_errno;
 }	t_shell;
 
 t_shell	g_shell;

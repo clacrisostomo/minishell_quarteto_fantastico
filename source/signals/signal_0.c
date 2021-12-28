@@ -15,7 +15,7 @@
 static void	sigint_interactive_handler(int signal)
 {
 	(void) signal;
-	errno = 130;
+	g_shell.ms_errno = 130;
 	ft_printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
